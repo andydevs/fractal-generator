@@ -72,20 +72,16 @@ int main(int argc, char const *argv[])
 	CImg<char> jimage(img_x, img_y, 1, 3);
 
 	// For each pixel location in image
-	for(unsigned x = 0; x < img_x; x++)
-	{
-		for (unsigned y = 0; y < img_y; y++)
-		{
-			// Compute complex number at location
-			// Compute JuliaSet map at complex number
-			// Add color as pixel map to pixel at location
+	cimg_forXY(jimage, x, y) {
+		// Compute complex number at location
+		// Compute JuliaSet map at complex number
+		// Add color as pixel map to pixel at location
 
-			// Color everything blue for now
-			setColor(jimage, x, y, 0x00aaff);
+		// Color everything blue for now
+		setColor(jimage, x, y, 0x00aaff);
 
-			// Increment iterations
-			iterations++;
-		}
+		// Increment iterations
+		iterations++;
 	}
 
 	// End clock
