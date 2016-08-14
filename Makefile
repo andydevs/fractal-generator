@@ -7,7 +7,7 @@ COMPILE = $(CC) -c
 LINK = $(CC)
 
 CFLAGS = -Wall -std=c++14
-LFLAGS = -Wall
+LFLAGS = -Wall -lpthread -lX11
 INCLUD = -Iinclude
 LIBRAR = -Llib
 
