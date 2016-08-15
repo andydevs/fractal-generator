@@ -1,5 +1,5 @@
 # JuliaSet
 
-![Julia Set Image](jimage.jpg)
+A program that generates julia set images like the one below:
 
-A program that generates julia set images.
+![Julia Set Image](jimage.jpg)
