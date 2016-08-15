@@ -39,14 +39,15 @@ complex<double> getComplex(const double& x, const double& y, const double& img_x
  *
  * @param z the complex number to check
  * @param c the constant complex number
- * @param i the iteration buffer to increment 
+ * @param i the iteration buffer to increment
+ * @param m the colormap to use
  * 
  * @return the JuliaSet color map of the given complex number
  */
-unsigned juliaSetColorMap(complex<double>& z, const complex<double>& c, int& i)
+unsigned juliaSetColorMap(complex<double>& z, const complex<double>& c, int& i, colormap m)
 {
 	// Iterations in this map
-	int n;
+	unsigned n;
 
 	// Try 255 iterations
 	for (n = 0; n < 255; n++, i++)
@@ -59,7 +60,7 @@ unsigned juliaSetColorMap(complex<double>& z, const complex<double>& c, int& i)
 	}
 
 	// Return color map
-	return 0x010101 * n;
+	return m(n);
 }
 
 /**
@@ -71,10 +72,10 @@ unsigned juliaSetColorMap(complex<double>& z, const complex<double>& c, int& i)
  * @param y   the y coord of the pixel
  * @param col the col value to set the pixel to
  */
-void setColor(CImg<char>& image, const unsigned& x, const unsigned& y, const unsigned& col)
+void setColor(CImg<char>& img, const unsigned& x, const unsigned& y, const unsigned& col)
 {
 	// Set each channel
-	image(x, y, 0) = (col & 0xFF0000) >> 16;
-	image(x, y, 1) = (col & 0x00FF00) >> 8;
-	image(x, y, 2) = (col & 0x0000FF);
+	img(x, y, 0) = (col & 0xFF0000) >> 16;
+	img(x, y, 1) = (col & 0x00FF00) >> 8;
+	img(x, y, 2) = (col & 0x0000FF);
 }

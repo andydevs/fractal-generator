@@ -10,6 +10,7 @@
 // Headers being used
 #include "CImg/CImg.h"
 #include "JuliaSet/functions.h"
+#include "JuliaSet/colormaps.h"
 
 // Libraries being used
 #include <iostream>
@@ -62,9 +63,9 @@ int main(int argc, char const *argv[])
 		// For each pixel location in image
 		cimg_forXY(jimage, x, y) {
 			// Compute JuliaSet map at pixel location
-			z = getComplex(x, y, img_x, img_y);   // Complex number z at pixel
-			color = juliaSetColorMap(z, c, iter); // Compute color map
-			setColor(jimage, x, y, color);        // Set color map
+			z = getComplex(x, y, img_x, img_y);   			     // Complex number z at pixel
+			color = juliaSetColorMap(z, c, iter, &whiteToBlack); // Compute color map
+			setColor(jimage, x, y, color);      			     // Set color map
 		}
 
 		// End clock

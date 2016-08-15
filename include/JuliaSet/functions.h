@@ -11,6 +11,7 @@
 #define _FUNCTIONS_H_
 
 // Headers being used
+#include "colormaps.h"
 #include "CImg/CImg.h"
 
 // Libraries being used
@@ -33,11 +34,12 @@ std::complex<double> getComplex(const double& x, const double& y, const double& 
  *
  * @param z the complex number to check
  * @param c the constant complex number
- * @param i the iteration buffer to increment 
+ * @param i the iteration buffer to increment
+ * @param m the colormap to use 
  * 
  * @return the JuliaSet color map of the given complex number
  */
-unsigned juliaSetColorMap(std::complex<double>& z, const std::complex<double>& c, int& i);
+unsigned juliaSetColorMap(std::complex<double>& z, const std::complex<double>& c, int& i, colormap m);
 
 /**
  * Sets the pixel in the given image at the given x/y coords
