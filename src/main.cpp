@@ -19,6 +19,9 @@
 using namespace std;
 using namespace cimg_library;
 
+// Constants being used
+const char* DEFAULT_IMAGE_NAME = "jimage.jpg"; // The default image name
+
 /**
  * Returns the complex number at the given pixel on the image
  *
@@ -102,7 +105,7 @@ int main(int argc, char const *argv[])
 
 	// Save image
 	cout << "Saving..." << endl;
-	jimage.save("./juliasetimage.jpg");
+	jimage.save(DEFAULT_IMAGE_NAME);
 
 	// Print end information
 	cout << "Iterations: "     << iter << endl;
