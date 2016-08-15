@@ -1,5 +1,7 @@
 TARGET = juliaset
 
+TESTARGS = -1.05 -0.25 1920 1080
+
 SHELL = /bin/bash -O globstar
 CC = g++
 
@@ -44,7 +46,7 @@ uninstall:
 	@rm $(INSDIR)/$(TARGET)
 
 run: $(BINARY)
-	@echo Running...
+	@echo Running with $(TESTARGS) ...
 	@echo -------------------------------
-	@$(BINARY)
+	@$(BINARY) $(TESTARGS)
 	@echo -------------------------------

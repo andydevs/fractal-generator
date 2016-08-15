@@ -13,6 +13,7 @@
 
 // Libraries being used
 #include <iostream>
+#include <cstdlib>
 #include <ctime>
 
 // Namespaces being used
@@ -32,51 +33,60 @@ const char* DEFAULT_IMAGE_NAME = "jimage.jpg"; // The default image name
  */
 int main(int argc, char const *argv[])
 {
-	// Read arguments (to be implemented later)
-		// First argument is constant real component
-		// Second argument is constant imaginary component
-		// Third argument is image x size
-		// Fourth argument is image y size
+	// If approppriate number of arguments given
+	if (argc > 4)
+	{
+		// Parse arguments
+		double real    = atof(argv[1]); // Constant real component
+		double imag    = atof(argv[2]); // Constant imaginary component
+		unsigned img_x = atoi(argv[3]); // Image width
+		unsigned img_y = atoi(argv[4]); // Image height
 
-	// Default arguments
-	complex<double> c(0, 0); 		     // Complex constant
-	unsigned img_x = 1920, img_y = 1920; // Image dimensions
+		// Complex constant
+		const complex<double> c(real, imag);
 
-	// Init buffers
-	int iter = 0;      // Total number of iter
-	complex<double> z; // Z Complex buffer
-	unsigned color;	   // Color buffer
+		// Initialize buffers
+		complex<double> z; // Z Complex buffer
+		unsigned color;	   // Color value buffer
+		int iter = 0;      // Total number of iterations
 
-	// Create image (with 3 color channels)
-	CImg<char> jimage(img_x, img_y, 1, 3);
+		// Create image (with 3 color channels)
+		CImg<char> jimage(img_x, img_y, 1, 3);
 
-	// Print dimensions
-	cout << "Generating: " << img_x << "x" << img_y << endl;
+		// Print dimensions
+		cout << "Generating: " << img_x << "x" << img_y << endl;
 
-	// Start clock
-	double time0 = clock();
+		// Start clock
+		double time0 = clock();
 
-	// For each pixel location in image
-	cimg_forXY(jimage, x, y) {
-		// Compute complex number at location
-		z = getComplex(x, y, img_x, img_y);
-		// Compute JuliaSet map at complex number
-		color = juliaSetColorMap(z, c, iter);
-		// Add color as pixel map to pixel at location
-		setColor(jimage, x, y, color);
+		// For each pixel location in image
+		cimg_forXY(jimage, x, y) {
+			// Compute JuliaSet map at pixel location
+			z = getComplex(x, y, img_x, img_y);   // Complex number z at pixel
+			color = juliaSetColorMap(z, c, iter); // Compute color map
+			setColor(jimage, x, y, color);        // Set color map
+		}
+
+		// End clock
+		double time = (clock() - time0) / CLOCKS_PER_SEC;
+
+		// Save image
+		cout << "Saving..." << endl;
+		jimage.save(DEFAULT_IMAGE_NAME);
+
+		// Print end information
+		cout << "Iterations: "     << iter << endl;
+		cout << "Time (seconds): " << time << endl;
+
+		// End program
+		return 0;
 	}
+	else
+	{
+		// Print error message
+		cout << "ERROR: Expected 4 program arguments. Got: " << (argc - 1) << endl;
 
-	// End clock
-	double time = (clock() - time0) / CLOCKS_PER_SEC;
-
-	// Save image
-	cout << "Saving..." << endl;
-	jimage.save(DEFAULT_IMAGE_NAME);
-
-	// Print end information
-	cout << "Iterations: "     << iter << endl;
-	cout << "Time (seconds): " << time << endl;
-
-	// End program
-	return 0;
+		// Return error
+		return 1;
+	}
 }
