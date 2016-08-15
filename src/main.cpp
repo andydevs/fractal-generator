@@ -20,6 +20,18 @@ using namespace std;
 using namespace cimg_library;
 
 /**
+ * Returns the complex number at the given pixel on the image
+ *
+ * @param x     the x coord of the pixel
+ * @param y     the y coord of the pixel
+ * @param img_x the width of the image
+ * @param img_y the height of the image
+ *
+ * @return the complex number at the given pixel on the image
+ */
+complex<double> getComplex(const double& x, const double& y, const double& img_x, const double& img_y);
+
+/**
  * Computes the JuliaSet color map of the given complex number
  *
  * @param z the complex number to check
@@ -28,7 +40,7 @@ using namespace cimg_library;
  * 
  * @return the JuliaSet color map of the given complex number
  */
-unsigned juliaSetColorMap(complex<double> z, complex<double> c, int& i);
+unsigned juliaSetColorMap(complex<double>& z, const complex<double>& c, int& i);
 
 /**
  * Sets the pixel in the given image at the given x/y coords
@@ -58,45 +70,94 @@ int main(int argc, char const *argv[])
 		// Fourth argument is image y size
 
 	// Default arguments
-	complex<double> c(0, 0); 		   	 // Complex constant
-	unsigned img_x = 1920, img_y = 1080; // Image dimensions
+	complex<double> c(0, 0); 		     // Complex constant
+	unsigned img_x = 1920, img_y = 1920; // Image dimensions
 
-	// Init iterations buffer and start clock
-	int iterations = 0;
-	int time0 = clock();
+	// Init buffers
+	int iter = 0;      // Total number of iter
+	complex<double> z; // Z Complex buffer
+	unsigned color;	   // Color buffer
+
+	// Create image (with 3 color channels)
+	CImg<char> jimage(img_x, img_y, 1, 3);
 
 	// Print dimensions
 	cout << "Generating: " << img_x << "x" << img_y << endl;
 
-	// Load image (with 3 color channels)
-	CImg<char> jimage(img_x, img_y, 1, 3);
+	// Start clock
+	double time0 = clock();
 
 	// For each pixel location in image
 	cimg_forXY(jimage, x, y) {
 		// Compute complex number at location
+		z = getComplex(x, y, img_x, img_y);
 		// Compute JuliaSet map at complex number
+		color = juliaSetColorMap(z, c, iter);
 		// Add color as pixel map to pixel at location
-
-		// Color everything blue for now
-		setColor(jimage, x, y, 0x00aaff);
-
-		// Increment iterations
-		iterations++;
+		setColor(jimage, x, y, color);
 	}
 
 	// End clock
-	double time = (double)(clock() - time0) / CLOCKS_PER_SEC;
+	double time = (clock() - time0) / CLOCKS_PER_SEC;
 
 	// Save image
 	cout << "Saving..." << endl;
 	jimage.save("./juliasetimage.jpg");
 
 	// Print end information
-	cout << "Iterations: " << iterations << endl;
+	cout << "Iterations: "     << iter << endl;
 	cout << "Time (seconds): " << time << endl;
 
 	// End program
 	return 0;
+}
+
+/**
+ * Returns the complex number at the given pixel on the image
+ *
+ * @param x     the x coord of the pixel
+ * @param y     the y coord of the pixel
+ * @param img_x the width of the image
+ * @param img_y the height of the image
+ *
+ * @return the complex number at the given pixel on the image
+ */
+complex<double> getComplex(const double& x, const double& y, const double& img_x, const double& img_y)
+{
+	// Real and imaginary
+	double real = 4.0 * (x / img_x) - 2.0;
+	double imag = 4.0 * (y / img_y) - 2.0;
+
+	// Return complex value
+	return complex<double>(real, imag);
+}
+
+/**
+ * Computes the JuliaSet color map of the given complex number
+ *
+ * @param z the complex number to check
+ * @param c the constant complex number
+ * @param i the iteration buffer to increment 
+ * 
+ * @return the JuliaSet color map of the given complex number
+ */
+unsigned juliaSetColorMap(complex<double>& z, const complex<double>& c, int& i)
+{
+	// Iterations in this map
+	int n;
+
+	// Try 255 iterations
+	for (n = 0; n < 255; n++, i++)
+	{
+		// Iteration function
+		z = pow(z, 2) + c;
+
+		// Break if z goes to infinity (beyond 2)
+		if (norm(z) >= 4.0) break;
+	}
+
+	// Return color map
+	return 0x010101 * n;
 }
 
 /**
