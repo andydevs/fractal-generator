@@ -79,3 +79,31 @@ void setColor(CImg<char>& img, const unsigned& x, const unsigned& y, const unsig
 	img(x, y, 1) = (col & 0x00FF00) >> 8;
 	img(x, y, 2) = (col & 0x0000FF);
 }
+
+/**
+ * Generates a Juliaset Image in the given object with the given complex constant
+ *
+ * @param image the image object to generate the Juliaset in
+ * @param c     the complex constant being used
+ * @param map   the colormap being used
+ *
+ * @return number of iterations that were calculated
+ */
+int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, colormap map)
+{
+	// Image dimensions
+	int imgx = image.width(), imgy = image.height();
+
+	// Initialize buffers
+	complex<double> z; // Z Complex buffer
+	unsigned color;	   // Color value buffer
+	int iter = 0;      // Total number of iterations
+
+	// For each pixel location in image
+	cimg_forXY(image, x, y) {
+		// Compute JuliaSet map at pixel location
+		z = getComplex(x, y, imgx, imgy);   	   // Complex number z at pixel
+		color = juliaSetColorMap(z, c, iter, map); // Compute color map
+		setColor(image, x, y, color);      		   // Set color map
+	}
+}

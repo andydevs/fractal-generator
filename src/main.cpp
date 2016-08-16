@@ -34,60 +34,54 @@ const char* DEFAULT_IMAGE_NAME = "jimage.jpg"; // The default image name
  */
 int main(int argc, char const *argv[])
 {
-	// If approppriate number of arguments given
-	if (argc > 4)
+	// -----------------------------ARGUMENTS-----------------------------
+
+	// Error if approppriate number of arguments is not given
+	if (argc < 5)
 	{
-		// Parse arguments
-		double real    = atof(argv[1]); // Constant real component
-		double imag    = atof(argv[2]); // Constant imaginary component
-		unsigned img_x = atoi(argv[3]); // Image width
-		unsigned img_y = atoi(argv[4]); // Image height
-
-		// Complex constant
-		const complex<double> c(real, imag);
-
-		// Initialize buffers
-		complex<double> z; // Z Complex buffer
-		unsigned color;	   // Color value buffer
-		int iter = 0;      // Total number of iterations
-
-		// Create image (with 3 color channels)
-		CImg<char> jimage(img_x, img_y, 1, 3);
-
-		// Print dimensions
-		cout << "Generating: " << img_x << "x" << img_y << endl;
-
-		// Start clock
-		double time0 = clock();
-
-		// For each pixel location in image
-		cimg_forXY(jimage, x, y) {
-			// Compute JuliaSet map at pixel location
-			z = getComplex(x, y, img_x, img_y);   			     // Complex number z at pixel
-			color = juliaSetColorMap(z, c, iter, &whiteToBlack); // Compute color map
-			setColor(jimage, x, y, color);      			     // Set color map
-		}
-
-		// End clock
-		double time = (clock() - time0) / CLOCKS_PER_SEC;
-
-		// Save image
-		cout << "Saving..." << endl;
-		jimage.save(DEFAULT_IMAGE_NAME);
-
-		// Print end information
-		cout << "Iterations: "     << iter << endl;
-		cout << "Time (seconds): " << time << endl;
-
-		// End program
-		return 0;
-	}
-	else
-	{
-		// Print error message
-		cout << "ERROR: Expected 4 program arguments. Got: " << (argc - 1) << endl;
-
-		// Return error
+		cout << "ERROR: Expected 4 program arguments. Got: ";
+		cout << (argc - 1) << endl;
 		return 1;
 	}
+
+	// Parse arguments
+	double real    = atof(argv[1]); // Constant real component
+	double imag    = atof(argv[2]); // Constant imaginary component
+	unsigned img_x = atoi(argv[3]); // Image width
+	unsigned img_y = atoi(argv[4]); // Image height
+
+	// -----------------------------CONSTANTS-----------------------------
+
+	// Complex constant
+	const complex<double> c(real, imag);
+
+	// Image (with 3 color channels)
+	CImg<char> jimage(img_x, img_y, 1, 3);
+
+	// -----------------------------ALGORITHM-----------------------------
+
+	// Print dimensions
+	cout << "Generating: " << jimage.width() << "x" << jimage.height() << endl;
+
+	// Start clock
+	double time = clock();
+
+	// Generate julia set image
+	int iter = generateJuliasetImage(jimage, c, &blackToWhite);
+
+	// End clock
+	time = (clock() - time) / CLOCKS_PER_SEC;
+
+	// ----------------------------SAVE AND END---------------------------
+
+	// Save image
+	cout << "Saving..." << endl;
+	jimage.save(DEFAULT_IMAGE_NAME);
+
+	// Print end information
+	cout << "Iterations: "     << iter << endl;
+	cout << "Time (seconds): " << time << endl;
+
+	// End program
+	return 0;
 }

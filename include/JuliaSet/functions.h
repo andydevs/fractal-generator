@@ -52,4 +52,15 @@ unsigned juliaSetColorMap(std::complex<double>& z, const std::complex<double>& c
  */
 void setColor(cimg_library::CImg<char>& image, const unsigned& x, const unsigned& y, const unsigned& col);
 
+/**
+ * Generates a Juliaset Image in the given object with the given complex constant
+ *
+ * @param image the image object to generate the Juliaset in
+ * @param c     the complex constant being used
+ * @param map   the colormap being used
+ *
+ * @return number of iterations that were calculated
+ */
+int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, colormap map);
+
 #endif
