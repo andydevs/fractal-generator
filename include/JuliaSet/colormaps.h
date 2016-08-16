@@ -37,14 +37,5 @@ unsigned blackToWhite(unsigned iterations);
  */
 unsigned whiteToBlack(unsigned iterations);
 
-/**
- * Blue to Yellow colormapping
- *
- * @param iterations the number of iterations being denoted
- *
- * @return a color integer
- */
-unsigned blueToYellow(unsigned iterations);
-
 
 #endif
