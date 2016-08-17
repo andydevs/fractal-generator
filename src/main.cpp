@@ -36,10 +36,15 @@ int main(int argc, char const *argv[])
 {
 	// CImg descriptor
 	cimg_usage("Generates JuliaSet images.");
-	double zoom = cimg_option("-zoom", 1.0, "The zoom scale of the image");         // Zoom
-	double offx = cimg_option("-offx", 0.0, "The x offset of the image");           // Offset x
-	double offy = cimg_option("-offy", 0.0, "The y offset of the image");           // Offset y
-	double rot  = cimg_option("-rot",  0.0, "The degree of rotation of the image"); // Rotation
+
+	// Image options
+	double zoom = cimg_option("-zoom", 1.0, "The zoom scale of the image"); 			        // Zoom
+	double offx = cimg_option("-offx", 0.0, "The x offset of the image");   			        // Offset x
+	double offy = cimg_option("-offy", 0.0, "The y offset of the image");       			    // Offset y
+	double rot  = cimg_option("-rot",  0.0, "The angle of rotation of the image (in degrees)"); // Rotation
+
+	// Image config
+	Config cfg(zoom, offx, offy, rot);
 
 	// -----------------------------ARGUMENTS-----------------------------
 
@@ -78,7 +83,7 @@ int main(int argc, char const *argv[])
 	double time = clock();
 
 	// Generate julia set image
-	int iter = generateJuliasetImage(jimage, c, zoom, off, rot, &BLUE_TO_YELLOW);
+	int iter = generateJuliasetImage(jimage, c, cfg, &BLUE_TO_YELLOW);
 
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;
