@@ -7,14 +7,17 @@
 // Created: 8 - 14 - 2016
 //-----------------------------------------------------------------------------------
 
-#ifndef _COLORMAPS_H_
-#define _COLORMAPS_H_
-
 // Headers being used
-#include "colormap.h"
+#include "JuliaSet/colormaps.h"
 
 // Libraries being used
-#include <string>
+#include <map>
+
+// Namespaces being used
+using namespace std;
+
+// Init map
+static map<string, ColorMapRGB*> colormapIndex;
 
 /**
  * Returns the colormap with the given name
@@ -23,6 +26,13 @@
  *
  * @return the colormap with the given name
  */
-ColorMapRGB* getColorMap(std::string name);
+ColorMapRGB* getColorMap(string name)
+{
+	// Populate
+	colormapIndex["black2white"] = new GradientMapRGB(0x000000, 0xffffff);
+	colormapIndex["white2black"] = new GradientMapRGB(0xffffff, 0x000000);
+	colormapIndex["drexel"]      = new GradientMapRGB(0x002f6c, 0xffc600);
 
-#endif
+	// Return index
+	return colormapIndex[name];
+}

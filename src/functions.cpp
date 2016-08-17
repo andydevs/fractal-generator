@@ -90,11 +90,8 @@ int juliaSetAlgorithm(std::complex<double>& z, const std::complex<double>& c)
  *
  * @return total number of iterations that were calculated
  */
-int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, Config& cfg, const ColorMapRGB* map)
+int generateJuliaSetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, Config& cfg, const ColorMapRGB* map)
 {
-	// Image dimensions
-	int imgx = image.width(), imgy = image.height();
-
 	// Initialize buffers
 	complex<double> z;     // Z Complex buffer
 	ColorRGB color;	       // Color value buffer

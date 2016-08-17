@@ -22,7 +22,8 @@ using namespace std;
 using namespace cimg_library;
 
 // Constants being used
-const char* DEFAULT_IMAGE_NAME = "jimage.jpg"; // The default image name
+const char* DEF_IMG_NAME  = "jimage.jpg";  // The default image name
+const char* DEF_CMAP_NAME = "black2white"; // The default colormap name
 
 /**
  * The main function of the program
@@ -34,6 +35,8 @@ const char* DEFAULT_IMAGE_NAME = "jimage.jpg"; // The default image name
  */
 int main(int argc, char const *argv[])
 {
+	// ------------------------------CONFIG------------------------------
+
 	// CImg descriptor
 	cimg_usage("Generates JuliaSet images.");
 
@@ -43,13 +46,17 @@ int main(int argc, char const *argv[])
 	double offy = cimg_option("-offy", 0.0, "The y offset of the image");       			    // Offset y
 	double rot  = cimg_option("-rot",  0.0, "The angle of rotation of the image (in degrees)"); // Rotation
 
+	// String options
+	string savename = cimg_option("-save", DEF_IMG_NAME,  "The file to save the image to"); // Save
+	string cmapname = cimg_option("-cmap", DEF_CMAP_NAME, "The colormapping to use");       // Colormap
+
 	// Image config
 	Config cfg(zoom, offx, offy, rot);
 
-	// -----------------------------ARGUMENTS-----------------------------
+	// Get colormap
+	const ColorMapRGB* cmap = getColorMap(cmapname);
 
-	// Return if just getting help
-	if (argv[1] == "-h") return 0;
+	// -----------------------------ARGUMENTS-----------------------------
 
 	// Error if approppriate number of arguments is not given
 	if (argc < 5)
@@ -68,7 +75,7 @@ int main(int argc, char const *argv[])
 	// -----------------------------CONSTANTS-----------------------------
 
 	// Complex values
-	const complex<double> c(real, imag); 	  // Constant
+	const complex<double> cons(real, imag);   // Constant
 	const complex<double> off(offx, offy); // Offset
 
 	// Image (with 3 color channels)
@@ -83,7 +90,7 @@ int main(int argc, char const *argv[])
 	double time = clock();
 
 	// Generate julia set image
-	int iter = generateJuliasetImage(jimage, c, cfg, &BLUE_TO_YELLOW);
+	int iter = generateJuliaSetImage(jimage, cons, cfg, cmap);
 
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;
@@ -92,7 +99,7 @@ int main(int argc, char const *argv[])
 
 	// Save image
 	cout << "Saving..." << endl;
-	jimage.save(DEFAULT_IMAGE_NAME);
+	jimage.save(savename.c_str());
 
 	// Print end information
 	cout << "Iterations: "     << iter << endl;

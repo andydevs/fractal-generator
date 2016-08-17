@@ -1,6 +1,6 @@
 TARGET = juliaset
 
-TESTARGS = -1.05 0.25 1920 1080 -zoom 2 -offx -1.00 -offy 0.4 -rot 45
+TESTARGS = -1.05 0.25 1920 1080 -cmap drexel
 
 SHELL = /bin/bash -O globstar
 CC = g++
@@ -8,7 +8,7 @@ CC = g++
 COMPILE = $(CC) -c
 LINK = $(CC)
 
-CFLAGS = -Wall -std=c++14
+CFLAGS = -Wall
 LFLAGS = -Wall -lpthread -lX11
 INCLUD = -Iinclude
 LIBRAR = -Llib
@@ -32,7 +32,7 @@ $(BINARY): $(OBJECTS)
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(INCLUDS)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo compiling $<
-	@$(COMPILE) $< -o $@ $(CPPFLAGS) $(INCLUD)
+	@$(COMPILE) $< -o $@ $(CFLAGS) $(INCLUD)
 
 clean:
 	@echo Cleaning up...
