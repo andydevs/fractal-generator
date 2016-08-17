@@ -17,18 +17,19 @@ using namespace cimg_library;
 /**
  * Returns the complex number at the given pixel on the image
  *
- * @param x    the x coord of the pixel
- * @param y    the y coord of the pixel
- * @param imgx the width of the image
- * @param imgy the height of the image
- * @param zoom the zoom scale
+ * @param x      the x coord of the pixel
+ * @param y      the y coord of the pixel
+ * @param imgx   the width of the image
+ * @param imgy   the height of the image
+ * @param zoom   the zoom scale
+ * @param offset the complex offset
  *
  * @return the complex number at the given pixel on the image
  */
-complex<double> getComplex(const double& x, const double& y, const double& imgx, const double& imgy, const double& zoom)
+std::complex<double> getComplex(const double& x, const double& y, const double& imgx, const double& imgy, const double& zoom, const std::complex<double>& offset)
 {
 	// Return complex value
-	return (SCALE * complex<double>(x / imgx, y / imgy) - SHIFT) / zoom;
+	return (SCALE * complex<double>(x / imgx, y / imgy) - SHIFT) / zoom + offset;
 }
 
 /**
@@ -61,14 +62,15 @@ int juliaSetAlgorithm(std::complex<double>& z, const std::complex<double>& c)
 /**
  * Generates a Juliaset Image in the given object with the given complex constant
  *
- * @param image the image object to generate the Juliaset in
- * @param c     the complex constant being used
- * @param zoom  the zoom scale
- * @param map   the colormap being used
+ * @param image  the image object to generate the Juliaset in
+ * @param c      the complex constant being used
+ * @param zoom   the zoom scale
+ * @param offset the complex offset
+ * @param map    the colormap being used
  *
  * @return total number of iterations that were calculated
  */
-int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, const double& zoom, const ColorMapRGB* map)
+int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, const double& zoom, const std::complex<double>& offset, const ColorMapRGB* map)
 {
 	// Image dimensions
 	int imgx = image.width(), imgy = image.height();
@@ -82,9 +84,9 @@ int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<do
 	cimg_forXY(image, x, y) 
 	{
 		// Compute JuliaSet map at pixel location
-		z      = getComplex(x, y, imgx, imgy, zoom); // Complex number z at pixel
-		result = juliaSetAlgorithm(z, c);            // Julia set algorithm
-		color  = map->color(result);		         // Compute color map
+		z      = getComplex(x, y, imgx, imgy, zoom, offset); // Complex number z at pixel
+		result = juliaSetAlgorithm(z, c);            	     // Julia set algorithm
+		color  = map->color(result);		         		 // Compute color map
 		
 		// Set Color
 		image(x, y, 0) = color.red;

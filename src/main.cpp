@@ -50,13 +50,16 @@ int main(int argc, char const *argv[])
 	unsigned img_x = atoi(argv[3]); // Image width
 	unsigned img_y = atoi(argv[4]); // Image height
 	
-	// Parse optionals
-	double zoom = argc > 5 ? atof(argv[5]) : 1.0; // Zoom	
+	// Parse optional arguments
+	double zoom = argc > 5 ? atof(argv[5]) : 1.0; // Zoom
+	double offx = argc > 6 ? atof(argv[6]) : 0.0; // Offset x
+	double offy = argc > 7 ? atof(argv[7]) : 0.0; // Offset y
 
 	// -----------------------------CONSTANTS-----------------------------
 
-	// Complex constant
-	const complex<double> c(real, imag);
+	// Complex values
+	const complex<double> c(real, imag); 	  // Constant
+	const complex<double> offset(offx, offy); // Offset
 
 	// Image (with 3 color channels)
 	CImg<char> jimage(img_x, img_y, 1, 3);
@@ -70,7 +73,7 @@ int main(int argc, char const *argv[])
 	double time = clock();
 
 	// Generate julia set image
-	int iter = generateJuliasetImage(jimage, c, zoom, &BLUE_TO_YELLOW);
+	int iter = generateJuliasetImage(jimage, c, zoom, offset, &BLUE_TO_YELLOW);
 
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;
