@@ -1,6 +1,6 @@
 TARGET = juliaset
 
-TESTARGS = -1.05 0.25 1920 1080 -cmap drexel
+TESTARGS = -1.05 0.25 1920 1080 -cmap ironman
 
 SHELL = /bin/bash -O globstar
 CC = g++

@@ -22,8 +22,8 @@ using namespace std;
 using namespace cimg_library;
 
 // Constants being used
-const char* DEF_IMG_NAME  = "jimage.jpg";  // The default image name
-const char* DEF_CMAP_NAME = "black2white"; // The default colormap name
+const char* DEF_IMG_NAME  = "jimage.jpg"; // The default image name
+const char* DEF_CMAP_NAME = "noir";       // The default colormap name
 
 /**
  * The main function of the program
@@ -84,7 +84,7 @@ int main(int argc, char const *argv[])
 	// -----------------------------ALGORITHM-----------------------------
 
 	// Print dimensions
-	cout << "Generating: " << jimage.width() << "x" << jimage.height() << endl;
+	cout << "Generating..." << endl;
 
 	// Start clock
 	double time = clock();

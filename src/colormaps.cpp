@@ -29,9 +29,13 @@ static map<string, ColorMapRGB*> colormapIndex;
 ColorMapRGB* getColorMap(string name)
 {
 	// Populate
-	colormapIndex["black2white"] = new GradientMapRGB(0x000000, 0xffffff);
-	colormapIndex["white2black"] = new GradientMapRGB(0xffffff, 0x000000);
+	colormapIndex["noir"]        = new GradientMapRGB(0x000000, 0xffffff);
+	colormapIndex["ink"]         = new GradientMapRGB(0xffffff, 0x000000);
+	colormapIndex["greenlight"]  = new GradientMapRGB(0x061700, 0x52c234);
+	colormapIndex["redlight"]    = new GradientMapRGB(0x000000, 0xe74c3c);
+	colormapIndex["shadownight"] = new GradientMapRGB(0x000000, 0x774b9b);
 	colormapIndex["drexel"]      = new GradientMapRGB(0x002f6c, 0xffc600);
+	colormapIndex["ironman"]     = new GradientMapRGB(0x771414, 0xbeba46);
 
 	// Return index
 	return colormapIndex[name];
