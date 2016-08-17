@@ -34,7 +34,17 @@ const char* DEFAULT_IMAGE_NAME = "jimage.jpg"; // The default image name
  */
 int main(int argc, char const *argv[])
 {
+	// CImg descriptor
+	cimg_usage("Generates JuliaSet images.");
+	double zoom = cimg_option("-zoom", 1.0, "The zoom scale of the image");         // Zoom
+	double offx = cimg_option("-offx", 0.0, "The x offset of the image");           // Offset x
+	double offy = cimg_option("-offy", 0.0, "The y offset of the image");           // Offset y
+	double rot  = cimg_option("-rot",  0.0, "The degree of rotation of the image"); // Rotation
+
 	// -----------------------------ARGUMENTS-----------------------------
+
+	// Return if just getting help
+	if (argv[1] == "-h") return 0;
 
 	// Error if approppriate number of arguments is not given
 	if (argc < 5)
@@ -49,12 +59,6 @@ int main(int argc, char const *argv[])
 	double imag    = atof(argv[2]); // Constant imaginary component
 	unsigned img_x = atoi(argv[3]); // Image width
 	unsigned img_y = atoi(argv[4]); // Image height
-	
-	// Parse optional arguments
-	double zoom = argc > 5 ? atof(argv[5]) : 1.0; // Zoom
-	double offx = argc > 6 ? atof(argv[6]) : 0.0; // Offset x
-	double offy = argc > 7 ? atof(argv[7]) : 0.0; // Offset y
-	double rot  = argc > 8 ? atof(argv[8]) : 0.0; // Rotation
 
 	// -----------------------------CONSTANTS-----------------------------
 

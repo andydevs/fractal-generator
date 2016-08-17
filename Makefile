@@ -1,6 +1,6 @@
 TARGET = juliaset
 
-TESTARGS = -1.05 0.25 1920 1080 2 -1.00 0.4 45
+TESTARGS = -1.05 0.25 1920 1080 -zoom 2 -offx -1.00 -offy 0.4 -rot 45
 
 SHELL = /bin/bash -O globstar
 CC = g++
