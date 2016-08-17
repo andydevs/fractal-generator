@@ -11,11 +11,21 @@
 #define _FUNCTIONS_H_
 
 // Headers being used
-#include "colormaps.h"
+#include "colormap.h"
 #include "CImg/CImg.h"
 
 // Libraries being used
 #include <complex>
+
+/**
+ * The complex space scale value
+ */
+const double SCALE = 4.0;
+
+/**
+ * The complex space shift value
+ */
+const std::complex<double> SHIFT(2.0, 2.0);
 
 /**
  * Returns the complex number at the given pixel on the image
@@ -30,27 +40,14 @@
 std::complex<double> getComplex(const double& x, const double& y, const double& img_x, const double& img_y);
 
 /**
- * Computes the JuliaSet color map of the given complex number
+ * Computes the JuliaSet algorithm of the given complex numbers
  *
  * @param z the complex number to check
  * @param c the constant complex number
- * @param i the iteration buffer to increment
- * @param m the colormap to use 
  * 
- * @return the JuliaSet color map of the given complex number
+ * @return the number of the iterations before infinity
  */
-unsigned juliaSetColorMap(std::complex<double>& z, const std::complex<double>& c, int& i, colormap m);
-
-/**
- * Sets the pixel in the given image at the given x/y coords
- * to the given color value.
- *
- * @param img the CImg to set
- * @param x   the x coord of the pixel
- * @param y   the y coord of the pixel
- * @param col the col value to set the pixel to
- */
-void setColor(cimg_library::CImg<char>& image, const unsigned& x, const unsigned& y, const unsigned& col);
+int juliaSetAlgorithm(std::complex<double>& z, const std::complex<double>& c);
 
 /**
  * Generates a Juliaset Image in the given object with the given complex constant
@@ -59,8 +56,8 @@ void setColor(cimg_library::CImg<char>& image, const unsigned& x, const unsigned
  * @param c     the complex constant being used
  * @param map   the colormap being used
  *
- * @return number of iterations that were calculated
+ * @return total number of iterations that were calculated
  */
-int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, colormap map);
+int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, const ColorMapRGB* map);
 
 #endif

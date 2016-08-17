@@ -67,7 +67,7 @@ int main(int argc, char const *argv[])
 	double time = clock();
 
 	// Generate julia set image
-	int iter = generateJuliasetImage(jimage, c, &blackToWhite);
+	int iter = generateJuliasetImage(jimage, c, &BLUE_TO_YELLOW);
 
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;

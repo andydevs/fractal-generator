@@ -26,58 +26,35 @@ using namespace cimg_library;
  */
 complex<double> getComplex(const double& x, const double& y, const double& img_x, const double& img_y)
 {
-	// Real and imaginary
-	double real = 4.0 * (x / img_x) - 2.0;
-	double imag = 4.0 * (y / img_y) - 2.0;
-
 	// Return complex value
-	return complex<double>(real, imag);
+	return SCALE * complex<double>(x / img_x, y / img_y) - SHIFT;
 }
 
 /**
- * Computes the JuliaSet color map of the given complex number
+ * Computes the JuliaSet algorithm of the given complex numbers
  *
  * @param z the complex number to check
  * @param c the constant complex number
- * @param i the iteration buffer to increment
- * @param m the colormap to use
  * 
- * @return the JuliaSet color map of the given complex number
+ * @return the number of the iterations before infinity
  */
-unsigned juliaSetColorMap(complex<double>& z, const complex<double>& c, int& i, colormap m)
+int juliaSetAlgorithm(std::complex<double>& z, const std::complex<double>& c)
 {
 	// Iterations in this map
 	unsigned n;
 
-	// Try 255 iterations
-	for (n = 0; n < 255; n++, i++)
+	// Try 256 iterations
+	for (n = 0; n < 256; n++)
 	{
 		// Iteration function
 		z = pow(z, 2) + c;
 
-		// Break if z goes to infinity (beyond 2)
-		if (norm(z) >= 4.0) break;
+		// Break if z goes to infinity (beyond space)
+		if (norm(z) >= pow(SCALE, 2)) break;
 	}
 
-	// Return color map
-	return m(n);
-}
-
-/**
- * Sets the pixel in the given image at the given x/y coords
- * to the given color value.
- *
- * @param img the CImg to set
- * @param x   the x coord of the pixel
- * @param y   the y coord of the pixel
- * @param col the col value to set the pixel to
- */
-void setColor(CImg<char>& img, const unsigned& x, const unsigned& y, const unsigned& col)
-{
-	// Set each channel
-	img(x, y, 0) = (col & 0xFF0000) >> 16;
-	img(x, y, 1) = (col & 0x00FF00) >> 8;
-	img(x, y, 2) = (col & 0x0000FF);
+	// Return number of iterations
+	return n;
 }
 
 /**
@@ -89,21 +66,33 @@ void setColor(CImg<char>& img, const unsigned& x, const unsigned& y, const unsig
  *
  * @return number of iterations that were calculated
  */
-int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, colormap map)
+int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, const ColorMapRGB* map)
 {
 	// Image dimensions
 	int imgx = image.width(), imgy = image.height();
 
 	// Initialize buffers
-	complex<double> z; // Z Complex buffer
-	unsigned color;	   // Color value buffer
-	int iter = 0;      // Total number of iterations
+	complex<double> z;     // Z Complex buffer
+	ColorRGB color;	       // Color value buffer
+	int result, total = 0; // Tterations buffer
 
 	// For each pixel location in image
-	cimg_forXY(image, x, y) {
+	cimg_forXY(image, x, y) 
+	{
 		// Compute JuliaSet map at pixel location
-		z = getComplex(x, y, imgx, imgy);   	   // Complex number z at pixel
-		color = juliaSetColorMap(z, c, iter, map); // Compute color map
-		setColor(image, x, y, color);      		   // Set color map
+		z      = getComplex(x, y, imgx, imgy); // Complex number z at pixel
+		result = juliaSetAlgorithm(z, c);      // Julia set algorithm
+		color  = map->color(result);		   // Compute color map
+		
+		// Set Color
+		image(x, y, 0) = color.red;
+		image(x, y, 1) = color.green;
+		image(x, y, 2) = color.blue;
+
+		// Add to total
+		total += result;
 	}
+
+	// Return total
+	return total;
 }

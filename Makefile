@@ -1,6 +1,6 @@
 TARGET = juliaset
 
-TESTARGS = -1.05 -0.25 1920 1080
+TESTARGS = -1.15 0.25 1920 1080
 
 SHELL = /bin/bash -O globstar
 CC = g++
@@ -25,7 +25,6 @@ OBJECTS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SOURCES))
 BINARY  = $(BINDIR)/$(TARGET)
 
 $(BINARY): $(OBJECTS)
-	@echo $(SOURCES)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo building $@
 	@$(LINK) $^ -o $@ $(LFLAGS) $(LIBRAR)

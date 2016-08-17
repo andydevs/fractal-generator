@@ -10,32 +10,22 @@
 #ifndef _COLORMAPS_H_
 #define _COLORMAPS_H_
 
-/**
- * Defines a colormap function
- *
- * @param iterations the number of iterations being denoted
- *
- * @return a color integer
- */
-typedef unsigned (*colormap)(unsigned iterations);
+// Headers being used
+#include "colormap.h"
 
 /**
- * Black to white colormapping
- *
- * @param iterations the number of iterations being denoted
- *
- * @return a color integer
+ * Black to White mapping
  */
-unsigned blackToWhite(unsigned iterations);
+const GradientMapRGB BLACK_TO_WHITE(0x000000, 0xffffff);
 
 /**
- * White to black colormapping
- *
- * @param iterations the number of iterations being denoted
- *
- * @return a color integer
+ * White to Black mapping
  */
-unsigned whiteToBlack(unsigned iterations);
+const GradientMapRGB WHITE_TO_BLACK(0xffffff, 0x000000);
 
+/**
+ * Blue to Yellow mapping
+ */
+const GradientMapRGB BLUE_TO_YELLOW(0x002f6c, 0xffc600);
 
 #endif
