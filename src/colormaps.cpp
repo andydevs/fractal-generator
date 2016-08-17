@@ -17,7 +17,36 @@
 using namespace std;
 
 // Init map
-static map<string, ColorMapRGB*> colormapIndex;
+static map<string, ColorMapRGB*> index;
+
+/**
+ * Initializes colormaps
+ */
+void initColorMap()
+{
+	// Populate
+	index["noir"]        = new GradientMapRGB(0x000000, 0xffffff);
+	index["ink"]         = new GradientMapRGB(0xffffff, 0x000000);
+	index["lightning"]   = new GradientMapRGB(0x000000, 0x99ddff);
+	index["greenlight"]  = new GradientMapRGB(0x061700, 0x52c234);
+	index["redlight"]    = new GradientMapRGB(0x000000, 0xe74c3c);
+	index["shadownight"] = new GradientMapRGB(0x000000, 0x774b9b);
+	index["drexel"]      = new GradientMapRGB(0x002f6c, 0xffc600);
+	index["ironman"]     = new GradientMapRGB(0x771414, 0xbeba46);
+}
+
+/**
+ * Returns true if the given name is a colormap
+ *
+ * @param name the name of the colormap to check
+ *
+ * @return true if the given name is a colormap
+ */
+bool hasColorMap(std::string name)
+{
+	map<string, ColorMapRGB*>::iterator it = index.find(name);
+	return it != index.end();
+}
 
 /**
  * Returns the colormap with the given name
@@ -28,15 +57,6 @@ static map<string, ColorMapRGB*> colormapIndex;
  */
 ColorMapRGB* getColorMap(string name)
 {
-	// Populate
-	colormapIndex["noir"]        = new GradientMapRGB(0x000000, 0xffffff);
-	colormapIndex["ink"]         = new GradientMapRGB(0xffffff, 0x000000);
-	colormapIndex["greenlight"]  = new GradientMapRGB(0x061700, 0x52c234);
-	colormapIndex["redlight"]    = new GradientMapRGB(0x000000, 0xe74c3c);
-	colormapIndex["shadownight"] = new GradientMapRGB(0x000000, 0x774b9b);
-	colormapIndex["drexel"]      = new GradientMapRGB(0x002f6c, 0xffc600);
-	colormapIndex["ironman"]     = new GradientMapRGB(0x771414, 0xbeba46);
-
-	// Return index
-	return colormapIndex[name];
+	// Return colormap
+	return index[name];
 }

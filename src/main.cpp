@@ -54,7 +54,15 @@ int main(int argc, char const *argv[])
 	Config cfg(zoom, offx, offy, rot);
 
 	// Get colormap
-	const ColorMapRGB* cmap = getColorMap(cmapname);
+	const ColorMapRGB* cmap;
+	initColorMap();
+	if (hasColorMap(cmapname))
+		cmap = getColorMap(cmapname);
+	else
+	{
+		cout << "Error! Colormap is not defined: " << cmapname << endl;
+		return 1;
+	}
 
 	// -----------------------------ARGUMENTS-----------------------------
 

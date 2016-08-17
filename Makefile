@@ -1,6 +1,6 @@
 TARGET = juliaset
 
-TESTARGS = -1.05 0.25 1920 1080 -cmap ironman
+TESTARGS = -0.02 0.78 1920 1080 -zoom 2 -offx 0.5 -rot -90 -cmap lightning
 
 SHELL = /bin/bash -O globstar
 CC = g++

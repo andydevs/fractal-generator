@@ -17,6 +17,20 @@
 #include <string>
 
 /**
+ * Initializes colormaps
+ */
+void initColorMap();
+
+/**
+ * Returns true if the given name is a colormap
+ *
+ * @param name the name of the colormap to check
+ *
+ * @return true if the given name is a colormap
+ */
+bool hasColorMap(std::string name);
+
+/**
  * Returns the colormap with the given name
  *
  * @param name the name of the colormap to retrieve
