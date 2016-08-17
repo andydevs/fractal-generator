@@ -30,14 +30,15 @@ const std::complex<double> SHIFT(2.0, 2.0);
 /**
  * Returns the complex number at the given pixel on the image
  *
- * @param x     the x coord of the pixel
- * @param y     the y coord of the pixel
- * @param img_x the width of the image
- * @param img_y the height of the image
+ * @param x    the x coord of the pixel
+ * @param y    the y coord of the pixel
+ * @param imgx the width of the image
+ * @param imgy the height of the image
+ * @param zoom the zoom scale
  *
  * @return the complex number at the given pixel on the image
  */
-std::complex<double> getComplex(const double& x, const double& y, const double& img_x, const double& img_y);
+std::complex<double> getComplex(const double& x, const double& y, const double& imgx, const double& imgy, const double& zoom);
 
 /**
  * Computes the JuliaSet algorithm of the given complex numbers
@@ -54,10 +55,11 @@ int juliaSetAlgorithm(std::complex<double>& z, const std::complex<double>& c);
  *
  * @param image the image object to generate the Juliaset in
  * @param c     the complex constant being used
+ * @param zoom  the zoom scale
  * @param map   the colormap being used
  *
  * @return total number of iterations that were calculated
  */
-int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, const ColorMapRGB* map);
+int generateJuliasetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, const double& zoom, const ColorMapRGB* map);
 
 #endif

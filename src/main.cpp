@@ -49,6 +49,9 @@ int main(int argc, char const *argv[])
 	double imag    = atof(argv[2]); // Constant imaginary component
 	unsigned img_x = atoi(argv[3]); // Image width
 	unsigned img_y = atoi(argv[4]); // Image height
+	
+	// Parse optionals
+	double zoom = argc > 5 ? atof(argv[5]) : 1.0; // Zoom	
 
 	// -----------------------------CONSTANTS-----------------------------
 
@@ -67,7 +70,7 @@ int main(int argc, char const *argv[])
 	double time = clock();
 
 	// Generate julia set image
-	int iter = generateJuliasetImage(jimage, c, &BLUE_TO_YELLOW);
+	int iter = generateJuliasetImage(jimage, c, zoom, &BLUE_TO_YELLOW);
 
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;
