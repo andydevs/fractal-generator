@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------------
 
 // Headers being used
-#include "JuliaSet/functions.h"
+#include "JuliaSet/juliaset.h"
 
 // Libraries being used
 #include <cmath>
