@@ -78,26 +78,46 @@ namespace juliaset
 	std::complex<double> getComplex(const double& x, const double& y, cimg_library::CImg<char>& image, Config& cfg);
 
 	/**
-	 * Computes the JuliaSet algorithm of the given complex numbers
+	 * Computes the Julia set algorithm of the given complex numbers
 	 *
 	 * @param z the complex number to check
 	 * @param c the constant complex number
 	 * 
 	 * @return the number of the iterations before infinity
 	 */
-	int juliaSetAlgorithm(std::complex<double>& z, const std::complex<double>& c);
+	unsigned juliaSetAlgorithm(std::complex<double>& z, const std::complex<double>& c);
 
 	/**
-	 * Generates a Juliaset Image in the given object with the given complex constant
+	 * Computes the Mandelbrot set algorithm of the given complex numbers
 	 *
-	 * @param image the image object to generate the Juliaset in
+	 * @param c the complex number to check
+	 * 
+	 * @return the number of the iterations before infinity
+	 */
+	unsigned mandelbrotSetAlgorithm(std::complex<double>& c);
+
+	/**
+	 * Generates a Julia set image in the given object with the given complex constant
+	 *
+	 * @param image the image object to generate the Julia set in
 	 * @param c     the complex constant being used
 	 * @param cfg   the image configuration
 	 * @param map   the colormap being used
 	 *
 	 * @return total number of iterations that were calculated
 	 */
-	int generateJuliaSetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, Config& cfg, const juliaset::colormap::ColorMapRGB* map);
+	unsigned generateJuliaSetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, Config& cfg, const juliaset::colormap::ColorMapRGB* map);
+
+	/**
+	 * Generates a Mandelbrot set image in the given object with the given complex constant
+	 *
+	 * @param image the image object to generate the Mandelbrot set in
+	 * @param cfg   the image configuration
+	 * @param map   the colormap being used
+	 *
+	 * @return total number of iterations that were calculated
+	 */
+	unsigned generateMandelbrotSetImage(cimg_library::CImg<char>& image, Config& cfg, const juliaset::colormap::ColorMapRGB* map);
 }
 
 #endif

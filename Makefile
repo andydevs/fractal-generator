@@ -2,8 +2,9 @@
 
 TARGET = juliaset
 
-TESTARGS = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -cmap shadownight
-CMAPARGS = -cmaps
+TESTARGS  = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -cmap shadownight
+TESTMBROT = -mbrot -imgx 1920 -imgy 1080 -cmap ink -save mimage.jpg
+TESTCMAP  = -cmaps
 
 # ----------------------------------------MAKE CONFIG----------------------------------------
 
@@ -60,6 +61,13 @@ run: $(BINARY)
 	@echo -------------------------------
 
 cmaps: $(BINARY)
+	@echo Running with $(TESTCMAP)
 	@echo -------------------------------
-	@$(BINARY) $(CMAPARGS)
+	@$(BINARY) $(TESTCMAP)
+	@echo -------------------------------
+
+mbrot: $(BINARY)
+	@echo Running with $(TESTMBROT)
+	@echo -------------------------------
+	@$(BINARY) $(TESTMBROT)
 	@echo -------------------------------

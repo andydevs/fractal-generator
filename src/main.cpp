@@ -41,6 +41,7 @@ int main(int argc, char const *argv[])
 	cimg_usage("Generates JuliaSet images.");
 
 	// Image options
+	bool mandelbrot = cimg_option("-mbrot", false,        "Generates the mandelbrot set");
 	bool showCmaps  = cimg_option("-cmaps", false,		  "Lists the cmaps");
 	unsigned imgx   = cimg_option("-imgx",  1920, 		  "The image width");
 	unsigned imgy   = cimg_option("-imgy",  1080, 		  "The image height");
@@ -86,12 +87,14 @@ int main(int argc, char const *argv[])
 
 	// -----------------------------CONSTANTS-----------------------------
 
-	// Complex values
-	const complex<double> cons(real, imag);   // Constant
-	const complex<double> off(offx, offy); // Offset
+	// Complex constant
+	const complex<double> cons(real, imag);
 
 	// Image (with 3 color channels)
 	CImg<char> jimage(imgx, imgy, 1, 3);
+
+	// Iterations
+	unsigned iter;
 
 	// -----------------------------ALGORITHM-----------------------------
 
@@ -101,8 +104,16 @@ int main(int argc, char const *argv[])
 	// Start clock
 	double time = clock();
 
-	// Generate julia set image
-	int iter = generateJuliaSetImage(jimage, cons, cfg, cmap);
+	if (mandelbrot)
+	{
+		// Generate mandelbrot set image
+		iter = generateMandelbrotSetImage(jimage, cfg, cmap);
+	}
+	else
+	{
+		// Generate julia set image
+		iter = generateJuliaSetImage(jimage, cons, cfg, cmap);
+	}
 
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;

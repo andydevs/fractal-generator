@@ -73,7 +73,7 @@ namespace juliaset
 	 * 
 	 * @return the number of the iterations before infinity
 	 */
-	int juliaSetAlgorithm(complex<double>& z, const complex<double>& c)
+	unsigned juliaSetAlgorithm(complex<double>& z, const complex<double>& c)
 	{
 		// Iterations in this map
 		unsigned n;
@@ -93,6 +93,35 @@ namespace juliaset
 	}
 
 	/**
+	 * Computes the Mandelbrot set algorithm of the given complex numbers
+	 *
+	 * @param c the complex number to check
+	 * 
+	 * @return the number of the iterations before infinity
+	 */
+	unsigned mandelbrotSetAlgorithm(std::complex<double>& c)
+	{
+		// Iterations in this map
+		unsigned n;
+
+		// Zero z
+		complex<double>z;
+
+		// Try 256 iterations
+		for (n = 0; n < 256; ++n)
+		{
+			// Iteration function
+			z = pow(z, 2) + c;
+
+			// Break if z goes to infinity (beyond space)
+			if (norm(z) >= pow(SCALE/2, 2)) break;
+		}
+
+		// Return iterations
+		return n;
+	}
+
+	/**
 	 * Generates a Juliaset Image in the given object with the given complex constant
 	 *
 	 * @param image the image object to generate the Juliaset in
@@ -102,7 +131,7 @@ namespace juliaset
 	 *
 	 * @return total number of iterations that were calculated
 	 */
-	int generateJuliaSetImage(cimg_library::CImg<char>& image, const complex<double>& c, Config& cfg, const ColorMapRGB* map)
+	unsigned generateJuliaSetImage(cimg_library::CImg<char>& image, const complex<double>& c, Config& cfg, const ColorMapRGB* map)
 	{
 		// Initialize buffers
 		complex<double> z;     // Z Complex buffer
@@ -115,6 +144,43 @@ namespace juliaset
 			// Compute JuliaSet map at pixel location
 			z      = getComplex(x, y, image, cfg); // Complex number z at pixel
 			result = juliaSetAlgorithm(z, c);      // Julia set algorithm
+			color  = map->color(result);		   // Compute color map
+			
+			// Set Color
+			image(x, y, 0) = color.red;
+			image(x, y, 1) = color.green;
+			image(x, y, 2) = color.blue;
+
+			// Add to total
+			total += result;
+		}
+
+		// Return total
+		return total;
+	}
+
+	/**
+	 * Generates a Mandelbrot set image in the given object with the given complex constant
+	 *
+	 * @param image the image object to generate the Mandelbrot set in
+	 * @param cfg   the image configuration
+	 * @param map   the colormap being used
+	 *
+	 * @return total number of iterations that were calculated
+	 */
+	unsigned generateMandelbrotSetImage(cimg_library::CImg<char>& image, Config& cfg, const ColorMapRGB* map)
+	{
+		// Initialize buffers
+		complex<double> c;     // C Complex buffer
+		ColorRGB color;	       // Color value buffer
+		int result, total = 0; // Tterations buffer
+
+		// For each pixel location in image
+		cimg_forXY(image, x, y) 
+		{
+			// Compute JuliaSet map at pixel location
+			c      = getComplex(x, y, image, cfg); // Complex number c at pixel
+			result = mandelbrotSetAlgorithm(c);    // Mandelbrot set algorithm
 			color  = map->color(result);		   // Compute color map
 			
 			// Set Color
