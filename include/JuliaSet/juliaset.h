@@ -66,11 +66,6 @@ namespace juliaset
 	const double SCALE = 4.0;
 
 	/**
-	 * The complex space shift value
-	 */
-	const std::complex<double> SHIFT(2.0, 2.0);
-
-	/**
 	 * Returns the complex number at the given pixel on the image
 	 *
 	 * @param x     the x coord of the pixel

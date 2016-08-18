@@ -53,13 +53,16 @@ namespace juliaset
 	complex<double> getComplex(const double& x, const double& y, cimg_library::CImg<char>& image, Config& cfg)
 	{
 		// Downscale pixel value by image dimensions
-		complex<double> downScale(x / image.width(), y / image.height());
+		complex<double> downScale(x / image.height(), y / image.height());
 
 		// Rotation complex
 		complex<double> rotation = polar(1.0, cfg.rotation / 180 * M_PI);
 
+		// Shift complex
+		complex<double> shift(0.5*image.width()/image.height(), 0.5);
+
 		// Perform Operation
-		return (SCALE * downScale - SHIFT) * rotation / cfg.zoom + cfg.offset;
+		return (downScale - shift) * rotation * (SCALE / cfg.zoom) + cfg.offset;
 	}
 
 	/**
@@ -82,7 +85,7 @@ namespace juliaset
 			z = pow(z, 2) + c;
 
 			// Break if z goes to infinity (beyond space)
-			if (norm(z) >= pow(SCALE, 2)) break;
+			if (norm(z) >= pow(SCALE/2, 2)) break;
 		}
 
 		// Return number of iterations

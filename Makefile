@@ -1,6 +1,11 @@
+# -------------------------------------TARGET AND TESTARGS-----------------------------------
+
 TARGET = juliaset
 
-TESTARGS = -cr -1.05 -ci 0.25 -cmap ink
+TESTARGS = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -cmap shadownight
+CMAPARGS = -cmaps
+
+# ----------------------------------------MAKE CONFIG----------------------------------------
 
 SHELL = /bin/bash -O globstar
 CC = g++
@@ -13,11 +18,15 @@ LFLAGS = -Wall -lpthread -lX11
 INCLUD = -Iinclude
 LIBRAR = -Llib
 
+# ----------------------------------------DIRECTORIES----------------------------------------
+
 INCDIR = include
 SRCDIR = src
 OBJDIR = obj
 BINDIR = bin
 INSDIR = /usr/bin
+
+# ----------------------------------------MAKE RULES-----------------------------------------
 
 INCLUDS = $(shell ls $(INCDIR)/**/*.h)
 SOURCES = $(shell ls $(SRCDIR)/**/*.cpp)
@@ -48,4 +57,9 @@ run: $(BINARY)
 	@echo Running with $(TESTARGS)
 	@echo -------------------------------
 	@$(BINARY) $(TESTARGS)
+	@echo -------------------------------
+
+cmaps: $(BINARY)
+	@echo -------------------------------
+	@$(BINARY) $(CMAPARGS)
 	@echo -------------------------------
