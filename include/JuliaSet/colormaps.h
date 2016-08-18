@@ -15,11 +15,19 @@
 
 // Libraries being used
 #include <string>
+#include <vector>
 
 /**
  * Initializes colormaps
  */
 void initColorMap();
+
+/**
+ * Returns a vector of all colormaps
+ *
+ * @return a vector of all colormaps
+ */
+std::vector<std::string> getColorMaps();
 
 /**
  * Returns true if the given name is a colormap

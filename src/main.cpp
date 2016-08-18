@@ -14,7 +14,9 @@
 
 // Libraries being used
 #include <iostream>
+#include <string>
 #include <cstdlib>
+#include <cstring>
 #include <ctime>
 
 // Namespaces being used
@@ -41,21 +43,41 @@ int main(int argc, char const *argv[])
 	cimg_usage("Generates JuliaSet images.");
 
 	// Image options
-	double zoom = cimg_option("-zoom", 1.0, "The zoom scale of the image"); 			        // Zoom
-	double offx = cimg_option("-offx", 0.0, "The x offset of the image");   			        // Offset x
-	double offy = cimg_option("-offy", 0.0, "The y offset of the image");       			    // Offset y
-	double rot  = cimg_option("-rot",  0.0, "The angle of rotation of the image (in degrees)"); // Rotation
-
-	// String options
-	string savename = cimg_option("-save", DEF_IMG_NAME,  "The file to save the image to"); // Save
-	string cmapname = cimg_option("-cmap", DEF_CMAP_NAME, "The colormapping to use");       // Colormap
+	bool showCmaps  = cimg_option("-cmaps", false,		  "Lists the cmaps");
+	unsigned imgx   = cimg_option("-imgx", 1920, 		  "The image width");
+	unsigned imgy   = cimg_option("-imgy", 1080, 		  "The image height");
+	double real     = cimg_option("-cr",   0.0,  		  "The constant real component");
+	double imag     = cimg_option("-ci",   0.0,  		  "The constant imaginary component");
+	double zoom     = cimg_option("-zoom", 1.0,  		  "The zoom scale of the image");
+	double offx     = cimg_option("-offx", 0.0,  		  "The x offset of the image");
+	double offy     = cimg_option("-offy", 0.0,  		  "The y offset of the image");
+	double rot      = cimg_option("-rot",  0.0,  		  "The angle of rotation of the image (in degrees)");
+	string savename = cimg_option("-save", "jimage.jpg",  "The file to save the image to");
+	string cmapname = cimg_option("-cmap", "noir",        "The colormapping to use");
 
 	// Image config
 	Config cfg(zoom, offx, offy, rot);
 
-	// Get colormap
-	const ColorMapRGB* cmap;
+	// Initialize colormaps
 	initColorMap();
+
+	// Show cmaps option
+	if (showCmaps)
+	{
+		// Get cmaps
+		vector<string> v = getColorMaps();
+
+		// Print cmaps
+		cout << "Available colormaps:" << endl;
+		for (vector<string>::iterator it = v.begin(); it != v.end(); it++)
+			cout << "\t" << *it << endl;
+
+		// Return 0
+		return 0;
+	}
+
+	// Image colormap
+	const ColorMapRGB* cmap;
 	if (hasColorMap(cmapname))
 		cmap = getColorMap(cmapname);
 	else
@@ -64,22 +86,6 @@ int main(int argc, char const *argv[])
 		return 1;
 	}
 
-	// -----------------------------ARGUMENTS-----------------------------
-
-	// Error if approppriate number of arguments is not given
-	if (argc < 5)
-	{
-		cout << "ERROR: Expected 4 program arguments. Got: ";
-		cout << (argc - 1) << endl;
-		return 1;
-	}
-
-	// Parse arguments
-	double real    = atof(argv[1]); // Constant real component
-	double imag    = atof(argv[2]); // Constant imaginary component
-	unsigned img_x = atoi(argv[3]); // Image width
-	unsigned img_y = atoi(argv[4]); // Image height
-
 	// -----------------------------CONSTANTS-----------------------------
 
 	// Complex values
@@ -87,7 +93,7 @@ int main(int argc, char const *argv[])
 	const complex<double> off(offx, offy); // Offset
 
 	// Image (with 3 color channels)
-	CImg<char> jimage(img_x, img_y, 1, 3);
+	CImg<char> jimage(imgx, imgy, 1, 3);
 
 	// -----------------------------ALGORITHM-----------------------------
 

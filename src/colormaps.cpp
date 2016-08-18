@@ -36,6 +36,21 @@ void initColorMap()
 }
 
 /**
+ * Returns a vector of all colormaps
+ *
+ * @return a vector of all colormaps
+ */
+vector<string> getColorMaps()
+{
+	vector<string> maps;
+	for (map<string, ColorMapRGB*>::iterator it = index.begin(); it != index.end(); it++)
+	{
+		maps.push_back(it->first);
+	}
+	return maps;
+}
+
+/**
  * Returns true if the given name is a colormap
  *
  * @param name the name of the colormap to check
