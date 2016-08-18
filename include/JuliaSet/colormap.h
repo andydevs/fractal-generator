@@ -11,191 +11,209 @@
 #define _COLORMAP_H_
 
 /**
- * Represents a linear gradient between two 
- * end colors over a space of 256 units
- *
+ * Contains functions and structs used by JuliaSet algorithm
+ * 
  * @author  Anshul Kharbanda
- * @created 8 - 16 - 2016
+ * @created 8 - 17 - 2016
  */
-struct ColorGradientRGB;
-
-/**
- * Represents a color with red, green, and blue values
- *
- * @author  Anshul Kharbanda
- * @created 8 - 16 - 2016
- */
-struct ColorRGB
+namespace juliaset
 {
 	/**
-	 * The red value
-	 */
-	short red;
-
-	/**
-	 * The green value
-	 */
-	short green;
-
-	/**
-	 * The blue value
-	 */
-	short blue;
-
-	/**
-	 * Creates an empty ColorRGB
-	 */
-	ColorRGB();
-
-	/**
-	 * Creates a ColorRGB with the given red, green and blue values
+	 * Handles colormapping
 	 *
-	 * @param r the red value
-	 * @param g the green value
-	 * @param b the blue value
+	 * @author  Anshul Kharbanda
+	 * @created 8 - 17 - 2016
 	 */
-	ColorRGB(short r, short g, short b);
+	namespace colormap
+	{
+		/**
+		 * Represents a linear gradient between two 
+		 * end colors over a space of 256 units
+		 *
+		 * @author  Anshul Kharbanda
+		 * @created 8 - 16 - 2016
+		 */
+		struct ColorGradientRGB;
 
-	/**
-	 * Creates a ColorRGB with the given integer color value
-	 *
-	 * @param color an RGB color integer
-	 */
-	ColorRGB(unsigned color);
+		/**
+		 * Represents a color with red, green, and blue values
+		 *
+		 * @author  Anshul Kharbanda
+		 * @created 8 - 16 - 2016
+		 */
+		struct ColorRGB
+		{
+			/**
+			 * The red value
+			 */
+			short red;
 
-	/**
-	 * Returns the result of the color shifted by the given gradient value
-	 *
-	 * @param other the gradient to shift the color by
-	 */
-	ColorRGB operator+(ColorGradientRGB other) const;
-};
+			/**
+			 * The green value
+			 */
+			short green;
 
-/**
- * Represents a linear gradient between two 
- * end colors over a space of 256 units
- *
- * @author  Anshul Kharbanda
- * @created 8 - 16 - 2016
- */
-struct ColorGradientRGB
-{
-	/**
-	 * The red value
-	 */
-	double red;
+			/**
+			 * The blue value
+			 */
+			short blue;
 
-	/**
-	 * The green value
-	 */
-	double green;
+			/**
+			 * Creates an empty ColorRGB
+			 */
+			ColorRGB();
 
-	/**
-	 * The blue value
-	 */
-	double blue;
+			/**
+			 * Creates a ColorRGB with the given red, green and blue values
+			 *
+			 * @param r the red value
+			 * @param g the green value
+			 * @param b the blue value
+			 */
+			ColorRGB(short r, short g, short b);
 
-	/**
-	 * Creates an empty ColorGradientRGB
-	 */
-	ColorGradientRGB();
+			/**
+			 * Creates a ColorRGB with the given integer color value
+			 *
+			 * @param color an RGB color integer
+			 */
+			ColorRGB(unsigned color);
 
-	/**
-	 * Creates a ColorGradientRGB with the given red, green and blue values
-	 *
-	 * @param r the red value
-	 * @param g the green value
-	 * @param b the blue value
-	 */
-	ColorGradientRGB(double r, double g, double b);
+			/**
+			 * Returns the result of the color shifted by the given gradient value
+			 *
+			 * @param other the gradient to shift the color by
+			 */
+			ColorRGB operator+(ColorGradientRGB other) const;
+		};
 
-	/**
-	 * Computes the ColorGradientRGB between the given start and end colors
-	 *
-	 * @param start the start color
-	 * @param end   the end color
-	 */
-	ColorGradientRGB(ColorRGB start, ColorRGB end);
+		/**
+		 * Represents a linear gradient between two 
+		 * end colors over a space of 256 units
+		 *
+		 * @author  Anshul Kharbanda
+		 * @created 8 - 16 - 2016
+		 */
+		struct ColorGradientRGB
+		{
+			/**
+			 * The red value
+			 */
+			double red;
 
-	/**
-	 * Computes the gradient value at the given point in the space
-	 *
-	 * @param point the point in the gradient space
-	 */
-	ColorGradientRGB operator*(unsigned point) const;
-};
+			/**
+			 * The green value
+			 */
+			double green;
 
-/**
- * Maps a given number of iterations made by the JuliaSet algorithm
- * to a color to assign the pixel in question to
- *
- * @author  Anshul Kharbanda
- * @created 8 - 16 - 2016
- */
-class ColorMapRGB
-{
-public:
-	/**
-	 * Creates an empty ColorMapRGB
-	 */
-	ColorMapRGB();
+			/**
+			 * The blue value
+			 */
+			double blue;
 
-	/**
-	 * Destroys the ColorMapRGB
-	 */
-	~ColorMapRGB();
+			/**
+			 * Creates an empty ColorGradientRGB
+			 */
+			ColorGradientRGB();
 
-	/**
-	 * Maps the given number of iterations to a given color
-	 *
-	 * @param iterations the iterations being mapped
-	 *
-	 * @return the color calculated from the iterations
-	 */
-	virtual ColorRGB color(unsigned iterations) const = 0;
-};
+			/**
+			 * Creates a ColorGradientRGB with the given red, green and blue values
+			 *
+			 * @param r the red value
+			 * @param g the green value
+			 * @param b the blue value
+			 */
+			ColorGradientRGB(double r, double g, double b);
 
-/**
- * Maps a given number of iterations to a color using a linear
- * gradient between two colors
- *
- * @author  Anshul Kharbanda
- * @created 8 - 16 - 2016
- */
-class GradientMapRGB : public ColorMapRGB
-{
-private:
-	/**
-	 * The start color
-	 */
-	ColorRGB m_start;
+			/**
+			 * Computes the ColorGradientRGB between the given start and end colors
+			 *
+			 * @param start the start color
+			 * @param end   the end color
+			 */
+			ColorGradientRGB(ColorRGB start, ColorRGB end);
 
-	/**
-	 * The color gradient
-	 */
-	ColorGradientRGB m_gradient;
-public:
-	/**
-	 * Creates a GradientMapRGB between the two given colors
-	 *
-	 * @param start the start color
-	 * @param end   the end color
-	 */
-	GradientMapRGB(unsigned start, unsigned end);
+			/**
+			 * Computes the gradient value at the given point in the space
+			 *
+			 * @param point the point in the gradient space
+			 */
+			ColorGradientRGB operator*(unsigned point) const;
+		};
 
-	/**
-	 * Destroys the GradientMapRGB
-	 */
-	~GradientMapRGB();
+		/**
+		 * Maps a given number of iterations made by the JuliaSet algorithm
+		 * to a color to assign the pixel in question to
+		 *
+		 * @author  Anshul Kharbanda
+		 * @created 8 - 16 - 2016
+		 */
+		class ColorMapRGB
+		{
+		public:
+			/**
+			 * Creates an empty ColorMapRGB
+			 */
+			ColorMapRGB();
 
-	/**
-	 * Maps the given number of iterations to a given color
-	 *
-	 * @param iterations the iterations being mapped
-	 *
-	 * @return the color calculated from the iterations
-	 */
-	ColorRGB color(unsigned iterations) const;
-};
+			/**
+			 * Destroys the ColorMapRGB
+			 */
+			~ColorMapRGB();
+
+			/**
+			 * Maps the given number of iterations to a given color
+			 *
+			 * @param iterations the iterations being mapped
+			 *
+			 * @return the color calculated from the iterations
+			 */
+			virtual ColorRGB color(unsigned iterations) const = 0;
+		};
+
+		/**
+		 * Maps a given number of iterations to a color using a linear
+		 * gradient between two colors
+		 *
+		 * @author  Anshul Kharbanda
+		 * @created 8 - 16 - 2016
+		 */
+		class GradientMapRGB : public ColorMapRGB
+		{
+		private:
+			/**
+			 * The start color
+			 */
+			ColorRGB m_start;
+
+			/**
+			 * The color gradient
+			 */
+			ColorGradientRGB m_gradient;
+		public:
+			/**
+			 * Creates a GradientMapRGB between the two given colors
+			 *
+			 * @param start the start color
+			 * @param end   the end color
+			 */
+			GradientMapRGB(unsigned start, unsigned end);
+
+			/**
+			 * Destroys the GradientMapRGB
+			 */
+			~GradientMapRGB();
+
+			/**
+			 * Maps the given number of iterations to a given color
+			 *
+			 * @param iterations the iterations being mapped
+			 *
+			 * @return the color calculated from the iterations
+			 */
+			ColorRGB color(unsigned iterations) const;
+		};
+	}
+}
 
 #endif

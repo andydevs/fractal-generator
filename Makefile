@@ -1,6 +1,6 @@
 TARGET = juliaset
 
-TESTARGS = -cmaps -cx -1.05 -cy 0.25 -cmap ink
+TESTARGS = -cr -1.05 -ci 0.25 -cmap ink
 
 SHELL = /bin/bash -O globstar
 CC = g++

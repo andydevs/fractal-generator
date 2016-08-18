@@ -9,7 +9,7 @@
 
 // Headers being used
 #include "CImg/CImg.h"
-#include "JuliaSet/functions.h"
+#include "JuliaSet/juliaset.h"
 #include "JuliaSet/colormaps.h"
 
 // Libraries being used
@@ -22,6 +22,8 @@
 // Namespaces being used
 using namespace std;
 using namespace cimg_library;
+using namespace juliaset;
+using namespace juliaset::colormap;
 
 // Constants being used
 const char* DEF_IMG_NAME  = "jimage.jpg"; // The default image name
