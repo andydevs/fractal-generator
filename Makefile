@@ -4,7 +4,7 @@ TARGET = juliaset
 
 TESTARGS  = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -zoom 2 -cmap shadownight
 
-FRONTIMAGE = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -zoom 2 -cmap greenlight
+FRONTIMAGE = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -zoom 2 -cmap greenlight -save fimage.jpg
 TESTMBROT = -mbrot -imgx 1920 -imgy 1080 -cmap ink -save mimage.jpg
 TESTCMAP  = -cmaps
 

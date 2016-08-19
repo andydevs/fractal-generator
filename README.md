@@ -2,7 +2,7 @@
 
 A program that generates Julia Set images.
 
-![Julia Set Image](jimage.jpg)
+![Julia Set Image](fimage.jpg)
 
 ## Usage
 
