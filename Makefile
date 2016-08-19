@@ -3,6 +3,8 @@
 TARGET = juliaset
 
 TESTARGS  = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -zoom 2 -cmap shadownight
+
+FRONTIMAGE = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -zoom 2 -cmap greenlight
 TESTMBROT = -mbrot -imgx 1920 -imgy 1080 -cmap ink -save mimage.jpg
 TESTCMAP  = -cmaps
 
@@ -58,6 +60,12 @@ run: $(BINARY)
 	@echo Running with $(TESTARGS)
 	@echo -------------------------------
 	@$(BINARY) $(TESTARGS)
+	@echo -------------------------------
+
+fimage: $(BINARY)
+	@echo Running with $(FRONTIMAGE)
+	@echo -------------------------------
+	@$(BINARY) $(FRONTIMAGE)
 	@echo -------------------------------
 
 cmaps: $(BINARY)
