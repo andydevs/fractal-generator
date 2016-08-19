@@ -69,8 +69,7 @@ namespace juliaset
 		 */
 		RainbowMapRGB::RainbowMapRGB(): ColorMapRGB(),
 		m_phaseR(DEFAULT_PHASE_R), m_phaseG(DEFAULT_PHASE_G), m_phaseB(DEFAULT_PHASE_B),
-		m_freqR(DEFAULT_FREQ_R), m_freqG(DEFAULT_FREQ_G), m_freqB(DEFAULT_FREQ_B),
-		m_width(DEFAULT_WIDTH), m_center(DEFAULT_CENTER) {}
+		m_freqR(DEFAULT_FREQ_R),   m_freqG(DEFAULT_FREQ_G),   m_freqB(DEFAULT_FREQ_B) {}
 
 		/**
 		 * Creates a RainbowMapRGB with the given phase shifts, frequencies, center, and width
@@ -81,17 +80,13 @@ namespace juliaset
 		 * @param freqR  the frequency of red
 		 * @param freqG  the frequency of green
 		 * @param freqB  the frequency of blue
-		 * @param width  the width of the sine wave
-		 * @param center the center of the sine wave
 		 */
 		RainbowMapRGB::RainbowMapRGB(
 			double phaseR, double phaseG, double phaseB,
-			double freqR, double freqG, double freqB,
-			double width, double center): 
+			double freqR, double freqG, double freqB): 
 		ColorMapRGB(),
 		m_phaseR(phaseR), m_phaseG(phaseG), m_phaseB(phaseB),
-		m_freqR(freqR),   m_freqG(freqG),   m_freqB(freqB),
-		m_width(width),   m_center(center) {}
+		m_freqR(freqR),   m_freqG(freqG),   m_freqB(freqB) {}
 
 		/**
 		 * Maps the given number of iterations to a given color
@@ -107,9 +102,9 @@ namespace juliaset
 
 			// Generate color
 			return ColorRGB(
-				(short)(m_width * sin(m_freqR * angle + m_phaseR) + m_center),
-				(short)(m_width * sin(m_freqG * angle + m_phaseG) + m_center),
-				(short)(m_width * sin(m_freqB * angle + m_phaseB) + m_center)
+				(short)(WIDTH * sin(m_freqR * angle + m_phaseR) + CENTER),
+				(short)(WIDTH * sin(m_freqG * angle + m_phaseG) + CENTER),
+				(short)(WIDTH * sin(m_freqB * angle + m_phaseB) + CENTER)
 			);
 		}
 	}

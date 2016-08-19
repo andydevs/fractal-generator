@@ -108,14 +108,14 @@ namespace juliaset
 		{
 		public:
 			/**
-			 * The default center
+			 * The center of the sine wave
 			 */
-			static const double DEFAULT_CENTER  = 128;
+			static const double CENTER  = 128;
 
 			/**
-			 * The default width
+			 * The width of the sine wave
 			 */
-			static const double DEFAULT_WIDTH   = 127;
+			static const double WIDTH   = 127;
 
 			/**
 			 * The default phase shift of red
@@ -201,10 +201,8 @@ namespace juliaset
 			 * @param freqR  the frequency of red
 			 * @param freqG  the frequency of green
 			 * @param freqB  the frequency of blue
-			 * @param width  the width of the sine wave
-			 * @param center the center of the sine wave
 			 */
-			RainbowMapRGB(double phaseR, double phaseG, double phaseB, double freqR, double freqG, double freqB, double width, double center);
+			RainbowMapRGB(double phaseR, double phaseG, double phaseB, double freqR, double freqG, double freqB);
 
 			/**
 			 * Maps the given number of iterations to a given color

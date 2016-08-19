@@ -42,6 +42,11 @@ namespace juliaset
 		{
 			// Populate
 			index["rainbow"]     = new RainbowMapRGB();
+			index["saffron"]     = new RainbowMapRGB(2, 3, 4, 0.7, 0.7, 0.7);
+			index["flower"]      = new RainbowMapRGB(-2, -2, -1, 0.7, 0.7, 0.7);
+			index["glow"]        = new RainbowMapRGB(4, 4, 4, 0, 0, 5);
+			index["psychedelic"] = new RainbowMapRGB(4.1, 4.5, 5, 5, 5, 5);
+			index["fruity"]      = new RainbowMapRGB(0, 4.5, 2.5, 5, 5, 5);
 			index["noir"]        = new GradientMapRGB(0x000000, 0xffffff);
 			index["ink"]         = new GradientMapRGB(0xffffff, 0x000000);
 			index["lightning"]   = new GradientMapRGB(0x000000, 0x99ddff);
