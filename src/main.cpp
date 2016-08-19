@@ -58,6 +58,8 @@ int main(int argc, char const *argv[])
 	// Image config
 	Config cfg(zoom, offx, offy, rot);
 
+	// -----------------------------COLORMAP-----------------------------
+
 	// Initialize colormaps
 	initColorMap();
 
