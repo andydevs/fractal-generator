@@ -18,17 +18,18 @@ The program uses CImg option parsing to retrieve command line arguments. To set 
 
 Here are a list of options:
 
-| Option |                           Description                          |  Defaults  |
-|:------:|:--------------------------------------------------------------:|:----------:|
-| -cr    | The real component of the complex constant                     | 0.0        |
-| -ci    | The imaginary component of the complex constant                | 0.0        |
-| -mbrot | Generates the mandelbrot set image (overrides -cr and -ci)     | false      |
-| -imgx  | The width of the image                                         | 1920       |
-| -imgy  | The height of the image                                        | 1080       |
-| -zoom  | The zoom scale of the image                                    | 1.0        |
-| -offx  | The x offset of the image                                      | 0.0        |
-| -offy  | The y offset of the image                                      | 0.0        |
-| -rot   | The angle of rotation of the image                             | 0.0        |
-| -save  | The filename to save to                                        | jimage.jpg |
-| -cmap  | The colormapping used (see gallery to look at colormaps)       | rainbow    |
-| -cmaps | Lists all of the colormaps and returns (overrides all options) | false      |
+| Option |                                 Description                                 |  Defaults  |
+|:------:|:---------------------------------------------------------------------------:|:----------:|
+| -cr    | The real component of the complex constant                                  | 0.0        |
+| -ci    | The imaginary component of the complex constant                             | 0.0        |
+| -mbrot | Generates the mandelbrot set image (overrides -cr and -ci)                  | false      |
+| -imgx  | The width of the image                                                      | 1920       |
+| -imgy  | The height of the image                                                     | 1080       |
+| -zoom  | The zoom scale of the image                                                 | 1.0        |
+| -offx  | The x offset of the image                                                   | 0.0        |
+| -offy  | The y offset of the image                                                   | 0.0        |
+| -rot   | The angle of rotation of the image                                          | 0.0        |
+| -save  | The filename to save to                                                     | jimage.jpg |
+| -cmap  | The colormapping used (see gallery to look at colormaps)                    | rainbow    |
+| -cmaps | Lists all of the colormaps and returns (overrides all options)              | false      |
+| -test  | Generates a 400x300 test image (saved to the savename) for the set colormap | false      |

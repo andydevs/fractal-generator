@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
 	string savename = cimg_option("-save",  "jimage.jpg", "The file to save the image to");
 	string cmapname = cimg_option("-cmap",  "rainbow",    "The colormapping to use");
 	bool showCmaps  = cimg_option("-cmaps", false,		  "Lists the cmaps");
-	bool testcmap   = cimg_option("-test",  false,        "Test cmap");
+	bool testcmap   = cimg_option("-test",  false,        "Generates a 400x300 test image (saved to the savename) for the set colormap");
 
 	// Image config
 	Config cfg(zoom, offx, offy, rot);
