@@ -30,5 +30,5 @@ Here are a list of options:
 | -offy  | The y offset of the image                                      | 0.0        |
 | -rot   | The angle of rotation of the image                             | 0.0        |
 | -save  | The filename to save to                                        | jimage.jpg |
-| -cmap  | The colormapping used (see gallery to look at colormaps)       | noir       |
+| -cmap  | The colormapping used (see gallery to look at colormaps)       | rainbow    |
 | -cmaps | Lists all of the colormaps and returns (overrides all options) | false      |
