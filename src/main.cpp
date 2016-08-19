@@ -51,8 +51,9 @@ int main(int argc, char const *argv[])
 	double offy     = cimg_option("-offy",  0.0,  		  "The y offset of the image");
 	double rot      = cimg_option("-rot",   0.0,  		  "The angle of rotation of the image (in degrees)");
 	string savename = cimg_option("-save",  "jimage.jpg", "The file to save the image to");
-	string cmapname = cimg_option("-cmap",  "noir",       "The colormapping to use");
+	string cmapname = cimg_option("-cmap",  "rainbow",    "The colormapping to use");
 	bool showCmaps  = cimg_option("-cmaps", false,		  "Lists the cmaps");
+	bool testcmap   = cimg_option("-test",  false,        "Test cmap");
 
 	// Image config
 	Config cfg(zoom, offx, offy, rot);
@@ -84,6 +85,34 @@ int main(int argc, char const *argv[])
 		// Error if cmap is not defined
 		cout << "Error! Colormap is not defined: " << cmapname << endl;
 		return 1;
+	}
+
+	// Test cmap
+	if (testcmap)
+	{
+		// 400 x 300 image with 3 color channels
+		CImg<char> image(400, 300, 1, 3);
+
+		// Variables
+		ColorRGB color;
+		
+		// For each pixel
+		cimg_forXY(image, x, y)
+		{
+			// Get color
+			color = cmap->color(256 * x / image.width());
+
+			// Set color
+			image(x, y, 0) = color.red;
+			image(x, y, 1) = color.green;
+			image(x, y, 2) = color.blue;
+		}
+
+		// Save image
+		image.save(savename.c_str());
+
+		// Return
+		return 0;
 	}
 
 	// -----------------------------CONSTANTS-----------------------------

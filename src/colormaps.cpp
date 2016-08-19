@@ -41,6 +41,7 @@ namespace juliaset
 		void initColorMap()
 		{
 			// Populate
+			index["rainbow"]     = new RainbowMapRGB();
 			index["noir"]        = new GradientMapRGB(0x000000, 0xffffff);
 			index["ink"]         = new GradientMapRGB(0xffffff, 0x000000);
 			index["lightning"]   = new GradientMapRGB(0x000000, 0x99ddff);

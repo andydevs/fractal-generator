@@ -2,11 +2,12 @@
 
 TARGET = juliaset
 
-TESTARGS  = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -zoom 2 -cmap shadownight
+TESTARGS  = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080
+TESTMBROT = -mbrot -imgx 1920 -imgy 1080 -cmap ink -save mimage.jpg
+TESTCMAPS = -cmaps
+TESTCMAP  = -test -cmap rainbow -save colormaptest.jpg
 
 FRONTIMAGE = -cr -1.05 -ci 0.25 -imgx 1920 -imgy 1080 -zoom 2 -cmap greenlight -save fimage.jpg
-TESTMBROT = -mbrot -imgx 1920 -imgy 1080 -cmap ink -save mimage.jpg
-TESTCMAP  = -cmaps
 
 # ----------------------------------------MAKE CONFIG----------------------------------------
 
@@ -69,6 +70,12 @@ fimage: $(BINARY)
 	@echo -------------------------------
 
 cmaps: $(BINARY)
+	@echo Running with $(TESTCMAPS)
+	@echo -------------------------------
+	@$(BINARY) $(TESTCMAPS)
+	@echo -------------------------------
+
+test: $(BINARY)
 	@echo Running with $(TESTCMAP)
 	@echo -------------------------------
 	@$(BINARY) $(TESTCMAP)
