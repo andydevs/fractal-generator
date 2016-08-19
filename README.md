@@ -8,7 +8,7 @@ A program that generates Julia Set images.
 
 ### Installation (Clone and build)
 
-<span style="color:red">NOTE: Project can only be built on Unix-based platforms like Linux/macOS/Cygwin for now.</span>
+<span style="color:red;">NOTE: Project can only be built on Unix-based platforms like Linux/macOS/Cygwin for now.</span>
 
 Make sure that you have make and g++ installed. Both of these can be acquired using `apt-get`. Clone the git repository into your local machine using `git clone` and entering the remote repository. You can then build and install using `make install`. This will build the project and install the binary in `/usr/bin`.
 
