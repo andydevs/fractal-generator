@@ -89,7 +89,9 @@ int main(int argc, char const *argv[])
 	// Image colormap
 	const ColorMapRGB* cmap;
 	if (hasColorMap(cmapname))
+	{
 		cmap = getColorMap(cmapname);
+	}
 	else
 	{
 		// Error if cmap is not defined

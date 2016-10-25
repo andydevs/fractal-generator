@@ -56,20 +56,20 @@ namespace juliaset
 		complex<double> downScale(x / image.height(), y / image.height());
 
 		// Rotation complex
-		complex<double> rotation = polar(1.0, cfg.rotation / 180 * M_PI);
+		complex<double> rotation = polar(1.0, cfg.rotation * M_PI / 180);
 
 		// Shift complex
 		complex<double> shift(0.5*image.width()/image.height(), 0.5);
 
 		// Perform Operation
-		return (downScale - shift) * rotation * (SCALE / cfg.zoom) + cfg.offset;
+		return (SCALE / cfg.zoom) * (downScale - shift) * rotation + cfg.offset;
 	}
 
 	/**
 	 * Computes the JuliaSet algorithm of the given complex numbers
 	 *
-	 * @param z    the complex number to check
-	 * @param c    the constant complex number
+	 * @param z the complex number to check
+	 * @param c the constant complex number
 	 * 
 	 * @return the number of the iterations before infinity
 	 */

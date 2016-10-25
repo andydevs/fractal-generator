@@ -2,7 +2,7 @@
 
 TARGET = juliaset
 
-TESTARGS  = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -offx -0.5 -offy -0.4 -rot -30 -zoom 2 -cmap saree
+TESTARGS  = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -rot -30 -zoom 2 -offx -0.8 -offy 0.5 -cmap saree
 TESTMBROT = -mbrot -imgx 1920 -imgy 1080 -cmap fruity -save mimage.jpg
 TESTCMAPS = -cmaps
 TESTCMAP  = -test -cmap saree -save colormaptest.jpg
