@@ -54,6 +54,14 @@ int main(int argc, char const *argv[])
 	string cmapname = cimg_option("-cmap",  "rainbow",    "The colormapping to use");
 	bool showCmaps  = cimg_option("-cmaps", false,		  "Lists the cmaps");
 	bool testcmap   = cimg_option("-test",  false,        "Generates a 400x300 test image (saved to the savename) for the set colormap");
+	bool help       = cimg_option("-help",  false,        "Prints the help message")
+				   || cimg_option("-h",     false,        "Prints the help message");
+
+	// Exit if they just wanted help
+	if (help) { 
+		printf("\n");
+		return 0;
+	}
 
 	// Image config
 	Config cfg(zoom, offx, offy, rot);
