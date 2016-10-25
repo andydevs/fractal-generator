@@ -34,7 +34,11 @@ The product of these two numbers reveals a new property of complex numbers:
 
 		= r*s*(cos(a + b) + sin(a + b)i)
 
-Complex numbers can be represented as vectors on an xy grid, where the x component of the vector represents the real component, and the y component of the vector represents the imaginary component. The product of two complex numbers, then, can be represented by the vector whose magnitude is the product of the magnitudes of the two complex vectors and whose angle is the sum of the angles of the two complex vectors.
+Complex numbers can be represented as vectors on an xy grid, where the x component of the vector represents the real component, and the y component of the vector represents the imaginary component. The product of two complex numbers, then, can be represented by the vector whose magnitude is the product of the magnitudes of the two complex vectors and whose angle is the sum of the angles of the two complex vectors. Naturally, then, the square of a complex number, will be a complex vector with a magnitude equal to the square of the original magnitude, and an angle equal to twice the original angle.
+
+### Iteration
+
+Consider a complex function `f(z) = z^2 + c`, where `c` is a constant.
 
 ## Usage
 
