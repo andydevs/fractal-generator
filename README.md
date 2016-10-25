@@ -6,11 +6,11 @@ A program that generates Julia Set images.
 
 ## The Algorithm
 
-This algorithm generates images that represent the interesting and unique properties of complex numbers.
+This algorithm generates images that represent the interesting behaviour of complex numbers.
 
 ### The imaginary number (i)
 
-The square root of -1 is defined as `i`. This number doesn't exist naturally, but it is used often as it has interesting properties. When multiplied by a real constant, say `b`, the result is an imaginary number `bi`, the square of which will be negative the square of the constant, or `-b^2`, since `i^2 = -1`.
+The square root of -1 is defined as `i`. This number doesn't exist naturally, but it is used often for it's unique properties. When multiplied by a real constant, say `b`, the result is an imaginary number `bi`, the square of which will be negative the square of the constant, or `-b^2`, since `i^2 = -1`.
 
 ### Complex Numbers
 
