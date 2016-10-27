@@ -11,6 +11,7 @@
 #include "JuliaSet/colormaps.h"
 
 // Libraries being used
+#include <pugixml-1.7/src/pugixml.hpp>
 #include <map>
 
 // Namespaces being used
@@ -40,6 +41,10 @@ namespace juliaset
 		 */
 		void initColorMap()
 		{
+			// Read colormap xml
+
+			// Populate colormap map
+
 			// Populate
 			index["rainbow"]     = new RainbowMapRGB();
 			index["saree"]       = new RainbowMapRGB(2, 3, 4, 1.4, 1.4, 1.4);
