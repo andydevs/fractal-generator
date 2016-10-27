@@ -27,7 +27,7 @@ Consider two complex numbers represented as shown:
 	A = r*(cos(a) + sin(a)i)
 	B = s*(cos(b) + sin(b)i)
 
-The product of these two numbers reveals a new property of complex numbers:
+The product of these two numbers reveals a consequence of imaginary multiplication:
 
 	A*B = r*(cos(a) + sin(a)i) * s*(cos(b) + sin(b)i)
 		= r*s*((cos(a)cos(b) - sin(a)sin(b)) + (cos(a)sin(b) + sin(a)cos(b))i)
