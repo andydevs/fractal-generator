@@ -31,6 +31,10 @@ OBJDIR = obj
 BINDIR = bin
 INSDIR = /usr/bin
 
+# ----------------------------------------OTHER FILES----------------------------------------
+
+CMAPS = colormaps.xml
+
 # ----------------------------------------MAKE RULES-----------------------------------------
 
 INCLUDS = $(shell ls $(INCDIR)/**/*.h)
@@ -54,6 +58,7 @@ clean:
 
 install: $(BINARY)
 	@cp $(BINARY) $(INSDIR)
+	@cp $(CMAPS) $(INSDIR)/..
 
 uninstall:
 	@rm $(INSDIR)/$(TARGET)
