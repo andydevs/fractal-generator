@@ -44,6 +44,57 @@ namespace juliaset
 	angle(a) {}
 
 	/**
+	 * Creates a default transform with the given parameters
+	 *
+	 * @param w the width of the image
+	 * @param h the height of the image
+	 */
+	Transform::Transform(unsigned w, unsigned h):
+	width(w),height(h),
+	zoom(DEFAULT_ZOOM),
+	offset(DEFAULT_OFFSET),
+	angle(DEFAULT_ANGLE) {}
+
+	/**
+	 * Creates a transform with the given dimension xml
+	 *
+	 * @param dimension the dimension xml
+	 */
+	Transform::Transform(pugi::xml_node dimension):
+	width(dimension.attribute("x").as_uint()),
+	height(dimension.attribute("y").as_uint()) {}
+
+	/**
+	 * Creates a transform with the given dimension and transform xml
+	 *
+	 * @param dimension the dimension xml
+	 * @param transform the transform xml
+	 */
+	Transform::Transform(pugi::xml_node dimension, pugi::xml_node transform):
+	width(dimension.attribute("x").as_uint()),
+	height(dimension.attribute("y").as_uint()) 
+	{
+		// Get zoom
+		if (transform.attribute("zoom"))
+			zoom = transform.attribute("zoom").as_double();
+		else
+			zoom = DEFAULT_ZOOM;
+
+		// Get angle
+		if (transform.attribute("angle"))
+			angle = transform.attribute("angle").as_double();
+		else
+			angle = DEFAULT_ANGLE;
+
+		// Get offset
+		offset = DEFAULT_OFFSET;
+		if (transform.attribute("offx"))
+			offset += transform.attribute("offx").as_double();
+		if (transform.attribute("offy"))
+			offset += complex<double>(0,transform.attribute("offy").as_double());
+	}
+
+	/**
 	 * Returns the complex number mapped at the given pixel by the transform
 	 *
 	 * @param x the x coord of the pixel

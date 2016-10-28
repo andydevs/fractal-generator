@@ -44,7 +44,7 @@ namespace juliaset
 	/**
 	 * Default rotation
 	 */
-	const double DEFAULT_ROATION = 0;
+	const double DEFAULT_ANGLE = 0;
 
 	/**
 	 * Image transform parameters
@@ -91,6 +91,29 @@ namespace juliaset
 		 * @param a the rotation angle of the image
 		 */
 		Transform(unsigned w, unsigned h, double z, double x, double y, double a);
+
+		/**
+		 * Creates a default transform with the given parameters
+		 *
+		 * @param w the width of the image
+		 * @param h the height of the image
+		 */
+		Transform(unsigned w, unsigned h);
+
+		/**
+		 * Creates a transform with the given dimension xml
+		 *
+		 * @param dimension the dimension xml
+		 */
+		Transform(pugi::xml_node dimension);
+
+		/**
+		 * Creates a transform with the given dimension and transform xml
+		 *
+		 * @param dimension the dimension xml
+		 * @param transform the transform xml
+		 */
+		Transform(pugi::xml_node dimension, pugi::xml_node transform);
 
 		/**
 		 * Returns the complex number mapped at the given pixel by the transform

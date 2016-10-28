@@ -3,7 +3,7 @@
 <jimage save="wimage.jpg">
 	<complex real="-0.19" imag="-0.67"/>
 	<dimension x="1920" y="1080"/>
-	<transform rot="30" zoom="2" offx="-0.8" offy="0.5"/>
+	<transform angle="30" zoom="2" offx="-0.8" offy="0.5"/>
 	<colormap preset="saree"/>
 </jimage>
 
