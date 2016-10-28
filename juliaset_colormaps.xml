@@ -10,7 +10,7 @@
 <entry>
 	<name>flower</name>
 	<colormap type="rainbow">
-		<phase r='-2' g='-1' b='-1'/>
+		<phase r='-2' g='-2' b='-1'/>
 		<freq r='0.7' g='0.7' b='0.7'/>
 	</colormap>
 </entry>
