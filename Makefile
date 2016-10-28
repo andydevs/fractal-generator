@@ -2,12 +2,10 @@
 
 TARGET = juliaset
 
-TESTARGS  = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -rot -30 -zoom 2 -offx -0.8 -offy 0.5 -cmap saree
+TESTARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
 TESTMBROT = -mbrot -imgx 1920 -imgy 1080 -cmap fruity -save mimage.jpg
 TESTCMAPS = -cmaps
 TESTCMAP  = -test -cmap saree -save colormaptest.jpg
-
-FRONTIMAGE = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
 WALLPAPER  = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -rot -30 -zoom 2 -offx -0.8 -offy 0.5 -save wimage.jpg -cmap saree
 
 # ----------------------------------------MAKE CONFIG----------------------------------------
