@@ -26,6 +26,33 @@ using namespace juliaset;
 using namespace juliaset::colormap;
 
 /**
+ * Shows a list of the available colormaps
+ */
+void showCmaps();
+
+/**
+ * Generates a 400x300 test image for the given colormap
+ * saved to the given sname
+ *
+ * @param sname the name to save the test image to
+ * @param cmap  the colormap to test
+ */
+void testCmap(string sname, ColorMapRGB* cmap);
+
+/**
+ * Generates a juliaset image with the given parameters
+ *
+ * @param imgx  the width of the image
+ * @param imgy  the height of the image
+ * @param sname the name to save the image to
+ * @param trans the image transform
+ * @param cmap  the image colormap
+ * @param mbrot true if the mandelbrot set is to be generated
+ * @param cons  the juliaset complex constant
+ */
+void generate(unsigned imgx, unsigned imgy, string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, complex<double> cons);
+
+/**
  * The main function of the program
  *
  * @param argc the number of command line arguments
@@ -50,10 +77,10 @@ int main(int argc, char const *argv[])
 	double offx     = cimg_option("-offx",  0.0,  		  "The x offset of the image");
 	double offy     = cimg_option("-offy",  0.0,  		  "The y offset of the image");
 	double rot      = cimg_option("-rot",   0.0,  		  "The angle of rotation of the image (in degrees)");
-	string savename = cimg_option("-save",  "jimage.jpg", "The file to save the image to");
+	string sname    = cimg_option("-save",  "jimage.jpg", "The file to save the image to");
 	string cmapname = cimg_option("-cmap",  "rainbow",    "The colormapping to use");
-	bool showCmaps  = cimg_option("-cmaps", false,		  "Lists the cmaps");
-	bool testcmap   = cimg_option("-test",  false,        "Generates a 400x300 test image (saved to the savename) for the set colormap");
+	bool showcmaps  = cimg_option("-cmaps", false,		  "Lists the cmaps");
+	bool testcmap   = cimg_option("-test",  false,        "Generates a 400x300 test image (saved to the sname) for the set colormap");
 	bool help       = cimg_option("-help",  false,        "Prints the help message")
 				   || cimg_option("-h",     false,        "Prints the help message");
 
@@ -63,31 +90,19 @@ int main(int argc, char const *argv[])
 		return 0;
 	}
 
-	// Image transform
-	Transform trans(imgx, imgy, zoom, offx, offy, rot);
-
-	// -----------------------------COLORMAP-----------------------------
-
 	// Initialize colormaps
 	initColorMap();
 
-	// Show cmaps option
-	if (showCmaps)
-	{
-		// Get cmaps
-		vector<string> v = getColorMaps();
+	// -----------------------------PARAMETERS-----------------------------
 
-		// Print cmaps
-		cout << "Available colormaps:" << endl;
-		for (vector<string>::iterator it = v.begin(); it != v.end(); it++)
-			cout << "\t" << *it << endl;
+	// Image transform
+	Transform trans(imgx, imgy, zoom, offx, offy, rot);
 
-		// Return 0
-		return 0;
-	}
+	// Complex constant
+	complex<double> cons(real, imag);
 
 	// Image colormap
-	const ColorMapRGB* cmap;
+	ColorMapRGB* cmap;
 	if (hasColorMap(cmapname))
 	{
 		cmap = getColorMap(cmapname);
@@ -99,54 +114,93 @@ int main(int argc, char const *argv[])
 		return 1;
 	}
 
-	// Test cmap
-	if (testcmap)
+	// ------------------------------GENERATE------------------------------
+
+	// Perform operation based on set
+	if (showcmaps) 
+		showCmaps();
+	else if (testcmap)
+		testCmap(sname, cmap);
+	else
+		generate(imgx, imgy, sname, trans, cmap, mandelbrot, cons);
+
+	// End program
+	return 0;
+}
+
+/**
+ * Shows a list of the available colormaps
+ */
+void showCmaps()
+{
+	// Get cmaps
+	vector<string> v = getColorMaps();
+
+	// Print cmaps
+	cout << "Available colormaps:" << endl;
+	for (vector<string>::iterator it = v.begin(); it != v.end(); it++)
+		cout << "\t" << *it << endl;
+}
+
+/**
+ * Generates a 400x300 test image for the given colormap
+ * saved to the given sname
+ *
+ * @param sname the name to save the test image to
+ * @param cmap  the colormap to test
+ */
+void testCmap(string sname, ColorMapRGB* cmap)
+{
+	// 400 x 300 image with 3 color channels
+	CImg<char> image(400, 300, 1, 3);
+
+	// Variables
+	ColorRGB color;
+	
+	// For each pixel
+	cimg_forXY(image, x, y)
 	{
-		// 400 x 300 image with 3 color channels
-		CImg<char> image(400, 300, 1, 3);
+		// Get color
+		color = cmap->color(256 * x / image.width());
 
-		// Variables
-		ColorRGB color;
-		
-		// For each pixel
-		cimg_forXY(image, x, y)
-		{
-			// Get color
-			color = cmap->color(256 * x / image.width());
-
-			// Set color
-			image(x, y, 0) = color.red;
-			image(x, y, 1) = color.green;
-			image(x, y, 2) = color.blue;
-		}
-
-		// Save image
-		image.save(savename.c_str());
-
-		// Return
-		return 0;
+		// Set color
+		image(x, y, 0) = color.red;
+		image(x, y, 1) = color.green;
+		image(x, y, 2) = color.blue;
 	}
 
-	// -----------------------------CONSTANTS-----------------------------
+	// Save image
+	image.save(sname.c_str());
+}
 
-	// Complex constant
-	const complex<double> cons(real, imag);
-
+/**
+ * Generates a juliaset image with the given parameters
+ *
+ * @param imgx  the width of the image
+ * @param imgy  the height of the image
+ * @param sname the name to save the image to
+ * @param trans the image transform
+ * @param cmap  the image colormap
+ * @param mbrot true if the mandelbrot set is to be generated
+ * @param cons  the juliaset complex constant
+ */
+void generate(unsigned imgx, unsigned imgy, string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, complex<double> cons)
+{
 	// Image (with 3 color channels)
 	CImg<char> jimage(imgx, imgy, 1, 3);
-
-	// Iterations
-	unsigned iter;
 
 	// -----------------------------ALGORITHM-----------------------------
 
 	// Print dimensions
 	cout << "Generating..." << endl;
 
+	// Iterations
+	unsigned iter;
+
 	// Start clock
 	double time = clock();
 
-	if (mandelbrot)
+	if (mbrot)
 	{
 		// Generate mandelbrot set image
 		iter = generateMandelbrotSetImage(jimage, trans, cmap);
@@ -160,16 +214,13 @@ int main(int argc, char const *argv[])
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;
 
-	// ----------------------------SAVE AND END---------------------------
+	// -------------------------------SAVE--------------------------------
 
 	// Save image
 	cout << "Saving..." << endl;
-	jimage.save(savename.c_str());
+	jimage.save(sname.c_str());
 
 	// Print end information
 	cout << "Iterations: "     << iter << endl;
 	cout << "Time (seconds): " << time << endl;
-
-	// End program
-	return 0;
 }
