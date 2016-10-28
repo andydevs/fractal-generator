@@ -13,10 +13,10 @@ WALLPAPER  = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -rot -30 -zoom 2 -offx -0
 # ----------------------------------------MAKE CONFIG----------------------------------------
 
 SHELL = /bin/bash -O globstar
-CC = g++
+CC    = g++
 
 COMPILE = $(CC) -c
-LINK = $(CC)
+LINK    = $(CC)
 
 CFLAGS = -Wall
 LFLAGS = -Wall -lpthread -lX11
