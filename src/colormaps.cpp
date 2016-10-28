@@ -102,7 +102,7 @@ namespace juliaset
 		vector<string> getColorMaps()
 		{
 			vector<string> maps;
-			for (map<string, ColorMapRGB*>::iterator it = preset.begin(); 
+			for (map<string, ColorMapRGB*>::iterator it = preset.begin();
 				it != preset.end(); it++)
 			{
 				maps.push_back(it->first);

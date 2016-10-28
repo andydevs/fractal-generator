@@ -13,6 +13,9 @@
 
 // Libraries being used
 #include <cmath>
+#include <iostream>
+
+using namespace std;
 
 /**
  * Contains functions and structs used by JuliaSet algorithm
@@ -104,37 +107,13 @@ namespace juliaset
 		 *
 		 * @param xml the xml representing the colormap
 		 */
-		RainbowMapRGB::RainbowMapRGB(pugi::xml_node xml):
-		ColorMapRGB()
-		{
-			// Parse phase xml
-			if (xml.child("phase"))
-			{
-				m_phaseR = xml.child("phase").attribute("r").as_double();
-				m_phaseG = xml.child("phase").attribute("g").as_double();
-				m_phaseB = xml.child("phase").attribute("b").as_double();
-			}
-			else
-			{
-				m_phaseR = DEFAULT_PHASE_R;
-				m_phaseG = DEFAULT_PHASE_G;
-				m_phaseB = DEFAULT_PHASE_B;
-			}
-
-			// Parse freq xml
-			if (xml.child("freq"))
-			{
-				m_freqR = xml.child("freq").attribute("r").as_double();
-				m_freqG = xml.child("freq").attribute("g").as_double();
-				m_freqB = xml.child("freq").attribute("b").as_double();
-			}
-			else
-			{
-				m_freqR = DEFAULT_FREQ_R;
-				m_freqG = DEFAULT_FREQ_G;
-				m_freqB = DEFAULT_FREQ_B;
-			}
-		}
+		RainbowMapRGB::RainbowMapRGB(pugi::xml_node xml): ColorMapRGB(),
+		m_phaseR(xml.child("phase").attribute("r").as_double()),
+		m_phaseG(xml.child("phase").attribute("g").as_double()),
+		m_phaseB(xml.child("phase").attribute("b").as_double()),
+		m_freqR(xml.child("freq").attribute("r").as_double()),
+		m_freqG(xml.child("freq").attribute("g").as_double()),
+		m_freqB(xml.child("freq").attribute("b").as_double()) {}
 
 		/**
 		 * Maps the given number of iterations to a given color
