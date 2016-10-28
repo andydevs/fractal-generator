@@ -1,11 +1,11 @@
-# -------------------------------------TARGET AND TESTARGS-----------------------------------
+# -------------------------------------TARGET AND ARGS-----------------------------------
 
 TARGET = juliaset
 
-TESTARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
-TESTMBROT = -mbrot -imgx 1920 -imgy 1080 -cmap fruity -save mimage.jpg
-TESTCMAPS = -cmaps
-TESTCMAP  = -test -cmap flower -save colormaptest.jpg
+ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
+CMAP  = -test -cmap flower -save colormaptest.jpg
+CMAPS = -cmaps
+MANDELBROT = -mbrot -imgx 1920 -imgy 1080 -cmap fruity -save mimage.jpg
 WALLPAPER  = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -rot -30 -zoom 2 -offx -0.8 -offy 0.5 -save wimage.jpg -cmap saree
 
 # ----------------------------------------MAKE CONFIG----------------------------------------
@@ -31,7 +31,7 @@ INSDIR = /usr/bin
 
 # ----------------------------------------OTHER FILES----------------------------------------
 
-CMAPS = colormaps.xml
+CMAPS = juliaset_colormaps.xml
 
 # ----------------------------------------MAKE RULES-----------------------------------------
 
@@ -63,15 +63,9 @@ uninstall:
 	@rm $(INSDIR)/$(CMAPS)
 
 run: $(BINARY)
-	@echo Running with $(TESTARGS)
+	@echo Running with $(ARGS)
 	@echo -------------------------------
-	@$(BINARY) $(TESTARGS)
-	@echo -------------------------------
-
-fimage: $(BINARY)
-	@echo Running with $(FRONTIMAGE)
-	@echo -------------------------------
-	@$(BINARY) $(FRONTIMAGE)
+	@$(BINARY) $(ARGS)
 	@echo -------------------------------
 
 wimage: $(BINARY)
@@ -80,20 +74,20 @@ wimage: $(BINARY)
 	@$(BINARY) $(WALLPAPER)
 	@echo -------------------------------
 
+mimage: $(BINARY)
+	@echo Running with $(MANDELBROT)
+	@echo -------------------------------
+	@$(BINARY) $(MANDELBROT)
+	@echo -------------------------------
+
 cmaps: $(BINARY)
-	@echo Running with $(TESTCMAPS)
+	@echo Running with $(CMAPS)
 	@echo -------------------------------
-	@$(BINARY) $(TESTCMAPS)
-	@echo -------------------------------
-
-test: $(BINARY)
-	@echo Running with $(TESTCMAP)
-	@echo -------------------------------
-	@$(BINARY) $(TESTCMAP)
+	@$(BINARY) $(CMAPS)
 	@echo -------------------------------
 
-mbrot: $(BINARY)
-	@echo Running with $(TESTMBROT)
+testcmap: $(BINARY)
+	@echo Running with $(CMAP)
 	@echo -------------------------------
-	@$(BINARY) $(TESTMBROT)
+	@$(BINARY) $(CMAP)
 	@echo -------------------------------

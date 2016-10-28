@@ -63,8 +63,8 @@ int main(int argc, char const *argv[])
 		return 0;
 	}
 
-	// Image config
-	Transform trans(zoom, offx, offy, rot);
+	// Image transform
+	Transform trans(imgx, imgy, zoom, offx, offy, rot);
 
 	// -----------------------------COLORMAP-----------------------------
 

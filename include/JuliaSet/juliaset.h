@@ -55,6 +55,16 @@ namespace juliaset
 	struct Transform
 	{
 		/**
+		 * The width of the image
+		 */
+		unsigned width;
+
+		/**
+		 * The height of the image
+		 */
+		unsigned height;
+
+		/**
 		 * The zoom scale of the image
 		 */
 		double zoom;
@@ -68,30 +78,30 @@ namespace juliaset
 		 * The angle of rotation of the image
 		 * (in degrees)
 		 */
-		double rotation;
+		double angle;
 
 		/**
 		 * Creates a transform with the given parameters
 		 *
+		 * @param w the width of the image
+		 * @param h the height of the image
 		 * @param z the zoom scale of the image
 		 * @param x the x offset of the image
 		 * @param y the y offset of the image
 		 * @param a the rotation angle of the image
 		 */
-		Transform(double z, double x, double y, double a);
-	};
+		Transform(unsigned w, unsigned h, double z, double x, double y, double a);
 
-	/**
-	 * Returns the complex number at the given pixel on the image
-	 *
-	 * @param x     the x coord of the pixel
-	 * @param y     the y coord of the pixel
-	 * @param image the image being processed
-	 * @param cfg   the image configuration
-	 *
-	 * @return the complex number at the given pixel on the image
-	 */
-	std::complex<double> getComplex(const double& x, const double& y, cimg_library::CImg<char>& image, Transform& cfg);
+		/**
+		 * Returns the complex number mapped at the given pixel by the transform
+		 *
+		 * @param x the x coord of the pixel
+		 * @param y the y coord of the pixel
+		 *
+		 * @return the complex number mapped at the given pixel by the transform
+		 */
+		std::complex<double> operator()(const double& x, const double& y);
+	};
 
 	/**
 	 * Computes the Julia set algorithm of the given complex numbers

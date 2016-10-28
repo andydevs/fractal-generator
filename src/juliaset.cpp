@@ -29,40 +29,41 @@ namespace juliaset
 	/**
 	 * Creates a config with the given parameters
 	 *
+	 * @param w the width of the image
+	 * @param h the height of the image
 	 * @param z the zoom scale of the image
 	 * @param x the x offset of the image
 	 * @param y the y offset of the image
 	 * @param a the rotation angle of the image
 	 */
-	Transform::Transform(double z, double x, double y, double a): 
-	zoom(z), 
-	offset(x, y), 
-	rotation(a) 
-	{}
+	Transform::Transform(unsigned w, unsigned h, double z, double x, double y, double a):
+	width(w),
+	height(h),
+	zoom(z),
+	offset(x, y),
+	angle(a) {}
 
 	/**
-	 * Returns the complex number at the given pixel on the image
+	 * Returns the complex number mapped at the given pixel by the transform
 	 *
-	 * @param x     the x coord of the pixel
-	 * @param y     the y coord of the pixel
-	 * @param image the image being processed
-	 * @param trans the image configuration
+	 * @param x the x coord of the pixel
+	 * @param y the y coord of the pixel
 	 *
-	 * @return the complex number at the given pixel on the image
+	 * @return the complex number mapped at the given pixel by the transform
 	 */
-	complex<double> getComplex(const double& x, const double& y, cimg_library::CImg<char>& image, Transform& trans)
+	complex<double> Transform::operator()(const double& x, const double& y)
 	{
-		// Downscale pixel value by image dimensions
-		complex<double> downScale(x / image.height(), y / image.height());
+		// Downscale pixel value by image height
+		complex<double> downScale(x / height, y / height);
 
 		// Rotation complex
-		complex<double> rotation = polar(1.0, trans.rotation * M_PI / 180);
+		complex<double> rotation = polar(1.0, angle * M_PI / 180);
 
-		// Shift complex
-		complex<double> shift(0.5*image.width()/image.height(), 0.5);
+		// Shift complex (scale by image aspect ratio)
+		complex<double> shift(0.5*width/height, 0.5);
 
 		// Perform Operation
-		return (SCALE / trans.zoom) * (downScale - shift) * rotation + trans.offset;
+		return (SCALE / zoom) * (downScale - shift) * rotation + offset;
 	}
 
 	/**
@@ -75,7 +76,7 @@ namespace juliaset
 	 */
 	unsigned juliaSetAlgorithm(complex<double>& z, const complex<double>& c)
 	{
-		// Iterations in this map
+		// Iterations at this point
 		unsigned n;
 
 		// Try 256 iterations
@@ -101,7 +102,7 @@ namespace juliaset
 	 */
 	unsigned mandelbrotSetAlgorithm(std::complex<double>& c)
 	{
-		// Iterations in this map
+		// Iterations at this point
 		unsigned n;
 
 		// Zero z
@@ -142,9 +143,9 @@ namespace juliaset
 		cimg_forXY(image, x, y) 
 		{
 			// Compute JuliaSet map at pixel location
-			z      = getComplex(x, y, image, trans); // Complex number z at pixel
-			result = juliaSetAlgorithm(z, c);      // Julia set algorithm
-			color  = map->color(result);		   // Compute color map
+			z      = trans(x,y); 			  // Complex number z at pixel
+			result = juliaSetAlgorithm(z, c); // Julia set algorithm
+			color  = map->color(result);      // Compute color map
 			
 			// Set Color
 			image(x, y, 0) = color.red;
@@ -179,9 +180,9 @@ namespace juliaset
 		cimg_forXY(image, x, y) 
 		{
 			// Compute JuliaSet map at pixel location
-			c      = getComplex(x, y, image, trans); // Complex number c at pixel
-			result = mandelbrotSetAlgorithm(c);      // Mandelbrot set algorithm
-			color  = map->color(result);		     // Compute color map
+			c      = trans(x, y);			    // Complex number c at pixel
+			result = mandelbrotSetAlgorithm(c); // Mandelbrot set algorithm
+			color  = map->color(result);		// Compute color map
 			
 			// Set Color
 			image(x, y, 0) = color.red;
