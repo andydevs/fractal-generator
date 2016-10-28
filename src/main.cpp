@@ -50,7 +50,9 @@ void testCmap(string sname, ColorMapRGB* cmap);
  * @param mbrot true if the mandelbrot set is to be generated
  * @param cons  the juliaset complex constant
  */
-void generate(unsigned imgx, unsigned imgy, string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, complex<double> cons);
+void generate(string sname, Transform trans, 
+	ColorMapRGB* cmap, bool mbrot, 
+	complex<double> cons);
 
 /**
  * The main function of the program
@@ -68,6 +70,7 @@ int main(int argc, char const *argv[])
 	cimg_usage("Generates JuliaSet images.");
 
 	// Image options
+	string xml      = cimg_option("-xml",   "",           "Parses the xml file with the given name.");
 	double real     = cimg_option("-cr",    0.0,  		  "The constant real component");
 	double imag     = cimg_option("-ci",    0.0,  		  "The constant imaginary component");
 	bool mandelbrot = cimg_option("-mbrot", false,        "Generates the mandelbrot set");
@@ -78,51 +81,29 @@ int main(int argc, char const *argv[])
 	double offy     = cimg_option("-offy",  0.0,  		  "The y offset of the image");
 	double rot      = cimg_option("-rot",   0.0,  		  "The angle of rotation of the image (in degrees)");
 	string sname    = cimg_option("-save",  "jimage.jpg", "The file to save the image to");
-	string cmapname = cimg_option("-cmap",  "rainbow",    "The colormapping to use");
+	string cname    = cimg_option("-cmap",  "rainbow",    "The colormapping to use");
 	bool showcmaps  = cimg_option("-cmaps", false,		  "Lists the cmaps");
 	bool testcmap   = cimg_option("-test",  false,        "Generates a 400x300 test image (saved to the sname) for the set colormap");
 	bool help       = cimg_option("-help",  false,        "Prints the help message")
 				   || cimg_option("-h",     false,        "Prints the help message");
 
-	// Exit if they just wanted help
-	if (help) { 
-		printf("\n");
-		return 0;
-	}
-
 	// Initialize colormaps
 	initColorMap();
 
-	// -----------------------------PARAMETERS-----------------------------
+	// -----------------------------FUNCTIONS-----------------------------
 
-	// Image transform
-	Transform trans(imgx, imgy, zoom, offx, offy, rot);
-
-	// Complex constant
-	complex<double> cons(real, imag);
-
-	// Image colormap
-	ColorMapRGB* cmap;
-	if (hasColorMap(cmapname))
-	{
-		cmap = getColorMap(cmapname);
-	}
-	else
-	{
-		// Error if cmap is not defined
-		cout << "Error! Colormap is not defined: " << cmapname << endl;
-		return 1;
-	}
-
-	// ------------------------------GENERATE------------------------------
-
-	// Perform operation based on set
-	if (showcmaps) 
+	if (help) // If they just wanted help
+		printf("\n");
+	else if (showcmaps) // Shows all cmaps
 		showCmaps();
-	else if (testcmap)
-		testCmap(sname, cmap);
-	else
-		generate(imgx, imgy, sname, trans, cmap, mandelbrot, cons);
+	else if (testcmap) // Tests one cmap
+		testCmap(sname, getColorMap(cname));
+	else // Command line interface
+		generate(sname, 
+				Transform(imgx,imgy,zoom,offx,offy,rot), 
+				getColorMap(cname), 
+				mandelbrot, 
+				complex<double>(real,imag));
 
 	// End program
 	return 0;
@@ -176,18 +157,16 @@ void testCmap(string sname, ColorMapRGB* cmap)
 /**
  * Generates a juliaset image with the given parameters
  *
- * @param imgx  the width of the image
- * @param imgy  the height of the image
  * @param sname the name to save the image to
  * @param trans the image transform
  * @param cmap  the image colormap
  * @param mbrot true if the mandelbrot set is to be generated
  * @param cons  the juliaset complex constant
  */
-void generate(unsigned imgx, unsigned imgy, string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, complex<double> cons)
+void generate(string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, complex<double> cons)
 {
 	// Image (with 3 color channels)
-	CImg<char> jimage(imgx, imgy, 1, 3);
+	CImg<char> jimage(trans.width, trans.height, 1, 3);
 
 	// -----------------------------ALGORITHM-----------------------------
 
@@ -200,16 +179,9 @@ void generate(unsigned imgx, unsigned imgy, string sname, Transform trans, Color
 	// Start clock
 	double time = clock();
 
-	if (mbrot)
-	{
-		// Generate mandelbrot set image
-		iter = generateMandelbrotSetImage(jimage, trans, cmap);
-	}
-	else
-	{
-		// Generate julia set image
-		iter = generateJuliaSetImage(jimage, cons, trans, cmap);
-	}
+	// Generate either mandelbrot or juliaset image
+	iter = mbrot ? generateMandelbrotSetImage(jimage, trans, cmap)
+				 : generateJuliaSetImage(jimage, cons, trans, cmap);
 
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;
