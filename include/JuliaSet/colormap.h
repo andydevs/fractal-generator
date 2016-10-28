@@ -13,6 +13,9 @@
 // Headers being used
 #include "color.h"
 
+// Libraries being used
+#include <pugixml-1.7/src/pugixml.hpp>
+
 /**
  * Contains functions and structs used by JuliaSet algorithm
  * 
@@ -86,6 +89,13 @@ namespace juliaset
 			 * @param end   the end color
 			 */
 			GradientMapRGB(unsigned start, unsigned end);
+
+			/**
+			 * Creates a GradientMapRGB from the given xml
+			 *
+			 * @param xml the xml representing the colormap
+			 */
+			GradientMapRGB(pugi::xml_node xml);
 
 			/**
 			 * Maps the given number of iterations to a given color
@@ -203,6 +213,13 @@ namespace juliaset
 			 * @param freqB  the frequency of blue
 			 */
 			RainbowMapRGB(double phaseR, double phaseG, double phaseB, double freqR, double freqG, double freqB);
+
+			/**
+			 * Creates a RainbowMapRGB from the given xml
+			 *
+			 * @param xml the xml representing the colormap
+			 */
+			RainbowMapRGB(pugi::xml_node xml);
 
 			/**
 			 * Maps the given number of iterations to a given color

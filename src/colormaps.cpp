@@ -39,38 +39,22 @@ namespace juliaset
 		/**
 		 * Returns the colormap parsed by the given xml
 		 *
-		 * @param cmap the xml object being parsed
+		 * @param xml the xml object being parsed
 		 * 
 		 * @return the colormap parsed by the given xml
 		 */
-		ColorMapRGB* parseColorMap(pugi::xml_node cmap) 
+		ColorMapRGB* parseColorMap(pugi::xml_node xml) 
 		{
 			// Get type 
-			const char* type = cmap.attribute("type").value();
+			const char* type = xml.attribute("type").value();
 
 			// Parse colormap according to type
 			if (!strcmp(type, "rainbow"))
-			{
-				return new RainbowMapRGB(
-					cmap.child("phase").attribute("r").as_double(),
-					cmap.child("phase").attribute("g").as_double(),
-					cmap.child("phase").attribute("b").as_double(),
-					cmap.child("freq").attribute("r").as_double(),
-					cmap.child("freq").attribute("g").as_double(),
-					cmap.child("freq").attribute("b").as_double()
-				);
-			}
+				return new RainbowMapRGB(xml);
 			else if (!strcmp(type, "gradient"))
-			{
-				return new GradientMapRGB(
-					cmap.child("start").text().as_uint(),
-					cmap.child("end").text().as_uint()
-				);
-			}
+				return new GradientMapRGB(xml);
 			else
-			{
 				return NULL;
-			}
 		}
 
 		/**
@@ -82,11 +66,14 @@ namespace juliaset
 		{
 			// Read colormap xml
 			pugi::xml_document cmapdoc;
-			cmapdoc.load_file("colormaps.xml");
+			cmapdoc.load_file("juliaset_colormaps.xml");
 
 			// Buffers
 			ColorMapRGB* colormap;
 			string name;
+
+			// Default preset
+			preset["rainbow"] = new RainbowMapRGB();
 
 			// For every entry in the colormap doc
 			for (pugi::xml_node entry = cmapdoc.child("entry"); 

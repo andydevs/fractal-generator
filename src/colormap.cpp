@@ -53,6 +53,17 @@ namespace juliaset
 		{}
 
 		/**
+		 * Creates a GradientMapRGB from the given xml
+		 *
+		 * @param xml the xml representing the colormap
+		 */
+		GradientMapRGB::GradientMapRGB(pugi::xml_node xml):
+		ColorMapRGB(),
+		m_start(xml.child("start").text().as_uint()),
+		m_gradient(xml.child("start").text().as_uint(),
+				   xml.child("end").text().as_uint()) {}
+
+		/**
 		 * Maps the given number of iterations to a given color
 		 *
 		 * @param iterations the iterations being mapped
@@ -87,6 +98,43 @@ namespace juliaset
 		ColorMapRGB(),
 		m_phaseR(phaseR), m_phaseG(phaseG), m_phaseB(phaseB),
 		m_freqR(freqR),   m_freqG(freqG),   m_freqB(freqB) {}
+
+		/**
+		 * Creates a RainbowMapRGB from the given xml
+		 *
+		 * @param xml the xml representing the colormap
+		 */
+		RainbowMapRGB::RainbowMapRGB(pugi::xml_node xml):
+		ColorMapRGB()
+		{
+			// Parse phase xml
+			if (xml.child("phase"))
+			{
+				m_phaseR = xml.child("phase").attribute("r").as_double();
+				m_phaseG = xml.child("phase").attribute("g").as_double();
+				m_phaseB = xml.child("phase").attribute("b").as_double();
+			}
+			else
+			{
+				m_phaseR = DEFAULT_PHASE_R;
+				m_phaseG = DEFAULT_PHASE_G;
+				m_phaseB = DEFAULT_PHASE_B;
+			}
+
+			// Parse freq xml
+			if (xml.child("freq"))
+			{
+				m_freqR = xml.child("freq").attribute("r").as_double();
+				m_freqG = xml.child("freq").attribute("g").as_double();
+				m_freqB = xml.child("freq").attribute("b").as_double();
+			}
+			else
+			{
+				m_freqR = DEFAULT_FREQ_R;
+				m_freqG = DEFAULT_FREQ_G;
+				m_freqB = DEFAULT_FREQ_B;
+			}
+		}
 
 		/**
 		 * Maps the given number of iterations to a given color

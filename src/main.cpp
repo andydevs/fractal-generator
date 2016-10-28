@@ -64,7 +64,7 @@ int main(int argc, char const *argv[])
 	}
 
 	// Image config
-	Config cfg(zoom, offx, offy, rot);
+	Transform trans(zoom, offx, offy, rot);
 
 	// -----------------------------COLORMAP-----------------------------
 
@@ -149,12 +149,12 @@ int main(int argc, char const *argv[])
 	if (mandelbrot)
 	{
 		// Generate mandelbrot set image
-		iter = generateMandelbrotSetImage(jimage, cfg, cmap);
+		iter = generateMandelbrotSetImage(jimage, trans, cmap);
 	}
 	else
 	{
 		// Generate julia set image
-		iter = generateJuliaSetImage(jimage, cons, cfg, cmap);
+		iter = generateJuliaSetImage(jimage, cons, trans, cmap);
 	}
 
 	// End clock

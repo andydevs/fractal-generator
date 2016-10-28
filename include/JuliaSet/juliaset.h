@@ -15,6 +15,7 @@
 #include "CImg/CImg.h"
 
 // Libraries being used
+#include <pugixml-1.7/src/pugixml.hpp>
 #include <complex>
 
 /**
@@ -26,12 +27,32 @@
 namespace juliaset
 {
 	/**
-	 * Image configuration parameters
+	 * The complex space scale value
+	 */
+	const double SCALE = 4.0;
+
+	/**
+	 * Default zoom
+	 */
+	const double DEFAULT_ZOOM = 1.0;
+
+	/**
+	 * Default offset
+	 */
+	const std::complex<double> DEFAULT_OFFSET(0,0);
+
+	/**
+	 * Default rotation
+	 */
+	const double DEFAULT_ROATION = 0;
+
+	/**
+	 * Image transform parameters
 	 *
 	 * @author  Anshul Kharbanda
 	 * @created 8 - 16 - 2016
 	 */
-	struct Config
+	struct Transform
 	{
 		/**
 		 * The zoom scale of the image
@@ -50,20 +71,15 @@ namespace juliaset
 		double rotation;
 
 		/**
-		 * Creates a config with the given parameters
+		 * Creates a transform with the given parameters
 		 *
 		 * @param z the zoom scale of the image
 		 * @param x the x offset of the image
 		 * @param y the y offset of the image
 		 * @param a the rotation angle of the image
 		 */
-		Config(double z, double x, double y, double a);
+		Transform(double z, double x, double y, double a);
 	};
-
-	/**
-	 * The complex space scale value
-	 */
-	const double SCALE = 4.0;
 
 	/**
 	 * Returns the complex number at the given pixel on the image
@@ -75,7 +91,7 @@ namespace juliaset
 	 *
 	 * @return the complex number at the given pixel on the image
 	 */
-	std::complex<double> getComplex(const double& x, const double& y, cimg_library::CImg<char>& image, Config& cfg);
+	std::complex<double> getComplex(const double& x, const double& y, cimg_library::CImg<char>& image, Transform& cfg);
 
 	/**
 	 * Computes the Julia set algorithm of the given complex numbers
@@ -101,23 +117,23 @@ namespace juliaset
 	 *
 	 * @param image the image object to generate the Julia set in
 	 * @param c     the complex constant being used
-	 * @param cfg   the image configuration
+	 * @param trans the image configuration
 	 * @param map   the colormap being used
 	 *
 	 * @return total number of iterations that were calculated
 	 */
-	unsigned generateJuliaSetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, Config& cfg, const juliaset::colormap::ColorMapRGB* map);
+	unsigned generateJuliaSetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, Transform& trans, const juliaset::colormap::ColorMapRGB* map);
 
 	/**
 	 * Generates a Mandelbrot set image in the given object with the given complex constant
 	 *
 	 * @param image the image object to generate the Mandelbrot set in
-	 * @param cfg   the image configuration
+	 * @param trans the image configuration
 	 * @param map   the colormap being used
 	 *
 	 * @return total number of iterations that were calculated
 	 */
-	unsigned generateMandelbrotSetImage(cimg_library::CImg<char>& image, Config& cfg, const juliaset::colormap::ColorMapRGB* map);
+	unsigned generateMandelbrotSetImage(cimg_library::CImg<char>& image, Transform& trans, const juliaset::colormap::ColorMapRGB* map);
 }
 
 #endif

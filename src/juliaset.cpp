@@ -34,7 +34,7 @@ namespace juliaset
 	 * @param y the y offset of the image
 	 * @param a the rotation angle of the image
 	 */
-	Config::Config(double z, double x, double y, double a): 
+	Transform::Transform(double z, double x, double y, double a): 
 	zoom(z), 
 	offset(x, y), 
 	rotation(a) 
@@ -46,23 +46,23 @@ namespace juliaset
 	 * @param x     the x coord of the pixel
 	 * @param y     the y coord of the pixel
 	 * @param image the image being processed
-	 * @param cfg   the image configuration
+	 * @param trans the image configuration
 	 *
 	 * @return the complex number at the given pixel on the image
 	 */
-	complex<double> getComplex(const double& x, const double& y, cimg_library::CImg<char>& image, Config& cfg)
+	complex<double> getComplex(const double& x, const double& y, cimg_library::CImg<char>& image, Transform& trans)
 	{
 		// Downscale pixel value by image dimensions
 		complex<double> downScale(x / image.height(), y / image.height());
 
 		// Rotation complex
-		complex<double> rotation = polar(1.0, cfg.rotation * M_PI / 180);
+		complex<double> rotation = polar(1.0, trans.rotation * M_PI / 180);
 
 		// Shift complex
 		complex<double> shift(0.5*image.width()/image.height(), 0.5);
 
 		// Perform Operation
-		return (SCALE / cfg.zoom) * (downScale - shift) * rotation + cfg.offset;
+		return (SCALE / trans.zoom) * (downScale - shift) * rotation + trans.offset;
 	}
 
 	/**
@@ -126,12 +126,12 @@ namespace juliaset
 	 *
 	 * @param image the image object to generate the Juliaset in
 	 * @param c     the complex constant being used
-	 * @param cfg   the image configuration
+	 * @param trans the image configuration
 	 * @param map   the colormap being used
 	 *
 	 * @return total number of iterations that were calculated
 	 */
-	unsigned generateJuliaSetImage(cimg_library::CImg<char>& image, const complex<double>& c, Config& cfg, const ColorMapRGB* map)
+	unsigned generateJuliaSetImage(cimg_library::CImg<char>& image, const complex<double>& c, Transform& trans, const ColorMapRGB* map)
 	{
 		// Initialize buffers
 		complex<double> z;     // Z Complex buffer
@@ -142,7 +142,7 @@ namespace juliaset
 		cimg_forXY(image, x, y) 
 		{
 			// Compute JuliaSet map at pixel location
-			z      = getComplex(x, y, image, cfg); // Complex number z at pixel
+			z      = getComplex(x, y, image, trans); // Complex number z at pixel
 			result = juliaSetAlgorithm(z, c);      // Julia set algorithm
 			color  = map->color(result);		   // Compute color map
 			
@@ -163,12 +163,12 @@ namespace juliaset
 	 * Generates a Mandelbrot set image in the given object with the given complex constant
 	 *
 	 * @param image the image object to generate the Mandelbrot set in
-	 * @param cfg   the image configuration
+	 * @param trans the image configuration
 	 * @param map   the colormap being used
 	 *
 	 * @return total number of iterations that were calculated
 	 */
-	unsigned generateMandelbrotSetImage(cimg_library::CImg<char>& image, Config& cfg, const ColorMapRGB* map)
+	unsigned generateMandelbrotSetImage(cimg_library::CImg<char>& image, Transform& trans, const ColorMapRGB* map)
 	{
 		// Initialize buffers
 		complex<double> c;     // C Complex buffer
@@ -179,9 +179,9 @@ namespace juliaset
 		cimg_forXY(image, x, y) 
 		{
 			// Compute JuliaSet map at pixel location
-			c      = getComplex(x, y, image, cfg); // Complex number c at pixel
-			result = mandelbrotSetAlgorithm(c);    // Mandelbrot set algorithm
-			color  = map->color(result);		   // Compute color map
+			c      = getComplex(x, y, image, trans); // Complex number c at pixel
+			result = mandelbrotSetAlgorithm(c);      // Mandelbrot set algorithm
+			color  = map->color(result);		     // Compute color map
 			
 			// Set Color
 			image(x, y, 0) = color.red;

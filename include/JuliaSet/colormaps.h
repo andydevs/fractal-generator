@@ -37,11 +37,11 @@ namespace juliaset
 		/**
 		 * Returns the colormap parsed by the given xml
 		 *
-		 * @param cmap the xml object being parsed
+		 * @param xml the xml object being parsed
 		 * 
 		 * @return the colormap parsed by the given xml
 		 */
-		ColorMapRGB* parseColorMap(pugi::xml_node cmap);
+		ColorMapRGB* parseColorMap(pugi::xml_node xml);
 
 		/**
 		 * Initializes colormaps
