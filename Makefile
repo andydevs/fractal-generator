@@ -58,10 +58,11 @@ clean:
 
 install: $(BINARY)
 	@cp $(BINARY) $(INSDIR)
-	@cp $(CMAPS) $(INSDIR)/..
+	@cp $(CMAPS) $(INSDIR)
 
 uninstall:
 	@rm $(INSDIR)/$(TARGET)
+	@rm $(INSDIR)/$(CMAPS)
 
 run: $(BINARY)
 	@echo Running with $(TESTARGS)

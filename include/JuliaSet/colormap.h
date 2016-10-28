@@ -47,7 +47,7 @@ namespace juliaset
 			/**
 			 * Destroys the ColorMapRGB
 			 */
-			~ColorMapRGB();
+			virtual ~ColorMapRGB();
 
 			/**
 			 * Maps the given number of iterations to a given color

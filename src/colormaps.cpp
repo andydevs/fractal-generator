@@ -11,7 +11,7 @@
 #include "JuliaSet/colormaps.h"
 
 // Libraries being used
-#include <pugixml-1.7/src/pugixml.hpp>
+#include <cstring>
 #include <map>
 
 // Namespaces being used
@@ -34,32 +34,77 @@ namespace juliaset
 	namespace colormap
 	{
 		// Init map
-		static map<string, ColorMapRGB*> index;
+		static map<string, ColorMapRGB*> preset;
+
+		/**
+		 * Returns the colormap parsed by the given xml
+		 *
+		 * @param cmap the xml object being parsed
+		 * 
+		 * @return the colormap parsed by the given xml
+		 */
+		ColorMapRGB* parseColorMap(pugi::xml_node cmap) 
+		{
+			// Get type 
+			const char* type = cmap.attribute("type").value();
+
+			// Parse colormap according to type
+			if (!strcmp(type, "rainbow"))
+			{
+				return new RainbowMapRGB(
+					cmap.child("phase").attribute("r").as_double(),
+					cmap.child("phase").attribute("g").as_double(),
+					cmap.child("phase").attribute("b").as_double(),
+					cmap.child("freq").attribute("r").as_double(),
+					cmap.child("freq").attribute("g").as_double(),
+					cmap.child("freq").attribute("b").as_double()
+				);
+			}
+			else if (!strcmp(type, "gradient"))
+			{
+				return new GradientMapRGB(
+					cmap.child("start").text().as_uint(),
+					cmap.child("end").text().as_uint()
+				);
+			}
+			else
+			{
+				return NULL;
+			}
+		}
 
 		/**
 		 * Initializes colormaps
+		 *
+		 * @return error code if colormap is not parsed correctly
 		 */
-		void initColorMap()
+		int initColorMap()
 		{
 			// Read colormap xml
+			pugi::xml_document cmapdoc;
+			cmapdoc.load_file("colormaps.xml");
 
-			// Populate colormap map
+			// Buffers
+			ColorMapRGB* colormap;
+			string name;
 
-			// Populate
-			index["rainbow"]     = new RainbowMapRGB();
-			index["saree"]       = new RainbowMapRGB(2, 3, 4, 1.4, 1.4, 1.4);
-			index["flower"]      = new RainbowMapRGB(-2, -2, -1, 0.7, 0.7, 0.7);
-			index["glow"]        = new RainbowMapRGB(4, 4, 4, 0, 0, 5);
-			index["psychedelic"] = new RainbowMapRGB(4.1, 4.5, 5, 5, 5, 5);
-			index["fruity"]      = new RainbowMapRGB(0, 4.5, 2.5, 5, 5, 5);
-			index["noir"]        = new GradientMapRGB(0x000000, 0xffffff);
-			index["ink"]         = new GradientMapRGB(0xffffff, 0x000000);
-			index["lightning"]   = new GradientMapRGB(0x000000, 0x99ddff);
-			index["greenlight"]  = new GradientMapRGB(0x061700, 0x52c234);
-			index["redlight"]    = new GradientMapRGB(0x000000, 0xe74c3c);
-			index["shadownight"] = new GradientMapRGB(0x000000, 0x774b9b);
-			index["drexel"]      = new GradientMapRGB(0x002f6c, 0xffc600);
-			index["ironman"]     = new GradientMapRGB(0x771414, 0xbeba46);
+			// For every entry in the colormap doc
+			for (pugi::xml_node entry = cmapdoc.child("entry"); 
+				 entry; entry = entry.next_sibling("entry"))
+			{
+				// Get name and colormap
+				name     = string(entry.child("name").text().get());
+				colormap = parseColorMap(entry.child("colormap"));
+				
+				// Set name in preset to colormap
+				preset[name] = colormap;
+			}
+
+			// Delete final colormap
+			delete colormap;
+			
+			// Return success
+			return 0;
 		}
 
 		/**
@@ -70,7 +115,8 @@ namespace juliaset
 		vector<string> getColorMaps()
 		{
 			vector<string> maps;
-			for (map<string, ColorMapRGB*>::iterator it = index.begin(); it != index.end(); it++)
+			for (map<string, ColorMapRGB*>::iterator it = preset.begin(); 
+				it != preset.end(); it++)
 			{
 				maps.push_back(it->first);
 			}
@@ -86,8 +132,8 @@ namespace juliaset
 		 */
 		bool hasColorMap(std::string name)
 		{
-			map<string, ColorMapRGB*>::iterator it = index.find(name);
-			return it != index.end();
+			map<string, ColorMapRGB*>::iterator it = preset.find(name);
+			return it != preset.end();
 		}
 
 		/**
@@ -100,7 +146,7 @@ namespace juliaset
 		ColorMapRGB* getColorMap(string name)
 		{
 			// Return colormap
-			return index[name];
+			return preset[name];
 		}
 	}
 }

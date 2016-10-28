@@ -1,71 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<colormap type="rainbow">
+<entry>
 	<name>saree</name>
-	<phase r='2' g='3' b='4'/>
-	<freq r='1.4' g='1.4' b='1.4'/>
-</colormap>
-<colormap type="rainbow">
+	<colormap type="rainbow">
+		<phase r='2' g='3' b='4'/>
+		<freq r='1.4' g='1.4' b='1.4'/>
+	</colormap>
+</entry>
+
+<entry>
 	<name>flower</name>
-	<phase r='-2' g='-1' b='-1'/>
-	<freq r='0.7' g='0.7' b='0.7'/>
-</colormap>
-<colormap type="rainbow">
+	<colormap type="rainbow">
+		<phase r='-2' g='-1' b='-1'/>
+		<freq r='0.7' g='0.7' b='0.7'/>
+	</colormap>
+</entry>
+
+<entry>
 	<name>glow</name>
-	<phase r='4' g='4' b='4'/>
-	<freq r='0' g='0' b='5'/>
-</colormap>
-<colormap type="rainbow">
+	<colormap type="rainbow">
+		<phase r='4' g='4' b='4'/>
+		<freq r='0' g='0' b='5'/>
+	</colormap>
+</entry>
+
+<entry>
 	<name>psychedelic</name>
-	<phase r='4.1' g='4.5' b='5'/>
-	<freq r='5' g='5' b='5'/>
-</colormap>
-<colormap type="rainbow">
+	<colormap type="rainbow">
+		<phase r='4.1' g='4.5' b='5'/>
+		<freq r='5' g='5' b='5'/>
+	</colormap>
+</entry>
+
+<entry>
 	<name>fruity</name>
-	<phase r='0' g='4.5' b='2.5'/>
-	<freq r='5' g='5' b='5'/>
-</colormap>
-<colormap type="gradient">
+	<colormap type="rainbow">
+		<phase r='0' g='4.5' b='2.5'/>
+		<freq r='5' g='5' b='5'/>
+	</colormap>
+</entry>
+
+<entry>
 	<name>noir</name>
-	<start>0x000000</start>
-	<end>0xffffff</end>
-</colormap>
-<colormap type="gradient">
+	<colormap type="gradient">
+		<start>0x000000</start>
+		<end>0xffffff</end>
+	</colormap>
+</entry>
+
+<entry>
 	<name>ink</name>
-	<start>0xffffff</start>
-	<end>0x000000</end>
-</colormap>
-<colormap type="gradient">
+	<colormap type="gradient">
+		<start>0xffffff</start>
+		<end>0x000000</end>
+	</colormap>
+</entry>
+
+<entry>
 	<name>lightning</name>
-	<start>0x000000</start>
-	<end>0x99ddff</end>
-</colormap>
-<colormap type="gradient">
+	<colormap type="gradient">
+		<start>0x000000</start>
+		<end>0x99ddff</end>
+	</colormap>
+</entry>
+
+<entry>
 	<name>greenlight</name>
-	<start>0x061700</start>
-	<end>0x52c234</end>
-</colormap>
-<colormap type="gradient">
-	<name>greenlight</name>
-	<start>0x000000</start>
-	<end>0xffffff</end>
-</colormap>
-<colormap type="gradient">
+	<colormap type="gradient">
+		<start>0x061700</start>
+		<end>0x52c234</end>
+	</colormap>
+</entry>
+
+<entry>
 	<name>redlight</name>
-	<start>0x000000</start>
-	<end>0xe74c3c</end>
-</colormap>
-<colormap type="gradient">
+	<colormap type="gradient">
+		<start>0x000000</start>
+		<end>0xe74c3c</end>
+	</colormap>
+</entry>
+
+<entry>
 	<name>shadownight</name>
-	<start>0x000000</start>
-	<end>0x774b9b</end>
-</colormap>
-<colormap type="gradient">
+	<colormap type="gradient">
+		<start>0x000000</start>
+		<end>0x774b9b</end>
+	</colormap>
+</entry>
+
+<entry>
 	<name>drexel</name>
-	<start>0x002f6c</start>
-	<end>0xffc600</end>
-</colormap>
-<colormap type="gradient">
-	<name>ironman</name>
-	<start>0x771414</start>
-	<end>0xbeba46</end>
-</colormap>
+	<colormap type="gradient">
+		<start>0x002f6c</start>
+		<end>0xffc600</end>
+	</colormap>
+</entry>

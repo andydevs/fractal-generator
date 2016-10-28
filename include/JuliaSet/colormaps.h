@@ -14,6 +14,7 @@
 #include "colormap.h"
 
 // Libraries being used
+#include <pugixml-1.7/src/pugixml.hpp>
 #include <string>
 #include <vector>
 
@@ -34,9 +35,20 @@ namespace juliaset
 	namespace colormap
 	{
 		/**
-		 * Initializes colormaps
+		 * Returns the colormap parsed by the given xml
+		 *
+		 * @param cmap the xml object being parsed
+		 * 
+		 * @return the colormap parsed by the given xml
 		 */
-		void initColorMap();
+		ColorMapRGB* parseColorMap(pugi::xml_node cmap);
+
+		/**
+		 * Initializes colormaps
+		 *
+		 * @return error code if colormap is not parsed correctly
+		 */
+		int initColorMap();
 
 		/**
 		 * Returns a vector of all colormaps
