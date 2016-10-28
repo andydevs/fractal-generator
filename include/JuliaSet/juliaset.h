@@ -75,10 +75,14 @@ namespace juliaset
 		std::complex<double> offset;
 
 		/**
-		 * The angle of rotation of the image
-		 * (in degrees)
+		 * The shift complex
 		 */
-		double angle;
+		std::complex<double> shift;
+
+		/**
+		 * The rotation complex
+		 */
+		std::complex<double> rotation;
 
 		/**
 		 * Creates a transform with the given parameters

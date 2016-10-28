@@ -41,7 +41,8 @@ namespace juliaset
 	height(h),
 	zoom(z),
 	offset(x, y),
-	angle(a) {}
+	shift(0.5*w, 0.5*h),
+	rotation(polar(1.0, a * M_PI / 180)) {}
 
 	/**
 	 * Creates a default transform with the given parameters
@@ -53,7 +54,8 @@ namespace juliaset
 	width(w),height(h),
 	zoom(DEFAULT_ZOOM),
 	offset(DEFAULT_OFFSET),
-	angle(DEFAULT_ANGLE) {}
+	shift(0.5,0.5),
+	rotation(1.0,0) {}
 
 	/**
 	 * Creates a transform with the given dimension xml
@@ -62,7 +64,8 @@ namespace juliaset
 	 */
 	Transform::Transform(pugi::xml_node dimension):
 	width(dimension.attribute("x").as_uint()),
-	height(dimension.attribute("y").as_uint()) {}
+	height(dimension.attribute("y").as_uint()),
+	shift(0.5*dimension.attribute("x").as_uint(),0.5*dimension.attribute("y").as_uint()) {}
 
 	/**
 	 * Creates a transform with the given dimension and transform xml
@@ -72,7 +75,8 @@ namespace juliaset
 	 */
 	Transform::Transform(pugi::xml_node dimension, pugi::xml_node transform):
 	width(dimension.attribute("x").as_uint()),
-	height(dimension.attribute("y").as_uint()) 
+	height(dimension.attribute("y").as_uint()),
+	shift(0.5*dimension.attribute("x").as_uint(),0.5*dimension.attribute("y").as_uint())
 	{
 		// Get zoom
 		if (transform.attribute("zoom"))
@@ -82,9 +86,9 @@ namespace juliaset
 
 		// Get angle
 		if (transform.attribute("angle"))
-			angle = transform.attribute("angle").as_double();
+			rotation = polar(1.0, transform.attribute("angle").as_double());
 		else
-			angle = DEFAULT_ANGLE;
+			rotation = complex<double>(1,0);
 
 		// Get offset
 		offset = DEFAULT_OFFSET;
@@ -104,17 +108,7 @@ namespace juliaset
 	 */
 	complex<double> Transform::operator()(const double& x, const double& y)
 	{
-		// Downscale pixel value by image height
-		complex<double> downScale(x / height, y / height);
-
-		// Rotation complex
-		complex<double> rotation = polar(1.0, angle * M_PI / 180);
-
-		// Shift complex (scale by image aspect ratio)
-		complex<double> shift(0.5*width/height, 0.5);
-
-		// Perform Operation
-		return (SCALE / zoom) * (downScale - shift) * rotation + offset;
+		return (SCALE / height / zoom) * (complex<double>(x,y) - shift) * rotation + offset;
 	}
 
 	/**
