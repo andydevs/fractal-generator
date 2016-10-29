@@ -34,14 +34,14 @@ The product of these two numbers reveals a consequence of imaginary multiplicati
 
 		= r*s*(cos(a + b) + sin(a + b)i)
 
-Complex numbers can be represented as vectors on an xy grid, where the x component of the vector represents the real component, and the y component of the vector represents the imaginary component. The product of two complex numbers, then, can be represented by the vector whose magnitude is the product of the magnitudes of the two complex vectors and whose angle is the sum of the angles of the two complex vectors. Naturally, then, the square of a complex number, will be a complex vector with a magnitude equal to the square of the original magnitude, and an angle equal to twice the original angle.
+Complex numbers can be represented as vectors on an xy grid, where the x component of the vector represents the real component, and the y component of the vector represents the imaginary component. The product of two complex numbers, then, can be represented by the vector whose magnitude is the product of the magnitudes of the two complex vectors and whose angle is the sum of the angles of the two complex vectors. Naturally, then, the square of a complex number will be a complex vector with a magnitude equal to the square of the original magnitude, and an angle equal to twice the original angle.
 
 	A   = r*(cos(a) + sin(a)i)
 	A^2 = r^2*(cos(2a) + sin(2a)i)
 
 ### Iteration
 
-Consider a complex function `f(z) = z^2 + c`, where `c` is a constant. Take a complex number z and put it through the function, then take the result and put it back into the function. Do this repeatedly infinatum. This iterative process can be written as `z[a+1] = z[a]^2 + c`. Because of the nature of complex numbers, after infinite iterations, the modulus of these numbers will either reach infinity, converge to zero, or remain bounded in an endless loop, depending on the value of `z[1]`. For example, consider a constant of `0` for now. Start at `z[1] = 2 + 3i`. The first few iterations result in `z[2] = -5 + 12i`, followed by `z[3] = -119 - 120i`, then `z[4] = -239 + 28560i`. This set seems to go to infinity under infinite iteration. Now consider `z[1] = 0.5 + 0.75i`. The next few iterations of this number would be `z[2] = -0.31 + 0.75i`, `z[3] = -0.47 - 0.47i`, and finally `z[4] = -0.0036 + 0.43i`. This set will eventually converge to zero. The Julia Set, loosly speaking, is the map of all complex numbers that either reach infinity or remain bounded under infinite iteration. Because `c = 0`, the Julia set is a simple circle with a radius of `1`, since any number that is less than 1 decreases in value when squared, and any number greater than 1 increases in value when squared. Adding a non-zero constant `c` will complicate the set.
+Consider a complex function `f(z) = z^2 + c`, where `c` is a constant. Take a complex number z and put it through the function, then take the result and put it back into the function. Do this repeatedly infinatum. This iterative process can be written as `z[a+1] = z[a]^2 + c`. Because of the nature of complex numbers, after infinite iterations, the modulus of these numbers will either reach infinity, converge to zero, or remain bounded in an endless loop, depending on the value of `z[1]`. For example, consider a constant of `0` for now, so the iterative function becomes `z[a+1] = z[a]^2`. Start at `z[1] = 2 + 3i`. The first few iterations result in `z[2] = -5 + 12i`, followed by `z[3] = -119 - 120i`, then `z[4] = -239 + 28560i`. This set seems to go to infinity under infinite iteration. Now consider `z[1] = 0.5 + 0.75i`. The next few iterations of this number would be `z[2] = -0.31 + 0.75i`, `z[3] = -0.47 - 0.47i`, and finally `z[4] = -0.0036 + 0.43i`. This set will eventually converge to zero. The Julia Set, loosly speaking, is the map of all complex numbers that either reach infinity or remain bounded under infinite iteration. Because `c = 0`, the Julia set is a simple circle with a radius of `1`, since any number that is less than 1 decreases in value when squared, and any number greater than 1 increases in value when squared. Adding a non-zero constant `c` will complicate the set.
 
 ### Generating the Image
 
@@ -79,7 +79,7 @@ Here are a list of options:
 |     -offy     | The y offset of the image                                                   | 0.0        |
 |     -rot      | The angle of rotation of the image                                          | 0.0        |
 |     -save     | The filename to save to                                                     | jimage.jpg |
-|     -cmap     | The colormapping used (see gallery to look at colormaps)                    | rainbow    |
-|     -cmaps    | Lists all of the colormaps and returns (overrides all options)              | false      |
+|     -cmap     | The colormapping used                                                       | rainbow    |
+|     -cmaps    | Lists all of the colormaps and returns                                      | false      |
 |     -test     | Generates a 400x300 test image (saved to the savename) for the set colormap | false      |
 | -help (or -h) | Prints the help message                                                     | false      |
