@@ -25,6 +25,33 @@ using namespace std;
 namespace juliaset
 {
 	/**
+	 * Parses rectangle complex from XML
+	 * 
+	 * @param xml the rectangle complex xml
+	 * 
+	 * @return complex parsed from XML
+	 */
+	complex<double> rectFromXML(pugi::xml_node xml)
+	{
+		return complex<double>(
+			xml.attribute("real").as_double(),
+			xml.attribute("imag").as_double());
+	}
+
+	/**
+	 * Parses polar complex from XML
+	 * 
+	 * @param xml the polar complex xml
+	 * 
+	 * @return complex parsed from XML
+	 */
+	complex<double> polarFromXML(pugi::xml_node xml)
+	{
+		return polar(1.0,
+			xml.attribute("angle").as_double() * M_PI / 180);
+	}
+
+	/**
 	 * Creates an empty ImgSize
 	 */
 	ImgSize::ImgSize():
@@ -38,6 +65,15 @@ namespace juliaset
 	 */
 	ImgSize::ImgSize(unsigned w, unsigned h):
 	width(w), height(h) {}
+
+	/** 
+	 * Creates a ImgSize with the given xml
+	 *
+	 * @param xml the image xml
+	 */
+	ImgSize::ImgSize(pugi::xml_node xml):
+	width(xml.attribute("width").as_uint()),
+	height(xml.attribute("height").as_uint()) {}
 
 	/**
 	 * Copy constructor for ImgSize
@@ -106,13 +142,11 @@ namespace juliaset
 	   ? xml.attribute("zoom").as_double()
 	   : DEFAULT_ZOOM),
 	offset(xml.child("offset")
-		 ? complex<double>(xml.child("offset").attribute("x").as_double(),
-						   xml.child("offset").attribute("y").as_double())
+		 ? rectFromXML(xml.child("offset"))
 		 : DEFAULT_OFFSET),
-	shift(0.5*size.width,
-		  0.5*size.height),
+	shift(0.5*size.width, 0.5*size.height),
 	rotation(xml.attribute("angle")
-		   ? polar(1.0, xml.attribute("angle").as_double())
+		   ? polarFromXML(xml)
 		   : complex<double>(1,0)) {}
 
 	/**

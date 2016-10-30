@@ -43,6 +43,24 @@ namespace juliaset
 	const double DEFAULT_ANGLE = 0;
 
 	/**
+	 * Parses rectangle complex from XML
+	 * 
+	 * @param xml the rectangle complex xml
+	 * 
+	 * @return complex parsed from XML
+	 */
+	std::complex<double> rectFromXML(pugi::xml_node xml);
+
+	/**
+	 * Parses polar complex from XML
+	 * 
+	 * @param xml the polar complex xml
+	 * 
+	 * @return complex parsed from XML
+	 */
+	std::complex<double> polarFromXML(pugi::xml_node xml);
+
+	/**
 	 * Image size (height and width)
 	 *
 	 * @author  Anshul Kharbanda
@@ -61,12 +79,12 @@ namespace juliaset
 		unsigned height;
 
 		/**
-		 * Creates an empty dimension
+		 * Creates an empty ImgSize
 		 */
 		ImgSize();
 
 		/**
-		 * Creates a dimension with the given width and height
+		 * Creates a ImgSize with the given width and height
 		 *
 		 * @param w the width of the image
 		 * @param h the height of the image
@@ -74,11 +92,18 @@ namespace juliaset
 		ImgSize(unsigned w, unsigned h);
 
 		/**
-		 * Copy constructor for dimension
+		 * Copy constructor for ImgSize
 		 *
-		 * @param other the other dimension to copy
+		 * @param other the other ImgSize to copy
 		 */
 		ImgSize(const ImgSize& other);
+
+		/** 
+		 * Creates a ImgSize with the given xml
+		 *
+		 * @param xml the image xml
+		 */
+		ImgSize(pugi::xml_node xml);
 
 		/**
 		 * Returns the area of the image

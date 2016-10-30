@@ -101,8 +101,7 @@ int main(int argc, char const *argv[])
 	else // Command line interface
 		generate(sname, 
 				Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot), 
-				getColorMap(cname),
-				mandelbrot,
+				getColorMap(cname), mandelbrot,
 				complex<double>(real,imag));
 
 	// End program
