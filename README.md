@@ -43,7 +43,7 @@ Complex numbers can be represented as vectors on an xy grid, where the x compone
 
 ### The Julia Set
 
-Consider a complex function `f(z) = z^2 + c`, where `c` is a constant. Take a complex number z and put it through the function, then take the result and put it back into the function, doing this repeatedly infinatum. This iterative process can be written as `z[a+1] = z[a]^2 + c`. Because of the nature of complex numbers, after infinite iterations, the modulus of these numbers will either reach infinity, converge to zero, or remain bounded in an endless loop, depending on the value of `z[1]`.
+Consider the complex function `f(z) = z^2 + c`, where `c` is a constant. Take a complex number `z` and put it through the function, then take the result and put it back into the function, doing this repeatedly infinatum. This iterative process can be written as `z[a+1] = z[a]^2 + c`. Because of the nature of complex numbers, after infinite iterations, the modulus of these numbers will either reach infinity, converge to zero, or remain bounded in an endless loop, depending on the value of `z[1]`.
 
 The Julia Set is the map of all complex numbers that either reach infinity or remain bounded.
 
@@ -51,7 +51,7 @@ For example, consider a constant of `0` for now, so the iterative function becom
 
 Julia Sets can be approximated by using a computer. Each image is a complex grid ranging from -2 to 2, and from -2i to 2i (the width bounds are extended according to the image aspect ratio). Each pixel represents an approximate complex number in the grid. The computer goes through these pixels, and performs at most 256 iterations of the function `z[a+1] = z[a]^2 + c` on the complex number, and maps the number of iterations it took for the set to reach infinity (at all) to a color (according to a set color map), creating the complex patterns.
 
-![Julia Set Wallpaper](wimage.jpg)
+![Julia Set (f(z) = z^2 + c, c = -0.19 - 0.67i)](wimage.jpg)
 
 ### The Mandelbrot Set
 
@@ -59,7 +59,7 @@ Running the algorithm with multiple different numbers, one may determine that so
 
 ![The Mandelbrot Set](mimage.jpg)
 
-The dark regions
+The black regions on the Mandelbrot Set are the c constants that will generate black blobs, while the white areas are those that will create barely visible dust-like shapes. The sweet-spot is around the edge of the mandelbrot set, as these complex values will generate complex crystal shapes.
 
 ## Usage
 
