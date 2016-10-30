@@ -100,9 +100,9 @@ int main(int argc, char const *argv[])
 		testCmap(sname, getColorMap(cname));
 	else // Command line interface
 		generate(sname, 
-				Transform(imgx,imgy,zoom,offx,offy,rot), 
-				getColorMap(cname), 
-				mandelbrot, 
+				Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot), 
+				getColorMap(cname),
+				mandelbrot,
 				complex<double>(real,imag));
 
 	// End program
@@ -166,7 +166,7 @@ void testCmap(string sname, ColorMapRGB* cmap)
 void generate(string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, complex<double> cons)
 {
 	// Image (with 3 color channels)
-	CImg<char> jimage(trans.width, trans.height, 1, 3);
+	CImg<char> jimage(trans.size.width, trans.size.height, 1, 3);
 
 	// -----------------------------ALGORITHM-----------------------------
 

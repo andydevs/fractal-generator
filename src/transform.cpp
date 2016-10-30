@@ -25,86 +25,95 @@ using namespace std;
 namespace juliaset
 {
 	/**
+	 * Creates an empty ImgSize
+	 */
+	ImgSize::ImgSize():
+	width(0), height(0) {}
+
+	/**
+	 * Creates a ImgSize with the given width and height
+	 *
+	 * @param w the width of the image
+	 * @param h the height of the image
+	 */
+	ImgSize::ImgSize(unsigned w, unsigned h):
+	width(w), height(h) {}
+
+	/**
+	 * Copy constructor for ImgSize
+	 *
+	 * @param other the other ImgSize to copy
+	 */
+	ImgSize::ImgSize(const ImgSize& other):
+	width(other.width), height(other.height) {}
+
+	/**
+	 * Returns the area of the image
+	 *
+	 * @return the area of the image
+	 */
+	unsigned ImgSize::area() 
+	{
+		return width*height;
+	}
+
+	/**
 	 * Creates an empty transform
 	 */
 	Transform::Transform():
-	width(0),height(0),
+	size(ImgSize()),
 	zoom(DEFAULT_ZOOM),
 	offset(DEFAULT_OFFSET),
 	shift(0.5,0.5),
 	rotation(1.0,0) {}
 
 	/**
-	 * Creates a default transform with the given parameters
+	 * Creates a default transform with the given size
 	 *
-	 * @param w the width of the image
-	 * @param h the height of the image
+	 * @param s the size of the image
 	 */
-	Transform::Transform(unsigned w, unsigned h):
-	width(w),height(h),
+	Transform::Transform(ImgSize s):
+	size(s),
 	zoom(DEFAULT_ZOOM),
 	offset(DEFAULT_OFFSET),
-	shift(0.5,0.5),
+	shift(0.5*s.width,0.5*s.height),
 	rotation(1.0,0) {}
 
 	/**
-	 * Creates a config with the given parameters
+	 * Creates a transform with the given parameters
 	 *
-	 * @param w the width of the image
-	 * @param h the height of the image
+	 * @param s the size of the image
 	 * @param z the zoom scale of the image
 	 * @param x the x offset of the image
 	 * @param y the y offset of the image
 	 * @param a the rotation angle of the image
 	 */
-	Transform::Transform(unsigned w, unsigned h, double z, double x, double y, double a):
-	width(w),
-	height(h),
-	zoom(z),
-	offset(x, y),
-	shift(0.5*w, 0.5*h),
+	Transform::Transform(ImgSize s, double z, double x, double y, double a):
+	size(s),
+	zoom(z), offset(x, y),
+	shift(0.5*s.width, 0.5*s.height),
 	rotation(polar(1.0, a * M_PI / 180)) {}
 
 	/**
-	 * Creates a transform with the given dimension xml
+	 * Creates a transform with the given s and xml
 	 *
-	 * @param dimension the dimension xml
+	 * @param s   the size of the image
+	 * @param xml the transform xml
 	 */
-	Transform::Transform(pugi::xml_node dimension):
-	width(dimension.attribute("x").as_uint()),
-	height(dimension.attribute("y").as_uint()),
-	shift(0.5*dimension.attribute("x").as_uint(),0.5*dimension.attribute("y").as_uint()) {}
-
-	/**
-	 * Creates a transform with the given dimension and transform xml
-	 *
-	 * @param dimension the dimension xml
-	 * @param transform the transform xml
-	 */
-	Transform::Transform(pugi::xml_node dimension, pugi::xml_node transform):
-	width(dimension.attribute("x").as_uint()),
-	height(dimension.attribute("y").as_uint()),
-	shift(0.5*dimension.attribute("x").as_uint(),0.5*dimension.attribute("y").as_uint())
-	{
-		// Get zoom
-		if (transform.attribute("zoom"))
-			zoom = transform.attribute("zoom").as_double();
-		else
-			zoom = DEFAULT_ZOOM;
-
-		// Get angle
-		if (transform.attribute("angle"))
-			rotation = polar(1.0, transform.attribute("angle").as_double());
-		else
-			rotation = complex<double>(1,0);
-
-		// Get offset
-		offset = DEFAULT_OFFSET;
-		if (transform.attribute("offx"))
-			offset += transform.attribute("offx").as_double();
-		if (transform.attribute("offy"))
-			offset += complex<double>(0,transform.attribute("offy").as_double());
-	}
+	Transform::Transform(ImgSize s, pugi::xml_node xml):
+	size(s),
+	zoom(xml.attribute("zoom")
+	   ? xml.attribute("zoom").as_double()
+	   : DEFAULT_ZOOM),
+	offset(xml.child("offset")
+		 ? complex<double>(xml.child("offset").attribute("x").as_double(),
+						   xml.child("offset").attribute("y").as_double())
+		 : DEFAULT_OFFSET),
+	shift(0.5*size.width,
+		  0.5*size.height),
+	rotation(xml.attribute("angle")
+		   ? polar(1.0, xml.attribute("angle").as_double())
+		   : complex<double>(1,0)) {}
 
 	/**
 	 * Copy constructor for transform
@@ -112,8 +121,7 @@ namespace juliaset
 	 * @param other the other transform to copy
 	 */
 	Transform::Transform(const Transform& other):
-	width(other.width), height(other.height),
-	zoom(other.zoom), offset(other.offset),
+	size(other.size), zoom(other.zoom), offset(other.offset),
 	shift(other.shift), rotation(other.rotation) {}
 
 	/**
@@ -126,6 +134,6 @@ namespace juliaset
 	 */
 	complex<double> Transform::operator()(const double& x, const double& y)
 	{
-		return (SCALE / height / zoom) * (complex<double>(x,y) - shift) * rotation + offset;
+		return (SCALE / size.height / zoom) * (complex<double>(x,y) - shift) * rotation + offset;
 	}
 }

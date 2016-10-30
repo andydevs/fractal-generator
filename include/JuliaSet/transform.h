@@ -43,22 +43,63 @@ namespace juliaset
 	const double DEFAULT_ANGLE = 0;
 
 	/**
-	 * Image transform parameters
+	 * Image size (height and width)
 	 *
 	 * @author  Anshul Kharbanda
-	 * @created 8 - 16 - 2016
+	 * @created 10 - 29 - 2016
 	 */
-	struct Transform
+	struct ImgSize
 	{
 		/**
 		 * The width of the image
-		 */
+		 */ 
 		unsigned width;
 
 		/**
 		 * The height of the image
 		 */
 		unsigned height;
+
+		/**
+		 * Creates an empty dimension
+		 */
+		ImgSize();
+
+		/**
+		 * Creates a dimension with the given width and height
+		 *
+		 * @param w the width of the image
+		 * @param h the height of the image
+		 */
+		ImgSize(unsigned w, unsigned h);
+
+		/**
+		 * Copy constructor for dimension
+		 *
+		 * @param other the other dimension to copy
+		 */
+		ImgSize(const ImgSize& other);
+
+		/**
+		 * Returns the area of the image
+		 *
+		 * @return the area of the image
+		 */
+		unsigned area();
+	};
+
+	/**
+	 * Image transform parameters
+	 *
+	 * @author  Anshul Kharbanda
+	 * @created 8 - 28 - 2016
+	 */
+	struct Transform
+	{
+		/**
+		 * The image size
+		 */
+		ImgSize size;
 
 		/**
 		 * The zoom scale of the image
@@ -86,39 +127,30 @@ namespace juliaset
 		Transform();
 
 		/**
-		 * Creates a default transform with the given parameters
+		 * Creates a default transform with the given size
 		 *
-		 * @param w the width of the image
-		 * @param h the height of the image
+		 * @param s the size of the image
 		 */
-		Transform(unsigned w, unsigned h);
+		Transform(ImgSize s);
 
 		/**
 		 * Creates a transform with the given parameters
 		 *
-		 * @param w the width of the image
-		 * @param h the height of the image
+		 * @param s the size of the image
 		 * @param z the zoom scale of the image
 		 * @param x the x offset of the image
 		 * @param y the y offset of the image
 		 * @param a the rotation angle of the image
 		 */
-		Transform(unsigned w, unsigned h, double z, double x, double y, double a);
+		Transform(ImgSize s, double z, double x, double y, double a);
 
 		/**
-		 * Creates a transform with the given dimension xml
+		 * Creates a transform with the given s and xml
 		 *
-		 * @param dimension the dimension xml
+		 * @param s   the size of the image
+		 * @param xml the transform xml
 		 */
-		Transform(pugi::xml_node dimension);
-
-		/**
-		 * Creates a transform with the given dimension and transform xml
-		 *
-		 * @param dimension the dimension xml
-		 * @param transform the transform xml
-		 */
-		Transform(pugi::xml_node dimension, pugi::xml_node transform);
+		Transform(ImgSize s, pugi::xml_node xml);
 
 		/**
 		 * Copy constructor for transform

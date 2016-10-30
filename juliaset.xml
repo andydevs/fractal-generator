@@ -2,22 +2,24 @@
 <!--Wallpaper-->
 <jimage save="wimage.jpg">
 	<complex real="-0.19" imag="-0.67"/>
-	<dimension x="1920" y="1080"/>
-	<transform angle="30" zoom="2" offx="-0.8" offy="0.5"/>
+	<size width="1920" height="1080"/>
+	<transform angle="30" zoom="2">
+		<offset real="-0.8" imag="0.5"/>
+	</transform>
 	<colormap preset="saree"/>
 </jimage>
 
 <!--Front Image-->
 <jimage save="fimage.jpg">
 	<complex real="-0.4" imag="0.6"/>
-	<dimension x="1920" y="1080"/>
+	<size width="1920" height="1080"/>
 	<transform zoom="2"/>
 	<colormap preset="flower"/>
 </jimage>
 
 <!--Mandelbrot-->
 <jimage mbrot="true" save="mimage.jpg">
-	<dimension x="1920" y="1080"/>
+	<size width="1920" height="1080"/>
 	<colormap type="gradient">
 		<start>0xaaaaaa</start>
 		<end>0xffff00</end>
