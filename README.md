@@ -57,7 +57,7 @@ Julia Sets can be approximated by using a computer. Each image is a complex grid
 
 Running the algorithm with multiple different numbers, one may determine that some values will yield juliaset with many infinite values and a monochromatic image, some will yield large blob-like patterns, and some will create intricate crystal-like structures. The Mandelbrot set developed by Benoit Mandelbrot, is a sort of roadmap of these various sets. This is generated with the same function, but, instead of assigning each pixel value to the initial value of the set, we set it to the value of the constant c and set the initial value of the set to z to 0. Running this process on each pixel will generate an image like this.
 
-![The Mandelbrot Set](mimage.jpg)
+![Mandelbrot Set (f(x) = z^2 + c)](mimage.jpg)
 
 The black regions on the Mandelbrot Set are the c constants that will generate black blobs, while the white areas are those that will create barely visible dust-like shapes. The sweet-spot is around the edge of the mandelbrot set, as these complex values will generate complex crystal shapes.
 
