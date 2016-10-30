@@ -1,6 +1,6 @@
 # -------------------------------------TARGET AND ARGS-----------------------------------
 
-TARGET = juliaset
+TARGET = fractal
 
 ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
 XML   = -xml juliaset.xml
