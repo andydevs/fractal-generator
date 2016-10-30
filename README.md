@@ -59,7 +59,7 @@ Running the algorithm with multiple different numbers, one may determine that so
 
 ![Mandelbrot Set (f(x) = z^2 + c)](mimage.jpg)
 
-The black regions on the Mandelbrot Set are the c constants that will generate black blobs, while the white areas are those that will create barely visible dust-like shapes. The sweet-spot is around the edge of the mandelbrot set, as these complex values will generate complex crystal shapes.
+The yellow regions on the Mandelbrot Set are the c constants that will generate blob shapes, while the grey areas are those that will create barely visible dust-like shapes. The sweet-spot is around the edge of the mandelbrot set, as these complex values will generate complex crystal shapes.
 
 ## Usage
 

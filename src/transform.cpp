@@ -33,24 +33,13 @@ namespace juliaset
 	 */
 	complex<double> rectFromXML(pugi::xml_node xml)
 	{
-		return complex<double>(
-			xml.attribute("real").as_double(),
-			xml.attribute("imag").as_double());
+		return xml 
+			? complex<double>(
+				xml.attribute("real").as_double(),
+				xml.attribute("imag").as_double())
+			: complex<double>(0,0);
 	}
-
-	/**
-	 * Parses polar complex from XML
-	 * 
-	 * @param xml the polar complex xml
-	 * 
-	 * @return complex parsed from XML
-	 */
-	complex<double> polarFromXML(pugi::xml_node xml)
-	{
-		return polar(1.0,
-			xml.attribute("angle").as_double() * M_PI / 180);
-	}
-
+	
 	/**
 	 * Creates an empty ImgSize
 	 */
@@ -137,17 +126,15 @@ namespace juliaset
 	 * @param xml the transform xml
 	 */
 	Transform::Transform(ImgSize s, pugi::xml_node xml):
-	size(s),
-	zoom(xml.attribute("zoom")
-	   ? xml.attribute("zoom").as_double()
-	   : DEFAULT_ZOOM),
-	offset(xml.child("offset")
-		 ? rectFromXML(xml.child("offset"))
-		 : DEFAULT_OFFSET),
-	shift(0.5*size.width, 0.5*size.height),
-	rotation(xml.attribute("angle")
-		   ? polarFromXML(xml)
-		   : complex<double>(1,0)) {}
+	size(s), shift(0.5*size.width, 0.5*size.height)
+	{
+		if (xml)
+		{
+			zoom     = xml.attribute("zoom").as_double(DEFAULT_ZOOM);
+			offset   = rectFromXML(xml.child("offset"));
+			rotation = polar(1.0, xml.attribute("angle").as_double(0) * M_PI / 180);
+		}
+	}
 
 	/**
 	 * Copy constructor for transform

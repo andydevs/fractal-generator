@@ -24,6 +24,7 @@ using namespace std;
 using namespace cimg_library;
 using namespace juliaset;
 using namespace juliaset::colormap;
+using namespace pugi;
 
 /**
  * Shows a list of the available colormaps
@@ -49,10 +50,19 @@ void testCmap(string sname, ColorMapRGB* cmap);
  * @param cmap  the image colormap
  * @param mbrot true if the mandelbrot set is to be generated
  * @param cons  the juliaset complex constant
+ *
+ * @return the number of iterations performed
  */
-void generate(string sname, Transform trans, 
+int generate(string sname, Transform trans, 
 	ColorMapRGB* cmap, bool mbrot, 
 	complex<double> cons);
+
+/**
+ * Runs the xml document with the given name
+ *
+ * @param docname the name of the document to parse
+ */
+void runXML(string docname);
 
 /**
  * The main function of the program
@@ -98,6 +108,8 @@ int main(int argc, char const *argv[])
 		showCmaps();
 	else if (testcmap) // Tests one cmap
 		testCmap(sname, getColorMap(cname));
+	else if (!xml.empty()) // Parse XML document
+		runXML(xml);
 	else // Command line interface
 		generate(sname, 
 				Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot), 
@@ -106,6 +118,55 @@ int main(int argc, char const *argv[])
 
 	// End program
 	return 0;
+}
+
+/**
+ * Runs the xml document with the given name
+ *
+ * @param docname the name of the document to parse
+ */
+void runXML(string docname)
+{
+	// Create xml doc
+	xml_document jdoc;
+	jdoc.load_file(docname.c_str());
+
+	// Parameters to extract
+	string sname;
+	ImgSize size;
+	Transform trans;
+	ColorMapRGB* cmap;
+	bool mbrot;
+	complex<double> cons(0,0);
+
+	// Start clock
+	double time = clock();
+
+	// Number of iterations
+	unsigned iter = 0;
+
+	// For each jimage object
+	for (xml_node jimage = jdoc.child("jimage"); 
+		jimage; jimage = jimage.next_sibling("jimage"))
+	{
+		// Extract parameters
+		sname = jimage.attribute("save").as_string();
+		size  = ImgSize(jimage.child("size"));
+		trans = Transform(size,jimage.child("transform"));
+		cmap  = parseColorMap(jimage.child("colormap"));
+		mbrot = jimage.attribute("mbrot").as_bool();
+		cons  = rectFromXML(jimage.child("complex"));
+
+		// Generate image
+		iter += generate(sname, trans, cmap, mbrot, cons);
+	}
+
+	// End clock
+	time = (clock() - time) / CLOCKS_PER_SEC;
+
+	// Print end information
+	cout << "Total Iterations: " << iter << endl;
+	cout << "Total Time:       " << time << " seconds" << endl;
 }
 
 /**
@@ -161,8 +222,10 @@ void testCmap(string sname, ColorMapRGB* cmap)
  * @param cmap  the image colormap
  * @param mbrot true if the mandelbrot set is to be generated
  * @param cons  the juliaset complex constant
+ *
+ * @return the number of iterations performed
  */
-void generate(string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, complex<double> cons)
+int generate(string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, complex<double> cons)
 {
 	// Image (with 3 color channels)
 	CImg<char> jimage(trans.size.width, trans.size.height, 1, 3);
@@ -170,7 +233,7 @@ void generate(string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, comp
 	// -----------------------------ALGORITHM-----------------------------
 
 	// Print dimensions
-	cout << "Generating..." << endl;
+	cout << "Generating " << sname << "..." << endl;
 
 	// Iterations
 	unsigned iter;
@@ -185,13 +248,15 @@ void generate(string sname, Transform trans, ColorMapRGB* cmap, bool mbrot, comp
 	// End clock
 	time = (clock() - time) / CLOCKS_PER_SEC;
 
-	// -------------------------------SAVE--------------------------------
+	// --------------------------SAVE AND RETURN--------------------------
 
 	// Save image
-	cout << "Saving..." << endl;
 	jimage.save(sname.c_str());
 
 	// Print end information
-	cout << "Iterations: "     << iter << endl;
-	cout << "Time (seconds): " << time << endl;
+	cout << "	Iterations: " << iter << endl;
+	cout << "	Time:       " << time << " seconds" << endl;
+
+	// Return iterations
+	return iter;
 }

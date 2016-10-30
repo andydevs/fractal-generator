@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--Wallpaper-->
 <jimage save="wimage.jpg">
 	<complex real="-0.19" imag="-0.67"/>
 	<size width="1920" height="1080"/>
-	<transform angle="30" zoom="2">
+	<transform angle="-30" zoom="2">
 		<offset real="-0.8" imag="0.5"/>
 	</transform>
 	<colormap preset="saree"/>

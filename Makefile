@@ -3,6 +3,7 @@
 TARGET = juliaset
 
 ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
+XML   = -xml juliaset.xml
 CMAP  = -test -cmap flower -save colormaptest.jpg
 CMAPS = -cmaps
 MANDELBROT = -mbrot -imgx 1920 -imgy 1080 -zoom 2 -offx -0.5 -cmap ink -save mimage.jpg
@@ -66,6 +67,12 @@ run: $(BINARY)
 	@echo Running with $(ARGS)
 	@echo -------------------------------
 	@$(BINARY) $(ARGS)
+	@echo -------------------------------
+
+xml: $(BINARY)
+	@echo Running with $(XML)
+	@echo -------------------------------
+	@$(BINARY) $(XML)
 	@echo -------------------------------
 
 wimage: $(BINARY)

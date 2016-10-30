@@ -45,6 +45,10 @@ namespace juliaset
 		 */
 		ColorMapRGB* parseColorMap(pugi::xml_node xml) 
 		{
+			// Return preset if set
+			if (xml.attribute("preset"))
+				return preset[xml.attribute("preset").value()];
+
 			// Get type 
 			const char* type = xml.attribute("type").value();
 
