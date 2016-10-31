@@ -1,14 +1,14 @@
 //-----------------------------------------------------------------------------------
-// Program: JuliaSet
+// Program: Fractal
 // 
-// Generates Julia set images
+// Generates Julia and Mandelbrot Set fractal images
 //
 // Author:  Anshul Kharbanda
 // Created: 8 - 14 - 2016
 //-----------------------------------------------------------------------------------
 
 // Headers being used
-#include "JuliaSet/juliaset.h"
+#include "Fractal/juliaset.h"
 
 // Libraries being used
 #include <cmath>
@@ -16,15 +16,15 @@
 // Libraries being used
 using namespace std;
 using namespace cimg_library;
-using namespace juliaset::colormap;
+using namespace fractal::colormap;
 
 /**
- * Contains functions and structs used by JuliaSet algorithm
+ * Contains functions and structs used by Fractal generator
  * 
  * @author  Anshul Kharbanda
  * @created 8 - 17 - 2016
  */
-namespace juliaset
+namespace fractal
 {
 	/**
 	 * Computes the JuliaSet algorithm of the given complex numbers

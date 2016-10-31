@@ -20,12 +20,12 @@
 #include <complex>
 
 /**
- * Contains functions and structs used by JuliaSet algorithm
+ * Contains functions and structs used by Fractal generator
  * 
  * @author  Anshul Kharbanda
  * @created 8 - 17 - 2016
  */
-namespace juliaset
+namespace fractal
 {
 	/**
 	 * Computes the Julia set algorithm of the given complex numbers
@@ -56,7 +56,7 @@ namespace juliaset
 	 *
 	 * @return total number of iterations that were calculated
 	 */
-	unsigned generateJuliaSetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, Transform& trans, const juliaset::colormap::ColorMapRGB* map);
+	unsigned generateJuliaSetImage(cimg_library::CImg<char>& image, const std::complex<double>& c, Transform& trans, const fractal::colormap::ColorMapRGB* map);
 
 	/**
 	 * Generates a Mandelbrot set image in the given object with the given complex constant
@@ -67,7 +67,7 @@ namespace juliaset
 	 *
 	 * @return total number of iterations that were calculated
 	 */
-	unsigned generateMandelbrotSetImage(cimg_library::CImg<char>& image, Transform& trans, const juliaset::colormap::ColorMapRGB* map);
+	unsigned generateMandelbrotSetImage(cimg_library::CImg<char>& image, Transform& trans, const fractal::colormap::ColorMapRGB* map);
 }
 
 #endif

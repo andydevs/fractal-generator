@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------------
-// Program: JuliaSet
+// Program: Fractal
 // 
-// Generates Julia set images
+// Generates Julia and Mandelbrot Set fractal images
 //
 // Author:  Anshul Kharbanda
 // Created: 8 - 14 - 2016
@@ -9,8 +9,8 @@
 
 // Headers being used
 #include "CImg/CImg.h"
-#include "JuliaSet/juliaset.h"
-#include "JuliaSet/colormaps.h"
+#include "Fractal/juliaset.h"
+#include "Fractal/colormaps.h"
 
 // Libraries being used
 #include <iostream>
@@ -22,8 +22,8 @@
 // Namespaces being used
 using namespace std;
 using namespace cimg_library;
-using namespace juliaset;
-using namespace juliaset::colormap;
+using namespace fractal;
+using namespace fractal::colormap;
 using namespace pugi;
 
 /**

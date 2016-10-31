@@ -1,14 +1,14 @@
 //-----------------------------------------------------------------------------------
-// Program: JuliaSet
+// Program: Fractal
 // 
-// Generates Julia set images
+// Generates Julia and Mandelbrot Set fractal images
 //
 // Author:  Anshul Kharbanda
 // Created: 8 - 14 - 2016
 //-----------------------------------------------------------------------------------
 
 // Headers being used
-#include "JuliaSet/colormaps.h"
+#include "Fractal/colormaps.h"
 
 // Libraries being used
 #include <cstring>
@@ -18,12 +18,12 @@
 using namespace std;
 
 /**
- * Contains functions and structs used by JuliaSet algorithm
+ * Contains functions and structs used by Fractal generator
  * 
  * @author  Anshul Kharbanda
  * @created 8 - 17 - 2016
  */
-namespace juliaset
+namespace fractal
 {
 	/**
 	 * Handles colormapping
