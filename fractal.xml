@@ -21,6 +21,9 @@
 <!--Mandelbrot-->
 <fractal mbrot="true" save="mimage.jpg">
 	<size width="1920" height="1080"/>
+	<transform zoom="2">
+		<offset real="-0.5"/>
+	</transform>
 	<colormap type="gradient">
 		<start>0xaaaaaa</start>
 		<end>0xffff00</end>

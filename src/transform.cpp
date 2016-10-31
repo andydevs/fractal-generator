@@ -90,7 +90,7 @@ namespace fractal
 	zoom(DEFAULT_ZOOM),
 	offset(DEFAULT_OFFSET),
 	shift(0.5,0.5),
-	rotation(1.0,0) {}
+	rotation(1.0,DEFAULT_ANGLE) {}
 
 	/**
 	 * Creates a default transform with the given size
@@ -128,12 +128,9 @@ namespace fractal
 	Transform::Transform(ImgSize s, pugi::xml_node xml):
 	size(s), shift(0.5*size.width, 0.5*size.height)
 	{
-		if (xml)
-		{
-			zoom     = xml.attribute("zoom").as_double(DEFAULT_ZOOM);
-			offset   = rectFromXML(xml.child("offset"));
-			rotation = polar(1.0, xml.attribute("angle").as_double(0) * M_PI / 180);
-		}
+		zoom     = xml.attribute("zoom").as_double(DEFAULT_ZOOM);
+		offset   = rectFromXML(xml.child("offset"));
+		rotation = polar(1.0, xml.attribute("angle").as_double(0) * M_PI / 180);
 	}
 
 	/**
