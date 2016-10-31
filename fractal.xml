@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--Wallpaper-->
-<jimage save="wimage.jpg">
+<fractal save="wimage.jpg">
 	<complex real="-0.19" imag="-0.67"/>
 	<size width="1920" height="1080"/>
 	<transform angle="-30" zoom="2">
 		<offset real="-0.8" imag="0.5"/>
 	</transform>
 	<colormap preset="saree"/>
-</jimage>
+</fractal>
 
 <!--Front Image-->
-<jimage save="fimage.jpg">
+<fractal save="fimage.jpg">
 	<complex real="-0.4" imag="0.6"/>
 	<size width="1920" height="1080"/>
 	<transform zoom="2"/>
 	<colormap preset="flower"/>
-</jimage>
+</fractal>
 
 <!--Mandelbrot-->
-<jimage mbrot="true" save="mimage.jpg">
+<fractal mbrot="true" save="mimage.jpg">
 	<size width="1920" height="1080"/>
 	<colormap type="gradient">
 		<start>0xaaaaaa</start>
 		<end>0xffff00</end>
 	</colormap>
-</jimage>
+</fractal>

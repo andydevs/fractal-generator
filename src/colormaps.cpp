@@ -62,15 +62,15 @@ namespace juliaset
 		}
 
 		/**
-		 * Initializes colormaps
+		 * Initializes presets
 		 *
-		 * @return error code if colormap is not parsed correctly
+		 * @return error code if preset is not parsed correctly
 		 */
-		int initColorMap()
+		int initPresets()
 		{
 			// Read colormap xml
 			pugi::xml_document cmapdoc;
-			cmapdoc.load_file("juliaset_colormaps.xml");
+			cmapdoc.load_file(PRESET_DOCUMENT.c_str());
 
 			// Buffers
 			ColorMapRGB* colormap;
@@ -99,11 +99,11 @@ namespace juliaset
 		}
 
 		/**
-		 * Returns a vector of all colormaps
+		 * Returns a vector of all presetss
 		 *
-		 * @return a vector of all colormaps
+		 * @return a vector of all presetss
 		 */
-		vector<string> getColorMaps()
+		vector<string> getPresets()
 		{
 			vector<string> maps;
 			for (map<string, ColorMapRGB*>::iterator it = preset.begin();
@@ -115,28 +115,14 @@ namespace juliaset
 		}
 
 		/**
-		 * Returns true if the given name is a colormap
+		 * Returns the preset with the given name
 		 *
-		 * @param name the name of the colormap to check
+		 * @param name the name of the preset to retrieve
 		 *
-		 * @return true if the given name is a colormap
+		 * @return the preset with the given name
 		 */
-		bool hasColorMap(std::string name)
+		ColorMapRGB* getPreset(std::string name)
 		{
-			map<string, ColorMapRGB*>::iterator it = preset.find(name);
-			return it != preset.end();
-		}
-
-		/**
-		 * Returns the colormap with the given name
-		 *
-		 * @param name the name of the colormap to retrieve
-		 *
-		 * @return the colormap with the given name
-		 */
-		ColorMapRGB* getColorMap(string name)
-		{
-			// Return colormap
 			return preset[name];
 		}
 	}

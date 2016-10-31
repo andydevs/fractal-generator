@@ -3,7 +3,7 @@
 TARGET = fractal
 
 ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
-XML   = -xml juliaset.xml
+XML   = -xml fractal.xml
 CMAP  = -test -cmap flower -save colormaptest.jpg
 CMAPS = -cmaps
 MANDELBROT = -mbrot -imgx 1920 -imgy 1080 -zoom 2 -offx -0.5 -cmap ink -save mimage.jpg
@@ -32,7 +32,7 @@ INSDIR = /usr/bin
 
 # ----------------------------------------OTHER FILES----------------------------------------
 
-CMAPS = juliaset_colormaps.xml
+CMAPS = fractal_colormaps.xml
 
 # ----------------------------------------MAKE RULES-----------------------------------------
 

@@ -29,7 +29,7 @@ using namespace pugi;
 /**
  * Shows a list of the available colormaps
  */
-void showCmaps();
+void showPresets();
 
 /**
  * Generates a 400x300 test image for the given colormap
@@ -97,24 +97,26 @@ int main(int argc, char const *argv[])
 	bool help       = cimg_option("-help",  false,        "Prints the help message")
 				   || cimg_option("-h",     false,        "Prints the help message");
 
-	// Initialize colormaps
-	initColorMap();
+	// Initialize presets
+	initPresets();
 
-	// -----------------------------FUNCTIONS-----------------------------
-
-	if (help) // If they just wanted help
-		printf("\n");
-	else if (showcmaps) // Shows all cmaps
-		showCmaps();
-	else if (testcmap) // Tests one cmap
-		testCmap(sname, getColorMap(cname));
-	else if (!xml.empty()) // Parse XML document
+	// Functions
+	if (help) 
+		// If they just wanted help
+		cout << endl;
+	else if (showcmaps) 
+		// Shows all cmaps
+		showPresets();
+	else if (testcmap) 
+		// Tests one cmap
+		testCmap(sname, getPreset(cname));
+	else if (!xml.empty()) 
+		// Parse XML document
 		runXML(xml);
-	else // Command line interface
-		generate(sname, 
-				Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot), 
-				getColorMap(cname), mandelbrot,
-				complex<double>(real,imag));
+	else 
+		// Command line interface
+		generate(sname, Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot), 
+				getPreset(cname), mandelbrot, complex<double>(real,imag));
 
 	// End program
 	return 0;
@@ -145,17 +147,17 @@ void runXML(string docname)
 	// Number of iterations
 	unsigned iter = 0;
 
-	// For each jimage object
-	for (xml_node jimage = jdoc.child("jimage"); 
-		jimage; jimage = jimage.next_sibling("jimage"))
+	// For each fractal object
+	for (xml_node fractal = jdoc.child("fractal"); 
+		fractal; fractal = fractal.next_sibling("fractal"))
 	{
 		// Extract parameters
-		sname = jimage.attribute("save").as_string();
-		size  = ImgSize(jimage.child("size"));
-		trans = Transform(size,jimage.child("transform"));
-		cmap  = parseColorMap(jimage.child("colormap"));
-		mbrot = jimage.attribute("mbrot").as_bool();
-		cons  = rectFromXML(jimage.child("complex"));
+		sname = fractal.attribute("save").as_string();
+		size  = ImgSize(fractal.child("size"));
+		trans = Transform(size,fractal.child("transform"));
+		cmap  = parseColorMap(fractal.child("colormap"));
+		mbrot = fractal.attribute("mbrot").as_bool();
+		cons  = rectFromXML(fractal.child("complex"));
 
 		// Generate image
 		iter += generate(sname, trans, cmap, mbrot, cons);
@@ -172,13 +174,13 @@ void runXML(string docname)
 /**
  * Shows a list of the available colormaps
  */
-void showCmaps()
+void showPresets()
 {
 	// Get cmaps
-	vector<string> v = getColorMaps();
+	vector<string> v = getPresets();
 
 	// Print cmaps
-	cout << "Available colormaps:" << endl;
+	cout << "Available preset names:" << endl;
 	for (vector<string>::iterator it = v.begin(); it != v.end(); it++)
 		cout << "\t" << *it << endl;
 }

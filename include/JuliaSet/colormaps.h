@@ -35,6 +35,11 @@ namespace juliaset
 	namespace colormap
 	{
 		/**
+		 * The document containing preset colormaps
+		 */
+		const std::string PRESET_DOCUMENT("fractal_colormaps.xml");
+
+		/**
 		 * Returns the colormap parsed by the given xml
 		 *
 		 * @param xml the xml object being parsed
@@ -44,36 +49,27 @@ namespace juliaset
 		ColorMapRGB* parseColorMap(pugi::xml_node xml);
 
 		/**
-		 * Initializes colormaps
+		 * Initializes presets
 		 *
-		 * @return error code if colormap is not parsed correctly
+		 * @return error code if preset is not parsed correctly
 		 */
-		int initColorMap();
+		int initPresets();
 
 		/**
-		 * Returns a vector of all colormaps
+		 * Returns a vector of all presets
 		 *
-		 * @return a vector of all colormaps
+		 * @return a vector of all presets
 		 */
-		std::vector<std::string> getColorMaps();
+		std::vector<std::string> getPresets();
 
 		/**
-		 * Returns true if the given name is a colormap
+		 * Returns the preset with the given name
 		 *
-		 * @param name the name of the colormap to check
+		 * @param name the name of the preset to retrieve
 		 *
-		 * @return true if the given name is a colormap
+		 * @return the preset with the given name
 		 */
-		bool hasColorMap(std::string name);
-
-		/**
-		 * Returns the colormap with the given name
-		 *
-		 * @param name the name of the colormap to retrieve
-		 *
-		 * @return the colormap with the given name
-		 */
-		ColorMapRGB* getColorMap(std::string name);
+		ColorMapRGB* getPreset(std::string name);
 	}
 }
 
