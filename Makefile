@@ -2,6 +2,7 @@
 
 TARGET = fractal
 
+HELP  = -h
 ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
 XML   = -xml fractal.xml
 CMAP  = -test -cmap flower -save colormaptest.jpg
@@ -62,6 +63,14 @@ install: $(BINARY)
 uninstall:
 	@rm $(INSDIR)/$(TARGET)
 	@rm $(INSDIR)/$(CMAPS)
+
+# ------------------------------------------TESTS-------------------------------------------
+
+help: $(BINARY)
+	@echo Running with $(HELP)
+	@echo -------------------------------
+	@$(BINARY) $(HELP)
+	@echo -------------------------------
 
 run: $(BINARY)
 	@echo Running with $(ARGS)

@@ -12,6 +12,8 @@
 
 // Libraries being used
 #include <cstring>
+#include <iostream>
+#include <sstream>
 #include <map>
 
 // Namespaces being used
@@ -61,6 +63,27 @@ namespace fractal
 				return NULL;
 		}
 
+		int loadDocument(pugi::xml_document& document)
+		{
+			// Paths to check
+			vector<string> paths;
+			paths.push_back(string("."));
+			paths.push_back(string("/usr/bin"));
+
+			// Go through each path and return if file is found there
+			std::string path;
+			pugi::xml_parse_result res;
+			for (vector<string>::iterator i = paths.begin(); i != paths.end(); ++i)
+			{
+				path = *i + "/" + PRESET_DOCUMENT;
+				res = document.load_file(path.c_str());
+				if (res) return 0;
+			}
+
+			// Return 1 if not
+			return 1;
+		}
+
 		/**
 		 * Initializes presets
 		 *
@@ -68,16 +91,16 @@ namespace fractal
 		 */
 		int initPresets()
 		{
-			// Read colormap xml
+			// Default preset
+			preset["rainbow"] = new RainbowMapRGB();
+
+			// Colormap xml document
 			pugi::xml_document cmapdoc;
-			cmapdoc.load_file(PRESET_DOCUMENT.c_str());
+			if (loadDocument(cmapdoc)) return 1;
 
 			// Buffers
 			ColorMapRGB* colormap;
 			string name;
-
-			// Default preset
-			preset["rainbow"] = new RainbowMapRGB();
 
 			// For every entry in the colormap doc
 			for (pugi::xml_node entry = cmapdoc.child("entry"); 
