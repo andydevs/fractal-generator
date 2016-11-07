@@ -12,6 +12,7 @@
 
 // Headers being used
 #include "colormap.h"
+#include "error.h"
 
 // Libraries being used
 #include <pugixml-1.7/src/pugixml.hpp>

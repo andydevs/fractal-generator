@@ -144,7 +144,7 @@ namespace fractal
 		 *
 		 * @return the preset with the given name
 		 */
-		ColorMapRGB* getPreset(std::string name)
+		ColorMapRGB* getPreset(string name)
 		{
 			return preset[name];
 		}
