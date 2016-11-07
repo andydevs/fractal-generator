@@ -7,13 +7,16 @@ ERRREAD = -xml foobar.xml
 ERRXML  = -xml err.xml
 ERRCMAP = -cmap foobar
 
-HELP  = -h
-ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
-XML   = -xml fractal.xml
-CMAP  = -test -cmap flower -save colormaptest.jpg
-CMAPS = -cmaps
-MANDELBROT = -mbrot -imgx 1920 -imgy 1080 -zoom 2 -offx -0.5 -cmap ink -save mimage.jpg
-WALLPAPER  = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -rot -30 -zoom 2 -offx -0.8 -offy 0.5 -save wimage.jpg -cmap saree
+# Fractal Images
+FIMAGE = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
+MIMAGE = -mbrot -imgx 1920 -imgy 1080 -zoom 2 -offx -0.5 -cmap ink -save mimage.jpg
+WIMAGE = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -rot -30 -zoom 2 -offx -0.8 -offy 0.5 -save wimage.jpg -cmap saree
+
+# Other tests
+HELP   = -help
+XML    = -xml fractal.xml
+TCMAP  = -test -cmap flower -save colormaptest.jpg
+LCMAPS = -cmaps
 
 # ----------------------------------------MAKE CONFIG----------------------------------------
 
@@ -38,7 +41,7 @@ INSDIR = /usr/bin
 
 # ----------------------------------------OTHER FILES----------------------------------------
 
-CMAPS = fractal_colormaps.xml
+PRESET = fractal_colormaps.xml
 
 # ----------------------------------------MAKE RULES-----------------------------------------
 
@@ -63,11 +66,11 @@ clean:
 
 install: $(BINARY)
 	@cp $(BINARY) $(INSDIR)
-	@cp $(CMAPS) $(INSDIR)
+	@cp $(PRESET) $(INSDIR)
 
 uninstall:
 	@rm $(INSDIR)/$(TARGET)
-	@rm $(INSDIR)/$(CMAPS)
+	@rm $(INSDIR)/$(PRESET)
 
 # ------------------------------------------TESTS-------------------------------------------
 
@@ -89,16 +92,28 @@ errread: $(BINARY)
 	@$(BINARY) $(ERRREAD)
 	@echo -------------------------------
 
+fimage: $(BINARY)
+	@echo Running with $(FIMAGE)
+	@echo -------------------------------
+	@$(BINARY) $(FIMAGE)
+	@echo -------------------------------
+
+wimage: $(BINARY)
+	@echo Running with $(WIMAGE)
+	@echo -------------------------------
+	@$(BINARY) $(WIMAGE)
+	@echo -------------------------------
+
+mimage: $(BINARY)
+	@echo Running with $(MIMAGE)
+	@echo -------------------------------
+	@$(BINARY) $(MIMAGE)
+	@echo -------------------------------
+
 help: $(BINARY)
 	@echo Running with $(HELP)
 	@echo -------------------------------
 	@$(BINARY) $(HELP)
-	@echo -------------------------------
-
-run: $(BINARY)
-	@echo Running with $(ARGS)
-	@echo -------------------------------
-	@$(BINARY) $(ARGS)
 	@echo -------------------------------
 
 xml: $(BINARY)
@@ -107,26 +122,14 @@ xml: $(BINARY)
 	@$(BINARY) $(XML)
 	@echo -------------------------------
 
-wimage: $(BINARY)
-	@echo Running with $(WALLPAPER)
+listcmaps: $(BINARY)
+	@echo Running with $(LCMAPS)
 	@echo -------------------------------
-	@$(BINARY) $(WALLPAPER)
-	@echo -------------------------------
-
-mimage: $(BINARY)
-	@echo Running with $(MANDELBROT)
-	@echo -------------------------------
-	@$(BINARY) $(MANDELBROT)
-	@echo -------------------------------
-
-cmaps: $(BINARY)
-	@echo Running with $(CMAPS)
-	@echo -------------------------------
-	@$(BINARY) $(CMAPS)
+	@$(BINARY) $(LCMAPS)
 	@echo -------------------------------
 
 testcmap: $(BINARY)
-	@echo Running with $(CMAP)
+	@echo Running with $(TCMAP)
 	@echo -------------------------------
-	@$(BINARY) $(CMAP)
+	@$(BINARY) $(TCMAP)
 	@echo -------------------------------
