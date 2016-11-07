@@ -2,9 +2,10 @@
 
 TARGET = fractal
 
+# Error arguments
 ERRREAD = -xml foobar.xml 
 ERRXML  = -xml err.xml
-ERROR   = -cmap foobar
+ERRCMAP = -cmap foobar
 
 HELP  = -h
 ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
@@ -70,10 +71,10 @@ uninstall:
 
 # ------------------------------------------TESTS-------------------------------------------
 
-error: $(BINARY)
-	@echo Running with $(ERROR)
+errcmap: $(BINARY)
+	@echo Running with $(ERRCMAP)
 	@echo -------------------------------
-	@$(BINARY) $(ERROR)
+	@$(BINARY) $(ERRCMAP)
 	@echo -------------------------------
 
 errxml: $(BINARY)
