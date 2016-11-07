@@ -2,6 +2,7 @@
 
 TARGET = fractal
 
+ERRXML = -xml err.xml
 ERROR = -cmap yuyu
 HELP  = -h
 ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
@@ -77,6 +78,12 @@ error: $(BINARY)
 	@echo Running with $(ERROR)
 	@echo -------------------------------
 	@$(BINARY) $(ERROR)
+	@echo -------------------------------
+
+errxml: $(BINARY)
+	@echo Running with $(ERRXML)
+	@echo -------------------------------
+	@$(BINARY) $(ERRXML)
 	@echo -------------------------------
 
 run: $(BINARY)

@@ -46,8 +46,10 @@ namespace fractal
 		 * @param xml the xml object being parsed
 		 * 
 		 * @return the colormap parsed by the given xml
+		 *
+		 * @throw Error upon error parsing xml
 		 */
-		ColorMapRGB* parseColorMap(pugi::xml_node xml);
+		ColorMapRGB* parseColorMap(pugi::xml_node xml) throw(Error);
 
 		/**
 		 * Initializes presets

@@ -114,13 +114,17 @@ Each fractal image being generated is represented by a `fractal` tag. Fractal fi
 
 Fractal objects must have a `save` attribute defined, which determines the location that the file is to be saved to. They can also have an `mbrot` attribute, a boolean that is true if the image being generated is the mandelbrot set, but defaults to false.
 
-The complex tag is optional and defaults to 0 + 0i (it is also ignored if the mbrot attribute is set to true). The real component of the complex is set by the real attribute, while the imaginary component is set by the imag attribute. These do not have to be both defined, i.e. `<complex real="-0.4"/> is also valid.
+The complex tag is optional and defaults to 0 + 0i (it is also ignored if the mbrot attribute is set to true). The real component of the complex is set by the real attribute, while the imaginary component is set by the imag attribute. For example, `<complex real="-0.4" imag="-0.6"/>` equals a complex number of -0.4 - 0.6i. These do not have to be both defined, i.e. `<complex real="-0.4"/>` is also valid and equals -0.4 + 0i.
 
-The size tag is required and must define a height and width component, which correspond to the height and width of the image to be generated.
+The size tag is required and must define a height and width component, which correspond to the height and width of the image to be generated. `<size width="400" height="300">` sets the image width to 400 and the image height to 300.
 
 The transform component defines the transformation of the image (the zoom, offset, and angle). The angle represented by the attribute `angle` (defaults to 0), and the zoom is represented by the attribute `zoom` (defaults to 1). The offset is represented by a child tag in the transform named offset. It is identical to the complex tag, in that it has `real` and `imag` attributes which define the real and imaginary components of the offset complex.
 
-Finally there is the colormap tag, which defines the colormap to use when generating the image. This can be defined in one of three ways. First off, the `type` attribute defines the type of colormap. There are two types: gradient and rainbow, each have their own children tags to define. 
+##### Colormaps
+
+The colormap tag defines the colormap to use when generating the image. This can be defined in one of three ways.
+
+##### Gradient
 
 The gradient type linearly interpolates between two given color values. The gradient requires that a `start` and `end` tag be defined, which color values as integers. These are the start and end color values respectfully.
 
@@ -131,6 +135,8 @@ The gradient type linearly interpolates between two given color values. The grad
 </colormap>
 ```
 
+##### Rainbow
+
 The rainbow type computes three sinusoidal functions for the red green and blue values of the color, each with it's own phase and frequency. The rainbow type requires `phase` and `freq` components, both of which require `r`, `g`, and `b` attributes which define the red, green, and blue values of both paramters respectfully. These values have defaults, for `phase`, these are all 0, and for `freq`, these are all 1.
 
 ```xml
@@ -139,6 +145,8 @@ The rainbow type computes three sinusoidal functions for the red green and blue 
 	<freq r="2" g="1" b="4"/>
 </colormap>
 ```
+
+##### Preset
 
 Finally, you can set a preset colormap instead using the `preset` attribute. The value of the attribute is the name of the preset, and this attribute supercedes all other options, i.e. if the preset is set, the colormap will be set to the preset, and not be defined by any other parameters set. 
 

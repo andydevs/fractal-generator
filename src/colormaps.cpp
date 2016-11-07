@@ -44,12 +44,14 @@ namespace fractal
 		 * @param xml the xml object being parsed
 		 * 
 		 * @return the colormap parsed by the given xml
+		 *
+		 * @throw Error upon error parsing xml
 		 */
-		ColorMapRGB* parseColorMap(pugi::xml_node xml) 
+		ColorMapRGB* parseColorMap(pugi::xml_node xml) throw(Error)
 		{
 			// Return preset if set
 			if (xml.attribute("preset"))
-				return preset[xml.attribute("preset").value()];
+				return getPreset(xml.attribute("preset").value());
 
 			// Get type 
 			const char* type = xml.attribute("type").value();
@@ -60,7 +62,7 @@ namespace fractal
 			else if (!strcmp(type, "gradient"))
 				return new GradientMapRGB(xml);
 			else
-				return NULL;
+				throw Error("Undefined colormap type: " + string(type) + " Available types: gradient, rainbow. See README for details.");
 		}
 
 		int loadDocument(pugi::xml_document& document)

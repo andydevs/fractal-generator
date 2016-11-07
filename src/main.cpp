@@ -63,7 +63,7 @@ int generate(string sname, Transform trans,
  *
  * @param docname the name of the document to parse
  */
-void runXML(string docname);
+void runXML(string docname) throw(Error);
 
 /**
  * The main function of the program
@@ -137,7 +137,7 @@ int main(int argc, char const *argv[])
  *
  * @param docname the name of the document to parse
  */
-void runXML(string docname)
+void runXML(string docname) throw(Error)
 {
 	// Create xml doc
 	xml_document jdoc;
@@ -158,9 +158,8 @@ void runXML(string docname)
 	unsigned iter = 0;
 
 	// For each fractal object
-	for (xml_node fractal = jdoc.child("fractal"); 
-		fractal; fractal = fractal.next_sibling("fractal"))
-	{
+	for (xml_node fractal = jdoc.child("fractal"); fractal; fractal = fractal.next_sibling("fractal"))
+	{	
 		// Extract parameters
 		sname = fractal.attribute("save").as_string();
 		size  = ImgSize(fractal.child("size"));
