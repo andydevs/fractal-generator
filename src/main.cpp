@@ -9,7 +9,7 @@
 
 // Headers being used
 #include "CImg/CImg.h"
-#include "Fractal/juliaset.h"
+#include "Fractal/fractal.h"
 #include "Fractal/colormaps.h"
 #include "Fractal/error.h"
 
@@ -23,9 +23,9 @@
 // Namespaces being used
 using namespace std;
 using namespace cimg_library;
+using namespace pugi;
 using namespace fractal;
 using namespace fractal::colormap;
-using namespace pugi;
 
 /**
  * Shows a list of the available colormaps

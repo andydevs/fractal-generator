@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------------
-// Program: JuliaSet
+// Program: Fractal
 // 
-// Generates Julia set images
+// Generates Julia and Mandelbrot Set fractal images
 //
 // Author:  Anshul Kharbanda
 // Created: 8 - 14 - 2016

@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------------
 
 // Headers being used
-#include "Fractal/juliaset.h"
+#include "Fractal/fractal.h"
 
 // Libraries being used
 #include <cmath>
