@@ -18,6 +18,7 @@
 
 // Namespaces being used
 using namespace std;
+using namespace pugi;
 
 /**
  * Contains functions and structs used by Fractal generator
@@ -47,7 +48,7 @@ namespace fractal
 		 *
 		 * @throw Error upon error parsing xml
 		 */
-		ColorMapRGB* parseColorMap(pugi::xml_node xml) throw(Error)
+		ColorMapRGB* parseColorMap(xml_node xml) throw(Error)
 		{
 			// Return preset if set
 			if (xml.attribute("preset"))
@@ -65,62 +66,61 @@ namespace fractal
 				throw Error("Undefined colormap type: " + string(type) + " Available types: gradient, rainbow. See README for details.");
 		}
 
-		int loadDocument(pugi::xml_document& document)
+		/**
+		 * Loads the preset document to the given xml document
+		 * 
+		 * @param document the xml document to load to
+		 *
+		 * @return the parse results
+		 */
+		xml_parse_result loadDocument(xml_document& document)
 		{
 			// Paths to check
 			vector<string> paths;
 			paths.push_back(string("."));
 			paths.push_back(string("/usr/bin"));
 
-			// Go through each path and return if file is found there
-			std::string path;
-			pugi::xml_parse_result res;
+			// Go through each path and break if file is found there
+			xml_parse_result result;
 			for (vector<string>::iterator i = paths.begin(); i != paths.end(); ++i)
 			{
-				path = *i + "/" + PRESET_DOCUMENT;
-				res = document.load_file(path.c_str());
-				if (res) return 0;
+				result = document.load_file((*i + "/" + PRESET_DOCUMENT).c_str());
+				if (result) break;
 			}
 
-			// Return 1 if not
-			return 1;
+			// Return parse result
+			return result;
 		}
 
 		/**
 		 * Initializes presets
 		 *
-		 * @return error code if preset is not parsed correctly
+		 * @throw Error upon error parsing preset document
 		 */
-		int initPresets()
+		void initPresets() throw (Error)
 		{
 			// Default preset
 			preset["rainbow"] = new RainbowMapRGB();
 
-			// Colormap xml document
-			pugi::xml_document cmapdoc;
-			if (loadDocument(cmapdoc)) return 1;
-
-			// Buffers
-			ColorMapRGB* colormap;
-			string name;
+			// Read cmapdoc (error if fail)
+			xml_document cmapdoc;
+			xml_parse_result result = loadDocument(cmapdoc);
+			if (!result) throw Error("When reading preset document (" + PRESET_DOCUMENT + ") - " + result.description());
 
 			// For every entry in the colormap doc
-			for (pugi::xml_node entry = cmapdoc.child("entry"); 
-				 entry; entry = entry.next_sibling("entry"))
+			string name;
+			for (xml_node entry = cmapdoc.child("entry"); entry; entry = entry.next_sibling("entry"))
 			{
-				// Get name and colormap
-				name     = string(entry.child("name").text().get());
-				colormap = parseColorMap(entry.child("colormap"));
+				// Get name
+				name = string(entry.child("name").text().get());
+
+				// Error if name is empty
+				if (name.empty())
+					throw Error("When reading preset document (" + PRESET_DOCUMENT + ") - Entity does not have defined name");
 				
 				// Set name in preset to colormap
-				preset[name] = colormap;
+				preset[name] = parseColorMap(entry.child("colormap"));
 			}
-
-			// Delete final colormap
-			delete colormap;
-			
-			// Return success
-			return 0;
 		}
 
 		/**

@@ -54,9 +54,9 @@ namespace fractal
 		/**
 		 * Initializes presets
 		 *
-		 * @return error code if preset is not parsed correctly
+		 * @throw Error upon error parsing preset document
 		 */
-		int initPresets();
+		void initPresets() throw(Error);
 
 		/**
 		 * Returns a vector of all presets
