@@ -139,9 +139,10 @@ int main(int argc, char const *argv[])
  */
 void runXML(string docname) throw(Error)
 {
-	// Create xml doc
+	// Read xml doc (error if read fails)
 	xml_document jdoc;
-	jdoc.load_file(docname.c_str());
+	xml_parse_result result = jdoc.load_file(docname.c_str());
+	if (!result) throw Error("When reading " + docname + " - " + result.description());
 
 	// Parameters to extract
 	string sname;

@@ -2,8 +2,10 @@
 
 TARGET = fractal
 
-ERRXML = -xml err.xml
-ERROR = -cmap yuyu
+ERRREAD = -xml foobar.xml 
+ERRXML  = -xml err.xml
+ERROR   = -cmap foobar
+
 HELP  = -h
 ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
 XML   = -xml fractal.xml
@@ -68,12 +70,6 @@ uninstall:
 
 # ------------------------------------------TESTS-------------------------------------------
 
-help: $(BINARY)
-	@echo Running with $(HELP)
-	@echo -------------------------------
-	@$(BINARY) $(HELP)
-	@echo -------------------------------
-
 error: $(BINARY)
 	@echo Running with $(ERROR)
 	@echo -------------------------------
@@ -84,6 +80,18 @@ errxml: $(BINARY)
 	@echo Running with $(ERRXML)
 	@echo -------------------------------
 	@$(BINARY) $(ERRXML)
+	@echo -------------------------------
+
+errread: $(BINARY)
+	@echo Running with $(ERRREAD)
+	@echo -------------------------------
+	@$(BINARY) $(ERRREAD)
+	@echo -------------------------------
+
+help: $(BINARY)
+	@echo Running with $(HELP)
+	@echo -------------------------------
+	@$(BINARY) $(HELP)
 	@echo -------------------------------
 
 run: $(BINARY)

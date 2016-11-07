@@ -5,5 +5,5 @@
 	<complex real="-0.4" imag="0.6"/>
 	<size width="1920" height="1080"/>
 	<transform zoom="2"/>
-	<colormap preset="yuyu"/>
+	<colormap preset="foobar"/>
 </fractal>
