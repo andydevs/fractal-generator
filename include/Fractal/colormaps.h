@@ -69,8 +69,10 @@ namespace fractal
 		 * @param name the name of the preset to retrieve
 		 *
 		 * @return the preset with the given name
+		 *
+		 * @throw Error when name is not a preset
 		 */
-		ColorMapRGB* getPreset(std::string name);
+		ColorMapRGB* getPreset(std::string name) throw(Error);
 	}
 }
 

@@ -11,6 +11,7 @@
 #include "CImg/CImg.h"
 #include "Fractal/juliaset.h"
 #include "Fractal/colormaps.h"
+#include "Fractal/error.h"
 
 // Libraries being used
 #include <iostream>
@@ -97,29 +98,38 @@ int main(int argc, char const *argv[])
 	bool help       = cimg_option("-help",  false,        "Prints the help message")
 				   || cimg_option("-h",     false,        "Prints the help message");
 
-	// Initialize presets
-	initPresets();
+	try
+	{
+		// Initialize presets
+		initPresets();
 
-	// Functions
-	if (help) 
-		// If they just wanted help
-		cout << endl;
-	else if (showcmaps) 
-		// Shows all cmaps
-		showPresets();
-	else if (testcmap) 
-		// Tests one cmap
-		testCmap(sname, getPreset(cname));
-	else if (!xml.empty()) 
-		// Parse XML document
-		runXML(xml);
-	else 
-		// Command line interface
-		generate(sname, Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot), 
-				getPreset(cname), mandelbrot, complex<double>(real,imag));
+		// Functions
+		if (help) 
+			// If they just wanted help
+			cout << endl;
+		else if (showcmaps) 
+			// Shows all cmaps
+			showPresets();
+		else if (testcmap) 
+			// Tests one cmap
+			testCmap(sname, getPreset(cname));
+		else if (!xml.empty()) 
+			// Parse XML document
+			runXML(xml);
+		else 
+			// Command line interface
+			generate(sname, Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot), 
+					getPreset(cname), mandelbrot, complex<double>(real,imag));
 
-	// End program
-	return 0;
+		// End program
+		return 0;
+	}
+	catch (Error e)
+	{
+		// Print error and return 1
+		cout << "Error: " << e.what() << endl;
+		return 1;
+	}
 }
 
 /**

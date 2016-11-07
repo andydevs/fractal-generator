@@ -143,10 +143,19 @@ namespace fractal
 		 * @param name the name of the preset to retrieve
 		 *
 		 * @return the preset with the given name
+		 *
+		 * @throw Error when name is not a preset
 		 */
-		ColorMapRGB* getPreset(string name)
+		ColorMapRGB* getPreset(string name) throw(Error)
 		{
-			return preset[name];
+			// Find name
+			map<string, ColorMapRGB*>::iterator it = preset.find(name);
+
+			// Return preset if found, else throw error
+			if (it != preset.end())
+				return it->second;
+			else
+				throw Error("Undefined preset name: " + name + ". See -cmaps for available presets.");
 		}
 	}
 }

@@ -2,6 +2,7 @@
 
 TARGET = fractal
 
+ERROR = -cmap yuyu
 HELP  = -h
 ARGS  = -cr -0.4 -ci 0.6 -imgx 1920 -imgy 1080 -zoom 2 -cmap flower -save fimage.jpg
 XML   = -xml fractal.xml
@@ -70,6 +71,12 @@ help: $(BINARY)
 	@echo Running with $(HELP)
 	@echo -------------------------------
 	@$(BINARY) $(HELP)
+	@echo -------------------------------
+
+error: $(BINARY)
+	@echo Running with $(ERROR)
+	@echo -------------------------------
+	@$(BINARY) $(ERROR)
 	@echo -------------------------------
 
 run: $(BINARY)

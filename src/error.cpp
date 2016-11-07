@@ -26,20 +26,24 @@ namespace fractal
 	 *
 	 * @param message the message to store
 	 */
-	Error::Error(const char* message): exception()
-	{
-		m_message = message;
-	}
+	Error::Error(const char* message): exception(), m_message(message)
+	{}
 
 	/**
 	 * Creates an Error with the given message
 	 *
 	 * @param message the message to store
 	 */
-	Error::Error(string message): exception()
-	{
-		m_message = message.c_str();
-	}
+	Error::Error(string message): exception(), m_message(message)
+	{}
+
+	/**
+	 * Copy constructor for Error
+	 *
+	 * @param other the other Error to copy
+	 */
+	Error::Error(const Error& other): exception(other), m_message(other.m_message)
+	{}
 
 	/**
 	 * Destroys the error
@@ -53,6 +57,6 @@ namespace fractal
 	 */
 	const char* Error::what() const throw()
 	{
-		return m_message;
+		return m_message.c_str();
 	}
 }

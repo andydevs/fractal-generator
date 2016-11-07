@@ -34,7 +34,7 @@ namespace fractal
 		/**
 		 * The message of the error
 		 */
-		const char* m_message;
+		std::string m_message;
 	public:
 		/**
 		 * Creates an Error with the given message
@@ -49,6 +49,13 @@ namespace fractal
 		 * @param message the message to store
 		 */
 		Error(std::string message);
+
+		/**
+		 * Copy constructor for Error
+		 *
+		 * @param other the other Error to copy
+		 */
+		Error(const Error& other);
 
 		/**
 		 * Destroys the error
