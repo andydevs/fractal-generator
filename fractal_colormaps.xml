@@ -32,6 +32,14 @@
 </entry>
 
 <entry>
+	<name>ice</name>
+	<colormap type="rainbow">
+		<phase r='0' g='0' b='2'/>
+		<freq r='2' g='2' b='0.1'/>
+	</colormap>
+</entry>
+
+<entry>
 	<name>fruity</name>
 	<colormap type="rainbow">
 		<phase r='0' g='4.5' b='2.5'/>
