@@ -39,8 +39,8 @@ namespace fractal
 		// Iterations at this point
 		unsigned n;
 
-		// Try 256 iterations
-		for (n = 0; n < 256; n++)
+		// Iterative process
+		for (n = 0; n < MAX_ITER; n++)
 		{
 			// Iteration function
 			z = pow(z, 2) + c;
@@ -68,8 +68,8 @@ namespace fractal
 		// Zero z
 		complex<double>z;
 
-		// Try 256 iterations
-		for (n = 0; n < 256; ++n)
+		// Iterative process
+		for (n = 0; n < MAX_ITER; ++n)
 		{
 			// Iteration function
 			z = pow(z, 2) + c;

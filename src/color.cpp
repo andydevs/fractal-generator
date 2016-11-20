@@ -7,7 +7,8 @@
 // Created: 8 - 14 - 2016
 //-----------------------------------------------------------------------------------
 
-// Headers being used
+// Headers being useds
+#include "Fractal/const.h"
 #include "Fractal/color.h"
 
 /**
@@ -89,9 +90,9 @@ namespace fractal
 		 */
 		ColorGradientRGB::ColorGradientRGB(ColorRGB first, ColorRGB last)
 		{
-			red   = (last.red   - first.red)   / 256.0;
-			green = (last.green - first.green) / 256.0;
-			blue  = (last.blue  - first.blue)  / 256.0;
+			red   = (last.red   - first.red)   / ((double)MAX_ITER);
+			green = (last.green - first.green) / ((double)MAX_ITER);
+			blue  = (last.blue  - first.blue)  / ((double)MAX_ITER);
 
 		}
 

@@ -11,6 +11,7 @@
 #define _FUNCTIONS_H_
 
 // Headers being used
+#include "const.h"
 #include "colormap.h"
 #include "CImg/CImg.h"
 #include "transform.h"

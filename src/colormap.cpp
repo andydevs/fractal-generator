@@ -125,7 +125,7 @@ namespace fractal
 		ColorRGB RainbowMapRGB::color(unsigned iterations) const
 		{
 			// Change iterations space to radians
-			double angle = iterations / 256.0 * (2*M_PI);
+			double angle = iterations / ((double)MAX_ITER) * (2*M_PI);
 
 			// Generate color
 			return ColorRGB(

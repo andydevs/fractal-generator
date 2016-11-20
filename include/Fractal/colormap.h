@@ -11,6 +11,7 @@
 #define _COLORMAP_H_
 
 // Headers being used
+#include "const.h"
 #include "color.h"
 
 // Libraries being used
@@ -109,7 +110,7 @@ namespace fractal
 
 		/**
 		 * Maps a given number of iterations to a color
-		 * using a rainbow gradient (using sine waves)
+		 * using using sinusoidal functions
 		 *
 		 * @author  Anshul Kharbanda
 		 * @created 8 - 19 - 2016
@@ -120,12 +121,12 @@ namespace fractal
 			/**
 			 * The center of the sine wave
 			 */
-			static const double CENTER  = 128;
+			static const double CENTER = MAX_ITER/2 + 1;
 
 			/**
 			 * The width of the sine wave
 			 */
-			static const double WIDTH   = 127;
+			static const double WIDTH  = MAX_ITER/2;
 
 			/**
 			 * The default phase shift of red
