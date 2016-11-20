@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<range from="-1" to="1" step="" as="x">
+	<fractal save="wimage.jpg">
+		<complex real="-0.19" imag="-0.67"/>
+		<size width="1920" height="1080"/>
+		<transform angle="-30" zoom="2">
+			<offset real="-0.8" imag="0.5"/>
+		</transform>
+		<colormap preset="saree"/>
+	</fractal>
+</range>

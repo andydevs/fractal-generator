@@ -46,7 +46,7 @@ namespace fractal
 			z = pow(z, 2) + c;
 
 			// Break if z goes to infinity (beyond space)
-			if (norm(z) >= pow(SCALE/2, 2)) break;
+			if (abs(z) >= SCALE/2) break;
 		}
 
 		// Return number of iterations
@@ -75,7 +75,7 @@ namespace fractal
 			z = pow(z, 2) + c;
 
 			// Break if z goes to infinity (beyond space)
-			if (norm(z) >= pow(SCALE/2, 2)) break;
+			if (abs(z) >= SCALE/2) break;
 		}
 
 		// Return iterations
