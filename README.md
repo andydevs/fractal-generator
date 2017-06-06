@@ -94,12 +94,12 @@ Here are a list of options:
 
 #### Using an XML File
 
-You can also run the fractal generator with an xml file containing all of the information of the fractals being generated to the program, rather than put the info in manually. Just type `fractal -xml [your xml file]` in the command line.
+You can also run the fractal generator with an xml file containing all of the information of the fractals being generated to the program, rather than put the info in manually. Just type `fractal -xml [your xml file]` in the command line. To generate a specific fractal in the file, use the `-id` option: `fractal -xml [your xml file] -id [id of image to generate]`. ID's are discussed in the xml definition.
 
 Each fractal image being generated is represented by a `fractal` tag. Fractal files can have multiple `fractal` tags.
 
 ```xml
-<fractal save="fractal.jpg">
+<fractal id="front" save="fractal.jpg">
 	<complex real="-0.4" imag="-0.6"/>
 	<size width="1920" height="1080"/>
 	<transform angle-"30" zoom="2">
@@ -112,7 +112,7 @@ Each fractal image being generated is represented by a `fractal` tag. Fractal fi
 </fractal>
 ```
 
-Fractal objects must have a `save` attribute defined, which determines the location that the file is to be saved to. They can also have an `mbrot` attribute, a boolean that is true if the image being generated is the mandelbrot set, but defaults to false.
+Fractal objects must have a `save` attribute defined, which determines the location that the file is to be saved to. Fractal objects can also have an `id` attribute defined. This is used in the `-id` option to select the image to generate. Finally, they can have an `mbrot` attribute, a boolean that is true if the image being generated is the mandelbrot set, but defaults to false.
 
 The complex tag is optional and defaults to 0 + 0i (it is also ignored if the mbrot attribute is set to true). The real component of the complex is set by the real attribute, while the imaginary component is set by the imag attribute. For example, `<complex real="-0.4" imag="-0.6"/>` equals a complex number of -0.4 - 0.6i. These do not have to be both defined, i.e. `<complex real="-0.4"/>` is also valid and equals -0.4 + 0i.
 
@@ -148,7 +148,7 @@ The rainbow type computes three sinusoidal functions for the red green and blue 
 
 ##### Preset
 
-Finally, you can set a preset colormap instead using the `preset` attribute. The value of the attribute is the name of the preset, and this attribute supercedes all other options, i.e. if the preset is set, the colormap will be set to the preset, and not be defined by any other parameters set. 
+Finally, you can set a preset colormap instead using the `preset` attribute. The value of the attribute is the name of the preset, and this attribute supercedes all other options, i.e. if the preset is set, the colormap will be set to the preset, and not be defined by any other parameters set.
 
 ```xml
 <colormap preset="noir"/>

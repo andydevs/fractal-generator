@@ -3,7 +3,7 @@
 TARGET = fractal
 
 # Error arguments
-ERRREAD = -xml foobar.xml 
+ERRREAD = -xml foobar.xml
 ERRXML  = -xml err.xml
 ERRCMAP = -cmap foobar
 
@@ -15,6 +15,7 @@ WIMAGE = -cr -0.19 -ci -0.67 -imgx 1920 -imgy 1080 -rot -30 -zoom 2 -offx -0.8 -
 # Other tests
 HELP   = -help
 XML    = -xml fractal.xml
+XMLID  = -xml fractal.xml -id front
 TCMAP  = -test -cmap flower -save colormaptest.jpg
 LCMAPS = -cmaps
 
@@ -120,6 +121,12 @@ xml: $(BINARY)
 	@echo Running with $(XML)
 	@echo -------------------------------
 	@$(BINARY) $(XML)
+	@echo -------------------------------
+
+xmlid: $(BINARY)
+	@echo Running with $(XMLID)
+	@echo -------------------------------
+	@$(BINARY) $(XMLID)
 	@echo -------------------------------
 
 listcmaps: $(BINARY)

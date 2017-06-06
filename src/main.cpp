@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------------
 // Program: Fractal
-// 
+//
 // Generates Julia and Mandelbrot Set fractal images
 //
 // Author:  Anshul Kharbanda
@@ -54,16 +54,17 @@ void testCmap(string sname, ColorMapRGB* cmap);
  *
  * @return the number of iterations performed
  */
-int generate(string sname, Transform trans, 
-	ColorMapRGB* cmap, bool mbrot, 
+int generate(string sname, Transform trans,
+	ColorMapRGB* cmap, bool mbrot,
 	complex<double> cons);
 
 /**
  * Runs the xml document with the given name
  *
  * @param docname the name of the document to parse
+ * @param id      the id of the fractal to generate (all if empty)
  */
-void runXML(string docname) throw(Error);
+void runXML(string docname, string id) throw(Error);
 
 /**
  * The main function of the program
@@ -82,6 +83,7 @@ int main(int argc, char const *argv[])
 
 	// Image options
 	string xml      = cimg_option("-xml",   "",           "Parses the xml file with the given name.");
+	string id       = cimg_option("-id",    "",           "The id of the image to generate from the xml file (all if empty)");
 	double real     = cimg_option("-cr",    0.0,  		  "The constant real component");
 	double imag     = cimg_option("-ci",    0.0,  		  "The constant imaginary component");
 	bool mandelbrot = cimg_option("-mbrot", false,        "Generates the mandelbrot set");
@@ -104,21 +106,21 @@ int main(int argc, char const *argv[])
 		initPresets();
 
 		// Functions
-		if (help) 
+		if (help)
 			// If they just wanted help
 			cout << endl;
-		else if (showcmaps) 
+		else if (showcmaps)
 			// Shows all cmaps
 			showPresets();
-		else if (testcmap) 
+		else if (testcmap)
 			// Tests one cmap
 			testCmap(sname, getPreset(cname));
-		else if (!xml.empty()) 
+		else if (!xml.empty())
 			// Parse XML document
-			runXML(xml);
-		else 
+			runXML(xml, id);
+		else
 			// Command line interface
-			generate(sname, Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot), 
+			generate(sname, Transform(ImgSize(imgx, imgy),zoom,offx,offy,rot),
 					getPreset(cname), mandelbrot, complex<double>(real,imag));
 
 		// End program
@@ -136,8 +138,9 @@ int main(int argc, char const *argv[])
  * Runs the xml document with the given name
  *
  * @param docname the name of the document to parse
+ * @param id      the id of the fractal to generate (all if empty)
  */
-void runXML(string docname) throw(Error)
+void runXML(string docname, string id) throw(Error)
 {
 	// Read xml doc (error if read fails)
 	xml_document jdoc;
@@ -145,6 +148,7 @@ void runXML(string docname) throw(Error)
 	if (!result) throw Error("When reading " + docname + " - " + result.description());
 
 	// Parameters to extract
+	string fid;
 	string sname;
 	ImgSize size;
 	Transform trans;
@@ -160,8 +164,9 @@ void runXML(string docname) throw(Error)
 
 	// For each fractal object
 	for (xml_node fractal = jdoc.child("fractal"); fractal; fractal = fractal.next_sibling("fractal"))
-	{	
+	{
 		// Extract parameters
+		fid   = fractal.attribute("id").as_string();
 		sname = fractal.attribute("save").as_string();
 		size  = ImgSize(fractal.child("size"));
 		trans = Transform(size,fractal.child("transform"));
@@ -169,8 +174,9 @@ void runXML(string docname) throw(Error)
 		mbrot = fractal.attribute("mbrot").as_bool();
 		cons  = rectFromXML(fractal.child("complex"));
 
-		// Generate image
-		iter += generate(sname, trans, cmap, mbrot, cons);
+		// Generate image (if needed)
+		if (id.empty() || fid == id)
+			iter += generate(sname, trans, cmap, mbrot, cons);
 	}
 
 	// End clock
@@ -209,7 +215,7 @@ void testCmap(string sname, ColorMapRGB* cmap)
 
 	// Variables
 	ColorRGB color;
-	
+
 	// For each pixel
 	cimg_forXY(image, x, y)
 	{
